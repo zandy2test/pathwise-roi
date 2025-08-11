@@ -21,6 +21,9 @@ export function validateCalculatorInputs(inputs: any): string[] {
     if (isNaN(inputs.scholarships) || inputs.scholarships < 0) {
       errors.push('Scholarship amount must be a positive number')
     }
+    if (inputs.scholarships > 100000) {
+      errors.push('Scholarships cannot exceed $100,000')
+    }
   }
 
   return errors

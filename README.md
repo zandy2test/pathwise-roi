@@ -12,20 +12,24 @@ PathwiseROI is an education investment calculator that helps students and parent
 
 ### Key Features
 
-- **ROI Calculator**: Calculate when your education investment breaks even
-- **Path Comparison**: Compare multiple education paths side-by-side
-- **Real Data**: Based on actual salary data and education costs
+- **ROI Calculator**: Calculate when your education investment breaks even with 10-year projections
+- **Path Comparison**: Compare multiple education paths side-by-side with winner determination
+- **Timeline Visualization**: Interactive graphs showing your journey from debt to profitability
+- **Share Cards**: Generate beautiful social media cards (1200x630px) to share your results
+- **Real Data**: Based on actual salary data and education costs for 20+ paths
+- **Location Intelligence**: Salary adjustments for 30+ cities
 - **Mobile Responsive**: Works perfectly on all devices
-- **Share Results**: Share your calculations with others
+- **Analytics**: Comprehensive event tracking and conversion monitoring
 
 ## 🛠 Tech Stack
 
-- **Framework**: Next.js 15 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
+- **Framework**: Next.js 15.2.4 (App Router)
+- **Language**: TypeScript 5
+- **Styling**: Tailwind CSS 3.4.17
 - **UI Components**: Radix UI (via shadcn/ui)
+- **Graphs**: Recharts for timeline visualizations
 - **Deployment**: Vercel
-- **Analytics**: Ready for Google Analytics/Plausible
+- **Analytics**: Custom analytics system + Vercel Analytics ready
 
 ## 🏃‍♂️ Getting Started
 
@@ -94,21 +98,27 @@ PathwiseROI is an education investment calculator that helps students and parent
 
 ```
 pathwise-roi/
-├── app/                # Next.js app directory
-│   ├── layout.tsx     # Root layout with metadata
-│   ├── page.tsx       # Landing page
-│   ├── calculate/     # Calculator page
-│   ├── compare/       # Comparison page
-│   └── sitemap.ts     # Sitemap generation
-├── components/        # React components
-│   ├── ui/           # Reusable UI components
-│   └── footer.tsx    # Site footer
-├── lib/              # Utility functions
-│   ├── calculator.ts # ROI calculation logic
-│   ├── data.json    # Education paths data
-│   └── types.ts     # TypeScript interfaces
-├── public/          # Static assets
-└── vercel.json      # Vercel configuration
+├── app/                   # Next.js app directory
+│   ├── layout.tsx        # Root layout with metadata
+│   ├── page.tsx          # Single-page application (all modes)
+│   ├── privacy/          # Privacy policy page
+│   ├── terms/            # Terms of service page
+│   ├── how-it-works/     # How it works guide
+│   └── sitemap.ts        # Sitemap generation
+├── components/           # React components
+│   ├── ui/              # Reusable UI components
+│   ├── path-builder.tsx # Reusable form component
+│   ├── roi-timeline.tsx # Timeline graph component
+│   ├── share-card.tsx   # Canvas share card generator
+│   └── footer.tsx       # Site footer
+├── lib/                 # Utility functions
+│   ├── calculator.ts    # ROI calculation logic
+│   ├── analytics.ts     # Analytics tracking system
+│   ├── validation.ts    # Form validation
+│   ├── data.json       # Education paths data
+│   └── types.ts        # TypeScript interfaces
+├── public/             # Static assets
+└── vercel.json         # Vercel configuration
 ```
 
 ## 🔧 Configuration

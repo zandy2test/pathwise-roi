@@ -1,7 +1,13 @@
+'use client'
+
 import Link from "next/link"
 import { Calculator, Heart } from "lucide-react"
 
-export function Footer() {
+interface FooterProps {
+  onPremiumClick?: () => void
+}
+
+export function Footer({ onPremiumClick }: FooterProps = {}) {
   const currentYear = new Date().getFullYear()
   
   return (
@@ -23,15 +29,24 @@ export function Footer() {
           <div className="text-center">
             <h3 className="font-semibold mb-3">Quick Links</h3>
             <div className="space-y-2">
-              <Link href="/calculate" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
+              <Link href="/" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
                 ROI Calculator
               </Link>
-              <Link href="/compare" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                Compare Paths
+              <Link href="/how-it-works" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                How It Works
               </Link>
-              <Link href="#premium" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                Premium (Coming Soon)
-              </Link>
+              {onPremiumClick ? (
+                <button 
+                  onClick={onPremiumClick}
+                  className="text-sm text-gray-600 hover:text-blue-600 transition-colors"
+                >
+                  Premium Features
+                </button>
+              ) : (
+                <Link href="#premium" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                  Premium Features
+                </Link>
+              )}
             </div>
           </div>
           
@@ -39,10 +54,10 @@ export function Footer() {
           <div className="text-center md:text-right">
             <h3 className="font-semibold mb-3">Legal</h3>
             <div className="space-y-2">
-              <Link href="#privacy" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
+              <Link href="/privacy" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
                 Privacy Policy
               </Link>
-              <Link href="#terms" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
+              <Link href="/terms" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
                 Terms of Service
               </Link>
             </div>

@@ -34,7 +34,9 @@ export interface ViralComparison {
 
 export interface CalculatorInputs {
   path: string
+  educationType?: string
   field?: string
+  program?: string
   location: string
   schoolTier: string
   livingCost: string
