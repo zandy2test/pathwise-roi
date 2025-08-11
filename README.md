@@ -145,7 +145,7 @@ Education paths and salary data are stored in `lib/data.json`. Update this file 
 - `npm run build` - Build for production
 - `npm start` - Start production server
 - `npm run lint` - Run ESLint
-- `npm run type-check` - Run TypeScript compiler check
+- `npm test` - Run automated tests with Vitest
 
 ## 🤝 Contributing
 
