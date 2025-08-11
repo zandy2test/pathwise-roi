@@ -1,127 +1,154 @@
 # PathwiseROI 🎓💰
 
-> **"Welders make more than lawyers until age 35"** - Find out when your education actually pays off.
+Calculate when your education investment pays off. Compare college degrees, trade schools, bootcamps, and work paths to find your optimal education ROI.
 
-## What is PathwiseROI?
+## 🚀 Live Demo
 
-PathwiseROI is an education ROI calculator that reveals the true payback time of different career paths. It cuts through traditional assumptions about education with data-driven comparisons that often surprise users.
+Visit [pathwiseroi.com](https://pathwiseroi.com) (coming soon)
+
+## 📚 Overview
+
+PathwiseROI is an education investment calculator that helps students and parents make data-driven decisions about education paths. It calculates the break-even point for different education investments and provides clear, actionable insights.
 
 ### Key Features
-- **Instant ROI Calculation**: Compare 50+ career paths across education types
-- **Doubt Score™**: Honest risk assessment for each path
-- **Visual Timeline**: See your debt-to-profit journey
-- **Shareable Comparisons**: Generate viral comparison cards
-- **No BS Approach**: Real data, uncomfortable truths
 
-## Tech Stack
+- **ROI Calculator**: Calculate when your education investment breaks even
+- **Path Comparison**: Compare multiple education paths side-by-side
+- **Real Data**: Based on actual salary data and education costs
+- **Mobile Responsive**: Works perfectly on all devices
+- **Share Results**: Share your calculations with others
 
-- **Frontend**: Next.js 14 (App Router), Tailwind CSS
-- **Hosting**: Vercel
-- **Analytics**: Mixpanel, Supabase
-- **Payments**: Stripe Payment Links
-- **PDF Generation**: React-to-PDF
+## 🛠 Tech Stack
 
-## Project Status
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: Radix UI (via shadcn/ui)
+- **Deployment**: Vercel
+- **Analytics**: Ready for Google Analytics/Plausible
 
-🚧 **Pre-Launch Phase** - Building MVP for 72-hour validation sprint
+## 🏃‍♂️ Getting Started
 
-### Current Progress
-- ✅ Project architecture and planning complete
-- ✅ Data structures defined
-- ✅ UI/UX flow designed
-- 🔄 Implementation in progress
-- ⏳ Launch targeted for next week
+### Prerequisites
 
-## Quick Start
+- Node.js 18+ installed
+- npm or yarn package manager
 
-```bash
-# Clone the repository
-git clone https://github.com/[your-username]/pathwise-roi.git
-cd pathwise-roi
+### Local Development
 
-# Install dependencies
-npm install
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/zandy2test/pathwise-roi.git
+   cd pathwise-roi
+   ```
 
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your API keys
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-# Run development server
-npm run dev
+3. **Run the development server**
+   ```bash
+   npm run dev
+   ```
 
-# Open http://localhost:3000
+4. **Open in browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 🚀 Deployment
+
+### Deploy to Vercel (Recommended)
+
+1. **Connect GitHub Repository**
+   - Go to [vercel.com](https://vercel.com)
+   - Sign in with GitHub
+   - Click "New Project"
+   - Import your GitHub repository
+
+2. **Configure Project**
+   - Framework Preset: Next.js
+   - Root Directory: ./
+   - Build Command: `npm run build`
+   - Output Directory: .next
+
+3. **Environment Variables**
+   Add any required environment variables in Vercel dashboard:
+   - `NEXT_PUBLIC_GA_ID` (optional, for Google Analytics)
+
+4. **Deploy**
+   Click "Deploy" and Vercel will build and deploy your application
+
+### Manual Deployment
+
+1. **Build the application**
+   ```bash
+   npm run build
+   ```
+
+2. **Start production server**
+   ```bash
+   npm start
+   ```
+
+## 📁 Project Structure
+
+```
+pathwise-roi/
+├── app/                # Next.js app directory
+│   ├── layout.tsx     # Root layout with metadata
+│   ├── page.tsx       # Landing page
+│   ├── calculate/     # Calculator page
+│   ├── compare/       # Comparison page
+│   └── sitemap.ts     # Sitemap generation
+├── components/        # React components
+│   ├── ui/           # Reusable UI components
+│   └── footer.tsx    # Site footer
+├── lib/              # Utility functions
+│   ├── calculator.ts # ROI calculation logic
+│   ├── data.json    # Education paths data
+│   └── types.ts     # TypeScript interfaces
+├── public/          # Static assets
+└── vercel.json      # Vercel configuration
 ```
 
-## Environment Variables
+## 🔧 Configuration
 
-Create a `.env` file based on `.env.example`:
+### SEO & Metadata
 
-```env
-# Analytics
-NEXT_PUBLIC_MIXPANEL_TOKEN=your_mixpanel_token
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+Edit `app/layout.tsx` to update:
+- Site title and description
+- Open Graph images
+- Twitter cards
+- Meta keywords
 
-# Payments
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_key
-STRIPE_SECRET_KEY=your_stripe_secret
+### Data Sources
 
-# Feature Flags
-NEXT_PUBLIC_ENABLE_ANALYTICS=true
-NEXT_PUBLIC_ENABLE_PAYMENTS=false
-```
+Education paths and salary data are stored in `lib/data.json`. Update this file to:
+- Add new education paths
+- Modify salary ranges
+- Update location multipliers
+- Change school tiers
 
-## Documentation
+## 📝 Available Scripts
 
-- [Implementation Plan](./implementation-plan.md) - Technical roadmap
-- [Design Guidelines](./design-guidelines.md) - UI/UX principles
-- [App Flow](./app-flow-and-pages.md) - User journey and page structure
-- [Data Structure](./data-structure-consolidated.json) - Core data models
-- [Quick Start Guide](./QUICKSTART.md) - Development setup
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run type-check` - Run TypeScript compiler check
 
-## The Hypothesis
+## 🤝 Contributing
 
-**"People will use and share a tool that shows education payback time with controversial comparisons"**
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-Success Metrics (72-hour validation):
-- 5,000+ users
-- 15%+ share rate
-- 10+ payments
+## 📜 License
 
-## Core Calculations
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-The app analyzes:
-- Total education costs (tuition + living + opportunity cost)
-- Career earning trajectories
-- Time to breakeven
-- 10-year wealth projections
-- Risk factors ("Doubt Score")
+## 📧 Contact
 
-## Disclaimer
-
-This tool provides estimates based on aggregated data. Individual results vary significantly. Not financial advice. Always consider multiple factors when making education decisions.
-
-## Contributing
-
-This is currently a solo MVP sprint. Post-launch, contributions will be welcome via:
-- Bug reports
-- Feature suggestions
-- Data accuracy improvements
-- UI/UX enhancements
-
-## License
-
-MIT License - See [LICENSE](./LICENSE) file
-
-## Contact
-
-- GitHub: [@[your-username]](https://github.com/[your-username])
-- Project URL: [Coming Soon]
+For questions or feedback, please open an issue on GitHub.
 
 ---
 
-**Mission:** Build and launch a viral education ROI calculator in one weekend to validate demand.
-
-**Philosophy:** Ship beats perfect. Controversy beats safe. Speed beats strategy. Data beats opinions.
-
-🚀 *Ready to reveal uncomfortable truths about education ROI*
+Built with ❤️ for students everywhere

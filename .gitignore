@@ -18,6 +18,9 @@ out/
 .env.test.local
 .env.production.local
 
+# Reference/temp folders
+temp-v0-repo/
+
 # Debug
 npm-debug.log*
 yarn-debug.log*

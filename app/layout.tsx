@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { Footer } from '@/components/footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -11,15 +12,36 @@ export const metadata: Metadata = {
   authors: [{ name: 'PathwiseROI' }],
   openGraph: {
     title: 'PathwiseROI - Education Investment Calculator',
-    description: 'Calculate when your education investment pays off',
+    description: 'Discover when your education pays for itself. Compare college vs trade school vs bootcamp paths with our free ROI calculator.',
     url: 'https://pathwiseroi.com',
     siteName: 'PathwiseROI',
     type: 'website',
+    locale: 'en_US',
+    images: [
+      {
+        url: 'https://pathwiseroi.com/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'PathwiseROI - Education Investment Calculator',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'PathwiseROI - Education Investment Calculator',
-    description: 'Calculate when your education investment pays off',
+    description: 'Discover when your education pays for itself. Free ROI calculator.',
+    images: ['https://pathwiseroi.com/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 }
 
@@ -31,8 +53,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="min-h-screen bg-background">
+        <div className="min-h-screen bg-background flex flex-col">
           {children}
+          <Footer />
         </div>
       </body>
     </html>
