@@ -22,7 +22,7 @@ export default function TermsPage() {
           <CardContent className="prose prose-gray max-w-none">
             <h2 className="text-xl font-semibold mt-6 mb-3">1. Acceptance of Terms</h2>
             <p className="mb-4">
-              By accessing and using PathwiseROI ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our Service.
+              By accessing and using PathwiseROI (&quot;the Service&quot;), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our Service.
             </p>
 
             <h2 className="text-xl font-semibold mt-6 mb-3">2. Description of Service</h2>

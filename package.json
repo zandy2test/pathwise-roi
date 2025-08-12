@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest",
+    "test:e2e": "playwright test",
+    "audit": "npm audit --audit-level=high",
     "deploy": "vercel --prod"
   },
   "dependencies": {
@@ -15,6 +17,7 @@
     "@radix-ui/react-select": "2.1.4",
     "@radix-ui/react-slot": "1.1.1",
     "@radix-ui/react-tooltip": "^1.2.7",
+    "@sentry/nextjs": "^10.4.0",
     "@vercel/analytics": "^1.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -28,6 +31,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@playwright/test": "^1.54.2",
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.3.0",
     "@types/node": "^22",

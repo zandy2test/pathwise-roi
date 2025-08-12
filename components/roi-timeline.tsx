@@ -136,8 +136,8 @@ export default function ROITimeline({ result, pathName }: ROITimelineProps) {
                   (the money you could have earned if working instead of studying).
                 </p>
                 <p className="text-sm text-blue-800">
-                  That's why it's not at $0 - it factors in both what you paid AND 
-                  what you didn't earn while in school.
+                  That&apos;s why it&apos;s not at $0 - it factors in both what you paid AND
+                  what you didn&apos;t earn while in school.
                 </p>
               </div>
             </div>

@@ -1,0 +1,71 @@
+# Page snapshot
+
+```yaml
+- heading "When Does Your Education Actually Pay Off?" [level=1]
+- paragraph: Compare college degrees, trade schools, bootcamps, and work paths. Find your breakeven point with real salary data and location adjustments.
+- button "Calculate Your ROI":
+  - img
+  - text: Calculate Your ROI
+- heading "Mind-Blowing Comparisons" [level=2]
+- paragraph: Real data that challenges conventional wisdom
+- heading "Welders make more than lawyers until age 35" [level=3]
+- button "See Comparison":
+  - text: See Comparison
+  - img
+- heading "Nurses beat MBAs by year 7" [level=3]
+- button "See Comparison":
+  - text: See Comparison
+  - img
+- heading "Plumbers earn more than liberal arts grads forever" [level=3]
+- button "See Comparison":
+  - text: See Comparison
+  - img
+- img
+- heading "Unlock Premium Insights" [level=2]
+- paragraph: Take your education planning to the next level with advanced analytics, personalized recommendations, and long-term financial projections
+- img
+- heading "20-Year Projections" [level=3]
+- paragraph: See career growth and compound earnings over two decades
+- img
+- heading "Risk Analysis" [level=3]
+- paragraph: Understand job market volatility and career stability metrics
+- img
+- heading "Debt Optimization" [level=3]
+- paragraph: Smart loan repayment strategies to minimize interest
+- img
+- heading "Career Pathways" [level=3]
+- paragraph: Alternative routes to reach your income goals faster
+- text: $9.99/month
+- paragraph: Cancel anytime • 30-day money-back guarantee
+- button "Get Premium Access":
+  - img
+  - text: Get Premium Access
+- paragraph: Join thousands of students making smarter education investments
+- contentinfo:
+  - link "PathwiseROI":
+    - /url: /
+    - img
+    - text: PathwiseROI
+  - paragraph: Make smarter education decisions with data-driven insights
+  - heading "Quick Links" [level=3]
+  - link "ROI Calculator":
+    - /url: /
+  - link "How It Works":
+    - /url: /how-it-works
+  - link "Premium Features":
+    - /url: "#premium"
+  - heading "Legal" [level=3]
+  - link "Privacy Policy":
+    - /url: /privacy
+  - link "Terms of Service":
+    - /url: /terms
+  - paragraph: © 2025 PathwiseROI. All rights reserved.
+  - paragraph:
+    - text: Made with
+    - img
+    - text: for students everywhere
+  - paragraph: Trusted by thousands of students making informed education decisions
+- button "Open Next.js Dev Tools":
+  - img
+- alert
+```

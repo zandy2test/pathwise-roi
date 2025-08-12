@@ -61,6 +61,16 @@ PathwiseROI is an education investment calculator that helps students and parent
 
 ## 🚀 Deployment
 
+### Error Monitoring (Sentry)
+
+This project is configured for error monitoring with Sentry. To enable it, you will need to create a Sentry account and a project. Then, add the following environment variables to your Vercel project:
+
+- `SENTRY_DSN`: Your project's DSN.
+- `SENTRY_AUTH_TOKEN`: An auth token for uploading source maps.
+- `NEXT_PUBLIC_SENTRY_DSN`: The same DSN, but exposed to the client.
+
+Refer to the Sentry documentation for more details on finding these values.
+
 ### Deploy to Vercel (Recommended)
 
 1. **Connect GitHub Repository**
@@ -145,7 +155,8 @@ Education paths and salary data are stored in `lib/data.json`. Update this file 
 - `npm run build` - Build for production
 - `npm start` - Start production server
 - `npm run lint` - Run ESLint
-- `npm test` - Run automated tests with Vitest
+- `npm test` - Run unit tests with Vitest
+- `npm run test:e2e` - Run end-to-end tests with Playwright
 
 ## 🤝 Contributing
 

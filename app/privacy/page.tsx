@@ -74,14 +74,14 @@ export default function PrivacyPage() {
               <li>Export your calculation history</li>
             </ul>
 
-            <h2 className="text-xl font-semibold mt-6 mb-3">8. Children's Privacy</h2>
+            <h2 className="text-xl font-semibold mt-6 mb-3">8. Children&apos;s Privacy</h2>
             <p className="mb-4">
               Our service is intended for users 16 years and older. We do not knowingly collect personal information from children under 16.
             </p>
 
             <h2 className="text-xl font-semibold mt-6 mb-3">9. Changes to This Policy</h2>
             <p className="mb-4">
-              We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last updated" date.
+              We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the &quot;Last updated&quot; date.
             </p>
 
             <h2 className="text-xl font-semibold mt-6 mb-3">10. Contact Us</h2>
