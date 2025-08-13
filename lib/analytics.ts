@@ -1,9 +1,11 @@
 // Basic Analytics Implementation
 // Can be replaced with Google Analytics, Mixpanel, or other analytics providers
 
+type AnalyticsPropertyValue = string | number | boolean | null | undefined
+
 interface AnalyticsEvent {
   event: string
-  properties?: Record<string, any>
+  properties?: Record<string, AnalyticsPropertyValue>
   timestamp: Date
 }
 
@@ -21,7 +23,7 @@ class Analytics {
     }
   }
 
-  track(event: string, properties?: Record<string, any>) {
+  track(event: string, properties?: Record<string, AnalyticsPropertyValue>) {
     const analyticsEvent: AnalyticsEvent = {
       event,
       properties: {
@@ -48,8 +50,8 @@ class Analytics {
 
     // Here you would send to your analytics provider
     // Example: Google Analytics
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', event, properties)
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', event, properties || {})
     }
 
     // Example: Custom endpoint (commented out)
@@ -109,7 +111,7 @@ class Analytics {
   }
 
   // Example method to send events to a custom endpoint
-  private async sendToEndpoint(event: AnalyticsEvent) {
+  private async sendToEndpoint(_event: AnalyticsEvent) {
     // Uncomment and configure when you have an analytics endpoint
     /*
     try {
@@ -118,7 +120,7 @@ class Analytics {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(event)
+        body: JSON.stringify(_event)
       })
     } catch (error) {
       // Failed to send analytics event - error silently handled
@@ -136,7 +138,7 @@ export default analytics
 // Declare global types for window
 declare global {
   interface Window {
-    gtag?: (...args: any[]) => void
-    va?: (...args: any[]) => void
+    gtag?: (command: string, eventName: string, parameters?: Record<string, AnalyticsPropertyValue>) => void
+    va?: (command: string, data: { name: string; [key: string]: AnalyticsPropertyValue }) => void
   }
 }

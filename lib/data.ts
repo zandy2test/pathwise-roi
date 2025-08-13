@@ -17,7 +17,7 @@ export function getEducationPath(pathKey: string): EducationPath | undefined {
 }
 
 export function getLocationMultiplier(location: string): number {
-  return (locationMultipliers as any)[location] || 1.0
+  return (locationMultipliers as Record<string, number>)[location] || 1.0
 }
 
 export function getSchoolTier(tier: string): SchoolTier {
@@ -55,11 +55,11 @@ export function getProgramOptions(educationType: string, field: string) {
   
   // Determine the property name (degrees, programs, etc.)
   const programsKey = 'degrees' in fieldData ? 'degrees' : 'programs'
-  const programs = fieldData[programsKey as keyof typeof fieldData] as any
+  const programs = fieldData[programsKey as keyof typeof fieldData] as Record<string, { name: string; [key: string]: unknown }>
   
   if (!programs) return []
   
-  return Object.entries(programs).map(([key, program]: [string, any]) => ({
+  return Object.entries(programs).map(([key, program]) => ({
     value: key,
     label: program.name
   }))
@@ -74,7 +74,7 @@ export function getEducationPathFromHierarchy(educationType: string, field: stri
   
   // Determine the property name (degrees, programs, etc.)
   const programsKey = 'degrees' in fieldData ? 'degrees' : 'programs'
-  const programs = fieldData[programsKey as keyof typeof fieldData] as any
+  const programs = fieldData[programsKey as keyof typeof fieldData] as Record<string, EducationPath>
   
   if (!programs) return undefined
   

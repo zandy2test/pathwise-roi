@@ -2,7 +2,6 @@
 
 import { useMemo } from 'react'
 import {
-  LineChart,
   Line,
   XAxis,
   YAxis,
@@ -29,7 +28,16 @@ interface DataPoint {
   isBreakeven?: boolean
 }
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+interface TooltipProps {
+  active?: boolean
+  payload?: Array<{
+    value: number
+    [key: string]: unknown
+  }>
+  label?: number
+}
+
+const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
   if (active && payload && payload.length) {
     const value = payload[0].value as number
     const month = label as number
@@ -56,7 +64,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null
 }
 
-export default function ROITimeline({ result, pathName }: ROITimelineProps) {
+export default function ROITimeline({ result }: ROITimelineProps) {
   const data = useMemo(() => {
     const points: DataPoint[] = []
     const monthlyNetGain = result.monthlySalary * 0.6 // After taxes and expenses

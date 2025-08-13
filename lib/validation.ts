@@ -1,4 +1,6 @@
-export function validateCalculatorInputs(inputs: any): string[] {
+import type { CalculatorInputs } from './types'
+
+export function validateCalculatorInputs(inputs: CalculatorInputs): string[] {
   const errors: string[] = []
 
   if (!inputs.path) {
