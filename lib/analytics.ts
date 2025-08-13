@@ -17,7 +17,7 @@ class Analytics {
     
     // Initialize Vercel Analytics if available
     if (typeof window !== 'undefined' && window.va) {
-      console.log('Vercel Analytics initialized')
+      // Vercel Analytics initialized
     }
   }
 
@@ -38,7 +38,7 @@ class Analytics {
 
     // Log to console in development
     if (process.env.NODE_ENV === 'development') {
-      console.log('📊 Analytics Event:', event, properties)
+      // Analytics Event tracked - development mode
     }
 
     // Send to Vercel Analytics if available
@@ -121,7 +121,7 @@ class Analytics {
         body: JSON.stringify(event)
       })
     } catch (error) {
-      console.error('Failed to send analytics event:', error)
+      // Failed to send analytics event - error silently handled
     }
     */
   }

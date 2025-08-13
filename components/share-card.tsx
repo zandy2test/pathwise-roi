@@ -257,7 +257,7 @@ export default function ShareCard({ result, pathName, comparison }: ShareCardPro
               : `My ${pathName} path breaks even in ${result.breakevenMonths} months!`
           })
         } catch (err) {
-          console.error('Share failed:', err)
+          // Share failed - silently fall back to download
         }
       } else {
         // Fallback to download

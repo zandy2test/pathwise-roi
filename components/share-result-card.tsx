@@ -44,7 +44,9 @@ export default function ShareResultCard({
         dark: '#000000',
         light: '#FFFFFF'
       }
-    }).then(setQrCodeUrl).catch(console.error)
+    }).then(setQrCodeUrl).catch(() => {
+      // QR code generation failed - silently ignore
+    })
   }, [])
 
   // Generate share text based on format
@@ -123,7 +125,7 @@ export default function ShareResultCard({
         URL.revokeObjectURL(url)
       }, 'image/png')
     } catch (error) {
-      console.error('Failed to generate image:', error)
+      // Failed to generate image - silently handle error
     } finally {
       setIsGenerating(false)
     }
@@ -139,7 +141,7 @@ export default function ShareResultCard({
         })
       } catch (err) {
         // User cancelled or error occurred
-        console.log('Share cancelled or failed:', err)
+        // Share cancelled or failed - silently handle
       }
     } else {
       // Fallback to copying text
