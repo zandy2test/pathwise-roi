@@ -23,7 +23,6 @@ import {
   AlertTriangle,
   Plus,
   Share2,
-  Copy,
   Check,
   Crown,
   X

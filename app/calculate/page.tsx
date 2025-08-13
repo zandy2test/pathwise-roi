@@ -13,11 +13,8 @@ import { educationPaths } from '@/lib/data'
 import type { CalculatorInputs, EducationPath } from '@/lib/types'
 import { validateCalculatorInputs } from '@/lib/validation'
 import { 
-  AlertTriangle, 
-  TrendingUp, 
   DollarSign, 
   Brain, 
-  AlertCircle,
   Zap,
   Skull,
   CheckCircle2,
@@ -43,7 +40,6 @@ export default function CalculatePage() {
   const [debtAmount, setDebtAmount] = useState<number>(0)
   const [selectedPath, setSelectedPath] = useState<EducationPath | null>(null)
   const [showDangerZone, setShowDangerZone] = useState(false)
-  const [showAIAlert, setShowAIAlert] = useState(false)
 
   // Calculate live Scam Score as user fills form
   useEffect(() => {
@@ -62,14 +58,12 @@ export default function CalculatePage() {
         
         // Show danger alerts
         setShowDangerZone(debtAmount > 100000)
-        setShowAIAlert((path.aiRiskScore || 0) > 60)
       }
     } else {
       setSelectedPath(null)
       setLiveScamScore(0)
       setDebtAmount(0)
       setShowDangerZone(false)
-      setShowAIAlert(false)
     }
   }, [inputs])
 

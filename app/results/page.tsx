@@ -13,21 +13,18 @@ import type { CalculatorInputs, EducationPath, CalculationResult } from '@/lib/t
 import { 
   ArrowLeft,
   Share2,
-  Download,
   TrendingDown,
   DollarSign,
   Clock,
   AlertTriangle,
   Brain,
   Sparkles,
-  Trophy,
   Skull,
   Car,
   Home,
   Plane,
   Coffee,
   Hammer,
-  GraduationCap,
   TrendingUp,
   Zap
 } from 'lucide-react'
