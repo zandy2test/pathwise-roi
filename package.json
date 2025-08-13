@@ -26,10 +26,10 @@
     "lucide-react": "^0.454.0",
     "next": "15.2.4",
     "qrcode": "^1.5.4",
-    "react": "^19",
-    "react-dom": "^19",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "recharts": "^3.1.2",
-    "tailwind-merge": "^2.5.5",
+    "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
@@ -37,20 +37,20 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
-    "@types/node": "^22",
+    "@types/node": "^22.17.1",
     "@types/qrcode": "^1.5.5",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
     "@typescript-eslint/eslint-plugin": "^8.39.1",
     "@typescript-eslint/parser": "^8.39.1",
-    "autoprefixer": "^10.4.20",
-    "eslint": "^8",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^8.57.1",
     "eslint-config-next": "15.2.4",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
-    "postcss": "^8.5",
+    "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
     "ts-jest": "^29.4.1",
-    "typescript": "^5"
+    "typescript": "^5.9.2"
   }
 }
