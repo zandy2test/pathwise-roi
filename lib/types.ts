@@ -1,7 +1,7 @@
 export interface EducationPath {
   name: string
   totalCost: number
-  duration: number
+  duration: number // months
   salary: {
     year1: number
     year5: number
@@ -9,6 +9,12 @@ export interface EducationPath {
   }
   riskText: string
   employmentRate: number
+  // Viral metrics
+  aiRiskScore?: number
+  aiRiskDescription?: string
+  jobSecurityScore?: number
+  brutalTruth?: string
+  inflationVulnerability?: 'high' | 'medium' | 'low'
 }
 
 export interface LocationMultiplier {
@@ -52,6 +58,8 @@ export interface CalculationResult {
   employmentRate: number
   riskText: string
   doubtScore: number
+  roi: number
+  opportunityCost: number
 }
 
 export interface ComparisonResult {

@@ -20,8 +20,8 @@ export function calculateROI(inputs: CalculatorInputs): CalculationResult | null
   const monthlySalary = adjustedSalary / 12
 
   // Calculate opportunity cost (what you could earn working instead)
-  const opportunityCost = 35000 // Base retail salary
-  const monthlyOpportunityCost = opportunityCost / 12
+  const opportunityCost = 35000 * path.duration / 12 // Base retail salary over education duration
+  const monthlyOpportunityCost = 35000 / 12
 
   // Calculate breakeven months
   const monthlyNetGain = monthlySalary - monthlyOpportunityCost
@@ -36,6 +36,11 @@ export function calculateROI(inputs: CalculatorInputs): CalculationResult | null
   // Simplified 10-year calculation
   const totalEarnings = (adjustedSalary * 4) + (year5Salary * 5) + year10Salary
   const netWorth10Years = totalEarnings - adjustedCost
+
+  // Calculate ROI (Return on Investment)
+  // ROI = (Net Return / Total Investment) * 100
+  const netReturn = netWorth10Years
+  const roi = adjustedCost > 0 ? (netReturn / adjustedCost) * 100 : 0
 
   // Calculate doubt score (0-100)
   const doubts = []
@@ -56,7 +61,9 @@ export function calculateROI(inputs: CalculatorInputs): CalculationResult | null
     netWorth10Years,
     employmentRate: path.employmentRate,
     riskText: path.riskText,
-    doubtScore
+    doubtScore,
+    roi,
+    opportunityCost
   }
 }
 

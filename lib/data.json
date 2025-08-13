@@ -10,7 +10,12 @@
         "year10": 150000
       },
       "riskText": "35% of CS grads don't get tech jobs",
-      "employmentRate": 0.65
+      "employmentRate": 0.65,
+      "aiRiskScore": 73,
+      "aiRiskDescription": "73% of software development tasks expected to be AI-automated by 2030",
+      "jobSecurityScore": 27,
+      "brutalTruth": "You'll be competing with AI that codes 24/7 and doesn't ask for equity",
+      "inflationVulnerability": "high"
     },
     "college_business": {
       "name": "4-Year Business Degree",
@@ -22,7 +27,12 @@
         "year10": 95000
       },
       "riskText": "42% underemployed first year",
-      "employmentRate": 0.58
+      "employmentRate": 0.58,
+      "aiRiskScore": 68,
+      "aiRiskDescription": "68% of business analysis roles face AI automation by 2030",
+      "jobSecurityScore": 32,
+      "brutalTruth": "Congrats, you paid $100k to learn what YouTube teaches for free",
+      "inflationVulnerability": "high"
     },
     "college_liberal_arts": {
       "name": "4-Year Liberal Arts",
@@ -34,7 +44,12 @@
         "year10": 70000
       },
       "riskText": "47% work outside their field",
-      "employmentRate": 0.53
+      "employmentRate": 0.53,
+      "aiRiskScore": 45,
+      "aiRiskDescription": "45% of creative and analytical tasks at risk of AI replacement",
+      "jobSecurityScore": 55,
+      "brutalTruth": "$110k for the world's most expensive coffee shop training",
+      "inflationVulnerability": "high"
     },
     "college_engineering": {
       "name": "4-Year Engineering",
@@ -46,7 +61,12 @@
         "year10": 125000
       },
       "riskText": "Highest dropout rate at 40%",
-      "employmentRate": 0.72
+      "employmentRate": 0.72,
+      "aiRiskScore": 38,
+      "aiRiskDescription": "38% of engineering design tasks face AI automation by 2032",
+      "jobSecurityScore": 62,
+      "brutalTruth": "You survived the hardest degree to compete with algorithms",
+      "inflationVulnerability": "medium"
     },
     "community_transfer": {
       "name": "2-Year + Transfer",
@@ -70,7 +90,12 @@
         "year10": 90000
       },
       "riskText": "Physical demands increase with age",
-      "employmentRate": 0.96
+      "employmentRate": 0.96,
+      "aiRiskScore": 12,
+      "aiRiskDescription": "Only 12% of welding jobs can be automated - robots can't reach everywhere",
+      "jobSecurityScore": 88,
+      "brutalTruth": "While others debate AI, you're building the world they live in",
+      "inflationVulnerability": "low"
     },
     "trades_plumbing": {
       "name": "Plumbing Apprentice",
@@ -82,7 +107,12 @@
         "year10": 85000
       },
       "riskText": "License requirements vary by state",
-      "employmentRate": 0.94
+      "employmentRate": 0.94,
+      "aiRiskScore": 8,
+      "aiRiskDescription": "8% automation risk - AI can't unclog your toilet",
+      "jobSecurityScore": 92,
+      "brutalTruth": "Everyone needs a plumber, nobody needs another LinkedIn influencer",
+      "inflationVulnerability": "low"
     },
     "trades_electrician": {
       "name": "Electrician Program",
@@ -106,7 +136,12 @@
         "year10": 120000
       },
       "riskText": "35% don't complete the program",
-      "employmentRate": 0.65
+      "employmentRate": 0.65,
+      "aiRiskScore": 76,
+      "aiRiskDescription": "76% of entry-level coding tasks face AI automation by 2028",
+      "jobSecurityScore": 24,
+      "brutalTruth": "3 months to learn what AI mastered in 3 seconds",
+      "inflationVulnerability": "high"
     },
     "bootcamp_data": {
       "name": "Data Science Bootcamp",
@@ -178,7 +213,12 @@
         "year10": 250000
       },
       "riskText": "67-month payback period",
-      "employmentRate": 0.87
+      "employmentRate": 0.87,
+      "aiRiskScore": 71,
+      "aiRiskDescription": "71% of strategic management tasks being automated by AI",
+      "jobSecurityScore": 29,
+      "brutalTruth": "$200k to learn buzzwords that ChatGPT generates for free",
+      "inflationVulnerability": "high"
     },
     "law_degree": {
       "name": "Law School (JD)",

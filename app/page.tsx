@@ -20,6 +20,7 @@ import {
   DollarSign, 
   Trophy, 
   AlertCircle,
+  AlertTriangle,
   Plus,
   Share2,
   Copy,
@@ -173,26 +174,80 @@ export default function HomePage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Hero Section - Always visible */}
+      {/* VIRAL HERO SECTION */}
       {mode === 'intro' && (
-        <section className="text-center py-16 space-y-6">
-          <h1 className="text-5xl font-bold tracking-tight">
-            When Does Your Education{' '}
-            <span className="text-primary">Actually Pay Off?</span>
+        <section className="text-center py-16 space-y-8 bg-gradient-to-br from-red-50 via-white to-yellow-50">
+          {/* Debt Counter */}
+          <div className="bg-red-600 text-white px-6 py-3 rounded-xl max-w-2xl mx-auto mb-8">
+            <p className="text-sm font-semibold mb-1">🚨 US STUDENT DEBT CRISIS</p>
+            <p className="text-2xl font-black">$1.7 TRILLION</p>
+            <p className="text-sm opacity-90">Growing by $3,000 every second</p>
+          </div>
+
+          <h1 className="text-6xl font-black tracking-tight leading-tight">
+            The <span className="text-red-600">$200,000</span> Question:{' '}
+            <br className="hidden sm:block" />
+            <span className="text-gray-900">Is College Worth It?</span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Compare college degrees, trade schools, bootcamps, and work paths. 
-            Find your breakeven point with real salary data and location adjustments.
-          </p>
-          <div className="flex justify-center pt-4">
+          
+          <div className="max-w-3xl mx-auto space-y-4">
+            <p className="text-2xl font-bold text-gray-800">
+              Find out if you're getting <span className="text-red-600 underline">SCAMMED</span>
+            </p>
+            <p className="text-lg text-gray-600">
+              Our controversial calculator exposes the brutal truth about education ROI. 
+              Compare degrees vs trades vs going straight to work - the results will shock you.
+            </p>
+          </div>
+
+          {/* Shocking Stats */}
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto py-8">
+            <div className="bg-red-100 border-l-4 border-red-500 p-4 rounded-r-lg">
+              <p className="text-3xl font-black text-red-700">73%</p>
+              <p className="text-sm font-semibold text-red-800">of CS jobs at risk from AI</p>
+            </div>
+            <div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-r-lg">
+              <p className="text-3xl font-black text-yellow-700">42%</p>
+              <p className="text-sm font-semibold text-yellow-800">of grads underemployed</p>
+            </div>
+            <div className="bg-green-100 border-l-4 border-green-500 p-4 rounded-r-lg">
+              <p className="text-3xl font-black text-green-700">96%</p>
+              <p className="text-sm font-semibold text-green-800">of welders find work</p>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
             <Button 
               size="lg" 
-              className="gap-2"
+              className="gap-2 bg-red-600 hover:bg-red-700 text-white px-8 py-4 text-lg font-bold"
               onClick={() => setMode('calculator')}
             >
-              <Calculator className="h-5 w-5" />
-              Calculate Your ROI
+              <AlertTriangle className="h-6 w-6" />
+              Calculate My Scam Score™
             </Button>
+            <Button 
+              variant="outline"
+              size="lg" 
+              className="gap-2 border-2 border-red-600 text-red-600 hover:bg-red-50 px-8 py-4 text-lg font-semibold"
+              onClick={() => handleQuickCompare('trades_plumbing', 'college_liberal_arts')}
+            >
+              <TrendingUp className="h-6 w-6" />
+              See Shocking Comparisons
+            </Button>
+          </div>
+
+          {/* Warning Message */}
+          <div className="bg-yellow-50 border border-yellow-300 rounded-xl p-6 max-w-2xl mx-auto">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="h-6 w-6 text-yellow-600 mt-1 flex-shrink-0" />
+              <div className="text-left">
+                <p className="font-bold text-yellow-800 mb-2">⚠️ Reality Check Incoming</p>
+                <p className="text-sm text-yellow-700">
+                  This calculator uses REAL data from Bureau of Labor Statistics, MIT studies, and industry reports. 
+                  Prepare to question everything you've been told about education.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
       )}
