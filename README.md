@@ -1,5 +1,8 @@
 # PathwiseROI 🎓💰
 
+[![CI](https://github.com/zandy2test/pathwise-roi/actions/workflows/ci.yml/badge.svg)](https://github.com/zandy2test/pathwise-roi/actions/workflows/ci.yml)
+[![Tests](https://img.shields.io/badge/tests-76%20passing-brightgreen)](https://github.com/zandy2test/pathwise-roi)
+
 Calculate when your education investment pays off. Compare college degrees, trade schools, bootcamps, and work paths to find your optimal education ROI.
 
 ## 🚀 Live Demo
@@ -41,17 +44,20 @@ PathwiseROI is an education investment calculator that helps students and parent
 ### Local Development
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/zandy2test/pathwise-roi.git
    cd pathwise-roi
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Run the development server**
+
    ```bash
    npm run dev
    ```
@@ -85,6 +91,7 @@ PathwiseROI is an education investment calculator that helps students and parent
 ### Manual Deployment
 
 1. **Build the application**
+
    ```bash
    npm run build
    ```
@@ -126,6 +133,7 @@ pathwise-roi/
 ### SEO & Metadata
 
 Edit `app/layout.tsx` to update:
+
 - Site title and description
 - Open Graph images
 - Twitter cards
@@ -134,6 +142,7 @@ Edit `app/layout.tsx` to update:
 ### Data Sources
 
 Education paths and salary data are stored in `lib/data.json`. Update this file to:
+
 - Add new education paths
 - Modify salary ranges
 - Update location multipliers
