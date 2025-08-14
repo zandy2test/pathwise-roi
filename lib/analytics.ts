@@ -231,10 +231,10 @@ class Analytics {
     })
   }
 
-  validationFailed(field: string, value: any, reason: string) {
+  validationFailed(field: string, value: unknown, reason: string) {
     this.track('validation_failed', {
       field,
-      value: typeof value === 'object' ? JSON.stringify(value) : value,
+      value: typeof value === 'object' ? JSON.stringify(value) : String(value),
       reason
     })
   }
