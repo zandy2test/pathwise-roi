@@ -40,7 +40,10 @@ When needed, use these servers for specific tasks:
 ## 🔒 PROJECT-SPECIFIC SAFETY
 
 - **React Version:** Stay on React 18 (v19 has known CI failures - see `docs/REACT19_CI_FAILURE_INCIDENT_REPORT.md`)
-- **Bundle Size:** Current ~200KB, warn if >500KB
+- **Bundle Size Monitoring:**
+  - ✅ Current: ~200KB (excellent!)
+  - ⚠️ Yellow warning: >300KB
+  - 🔴 Red alert: >500KB
 - **Vercel Limits:** Check function size <50MB
 - **Share URLs:** Always validate before deployment
 - **Calculation Accuracy:** Test edge cases in `__tests__/calculator.test.ts`
@@ -115,7 +118,10 @@ public/           # Static assets
 ## 📊 PERFORMANCE TARGETS
 
 - Lighthouse score: >90 for all metrics
-- Bundle size: <500KB
+- Bundle size targets:
+  - ✅ Optimal: <300KB
+  - ⚠️ Acceptable: 300-500KB
+  - 🔴 Needs optimization: >500KB
 - First contentful paint: <1.5s
 - Time to interactive: <3s
 
