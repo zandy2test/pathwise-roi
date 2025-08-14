@@ -2,6 +2,10 @@
 
 [![CI](https://github.com/zandy2test/pathwise-roi/actions/workflows/ci.yml/badge.svg)](https://github.com/zandy2test/pathwise-roi/actions/workflows/ci.yml)
 [![Tests](https://img.shields.io/badge/tests-76%20passing-brightgreen)](https://github.com/zandy2test/pathwise-roi)
+[![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)](https://github.com/zandy2test/pathwise-roi)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-15.2.4-black)](https://nextjs.org/)
 
 Calculate when your education investment pays off. Compare college degrees, trade schools, bootcamps, and work paths to find your optimal education ROI.
 

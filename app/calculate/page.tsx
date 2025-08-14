@@ -20,6 +20,7 @@ import {
   CheckCircle2,
   Siren
 } from 'lucide-react'
+import analytics from '@/lib/analytics'
 
 export default function CalculatePage() {
   const router = useRouter()
@@ -41,6 +42,11 @@ export default function CalculatePage() {
   const [selectedPath, setSelectedPath] = useState<EducationPath | null>(null)
   const [showDangerZone, setShowDangerZone] = useState(false)
 
+  // Track page view on mount
+  useEffect(() => {
+    analytics.pageView('/calculate', '/')
+  }, [])
+
   // Calculate live Scam Score as user fills form
   useEffect(() => {
     if (inputs.path && educationPaths[inputs.path]) {
@@ -57,7 +63,13 @@ export default function CalculatePage() {
         setLiveScamScore(scamResult.totalScore)
         
         // Show danger alerts
-        setShowDangerZone(debtAmount > 100000)
+        const shouldShowDangerZone = (result.totalCost - (inputs.scholarships || 0)) > 100000
+        setShowDangerZone(shouldShowDangerZone)
+        
+        // Track when user enters danger zone
+        if (shouldShowDangerZone && !showDangerZone) {
+          analytics.featureEngagement('danger-zone', 'shown')
+        }
       }
     } else {
       setSelectedPath(null)
@@ -65,16 +77,21 @@ export default function CalculatePage() {
       setDebtAmount(0)
       setShowDangerZone(false)
     }
-  }, [inputs])
+  }, [inputs, showDangerZone])
 
   const handleCalculate = () => {
     const validationErrors = validateCalculatorInputs(inputs)
     if (validationErrors.length > 0) {
       setErrors(validationErrors)
+      analytics.errorOccurred('Validation failed: ' + validationErrors.join(', '), 'calculate')
       return
     }
     
     setIsCalculating(true)
+    
+    // Track calculation started
+    analytics.ctaClicked('calculate', 'calculate-page')
+    analytics.conversionGoal('calculation_started', debtAmount)
     
     // Store inputs and navigate to results
     if (typeof window !== 'undefined') {

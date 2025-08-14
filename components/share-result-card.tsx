@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X, Download, Share2, Camera, Instagram, Twitter } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import analytics from '@/lib/analytics'
 
 interface ShareResultCardProps {
   scamScore: number
@@ -105,6 +106,7 @@ export default function ShareResultCard({
     if (!cardRef.current) return
     
     setIsGenerating(true)
+    analytics.shareButtonClicked('download')
     
     try {
       const canvas = await html2canvas(cardRef.current, {
@@ -116,22 +118,33 @@ export default function ShareResultCard({
       })
       
       canvas.toBlob((blob) => {
-        if (!blob) return
+        if (!blob) {
+          analytics.shareAttempted('social', 'download', false)
+          return
+        }
         const url = URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
         a.download = `college-scam-score-${format}-${Date.now()}.png`
         a.click()
         URL.revokeObjectURL(url)
+        
+        // Track successful download
+        analytics.shareAttempted('social', 'download', true)
+        analytics.shareCompleted(`download-${format}`)
       }, 'image/png')
     } catch (error) {
-      // Failed to generate image - silently handle error
+      // Failed to generate image - track error
+      analytics.shareAttempted('social', 'download', false)
+      analytics.errorOccurred('Failed to generate share image', 'share-download')
     } finally {
       setIsGenerating(false)
     }
   }
 
   const handleShare = async () => {
+    analytics.shareButtonClicked('webshare')
+    
     if (navigator.share) {
       try {
         await navigator.share({
@@ -139,20 +152,37 @@ export default function ShareResultCard({
           text: shareText,
           url: 'https://collegescamcalculator.com'
         })
-      } catch (err) {
+        // Track successful share
+        analytics.shareAttempted('webshare', undefined, true)
+        analytics.shareCompleted('webshare')
+      } catch (error) {
         // User cancelled or error occurred
-        // Share cancelled or failed - silently handle
+        analytics.shareAttempted('webshare', undefined, false)
       }
     } else {
       // Fallback to copying text
-      navigator.clipboard.writeText(shareText)
-      alert('Share text copied to clipboard!')
+      try {
+        await navigator.clipboard.writeText(shareText)
+        alert('Share text copied to clipboard!')
+        analytics.shareAttempted('clipboard', undefined, true)
+      } catch {
+        analytics.shareAttempted('clipboard', undefined, false)
+      }
     }
   }
 
-  const handleCopyText = () => {
-    navigator.clipboard.writeText(shareText)
-    alert('Share text copied to clipboard!')
+  const handleCopyText = async () => {
+    analytics.shareButtonClicked('clipboard')
+    
+    try {
+      await navigator.clipboard.writeText(shareText)
+      alert('Share text copied to clipboard!')
+      analytics.shareAttempted('clipboard', undefined, true)
+      analytics.shareCompleted('clipboard')
+    } catch {
+      analytics.shareAttempted('clipboard', undefined, false)
+      analytics.errorOccurred('Failed to copy to clipboard', 'share-copy')
+    }
   }
 
   const dimensions = getDimensions()
@@ -191,7 +221,10 @@ export default function ShareResultCard({
           <div className="flex gap-2 mb-6">
             <Button
               variant={format === 'instagram' ? 'default' : 'outline'}
-              onClick={() => setFormat('instagram')}
+              onClick={() => {
+                setFormat('instagram')
+                analytics.featureEngagement('share-format', 'instagram')
+              }}
               className={format === 'instagram' ? 'bg-gradient-to-r from-purple-600 to-pink-600' : ''}
             >
               <Instagram className="h-4 w-4 mr-2" />
@@ -199,7 +232,10 @@ export default function ShareResultCard({
             </Button>
             <Button
               variant={format === 'twitter' ? 'default' : 'outline'}
-              onClick={() => setFormat('twitter')}
+              onClick={() => {
+                setFormat('twitter')
+                analytics.featureEngagement('share-format', 'twitter')
+              }}
               className={format === 'twitter' ? 'bg-blue-500' : ''}
             >
               <Twitter className="h-4 w-4 mr-2" />
@@ -207,7 +243,10 @@ export default function ShareResultCard({
             </Button>
             <Button
               variant={format === 'tiktok' ? 'default' : 'outline'}
-              onClick={() => setFormat('tiktok')}
+              onClick={() => {
+                setFormat('tiktok')
+                analytics.featureEngagement('share-format', 'tiktok')
+              }}
               className={format === 'tiktok' ? 'bg-black border-white' : ''}
             >
               <Camera className="h-4 w-4 mr-2" />

@@ -1,0 +1,292 @@
+import React from 'react'
+import { render, screen, waitFor } from '@testing-library/react'
+import '@testing-library/jest-dom'
+import ROITimeline from '@/components/roi-timeline'
+import { CalculationResult } from '@/lib/types'
+
+// Mock recharts components - handle SVG elements properly to avoid React warnings
+jest.mock('recharts', () => {
+  const React = require('react')
+  return {
+    ResponsiveContainer: ({ children }: any) => <div data-testid="responsive-container">{children}</div>,
+    AreaChart: ({ children, data }: any) => <div data-testid="area-chart" data-points={JSON.stringify(data)}>{children}</div>,
+    Area: ({ dataKey }: any) => <div data-testid={`area-${typeof dataKey === 'function' ? 'function' : dataKey}`} />,
+    Line: ({ dataKey }: any) => <div data-testid={`line-${dataKey}`} />,
+    XAxis: ({ tickFormatter, label }: any) => <div data-testid="x-axis" data-label={label?.value} />,
+    YAxis: ({ tickFormatter, label }: any) => <div data-testid="y-axis" data-label={label?.value} />,
+    CartesianGrid: () => <div data-testid="grid" />,
+    Tooltip: ({ content }: any) => <div data-testid="tooltip">{content && typeof content === 'function' ? 'CustomTooltip' : null}</div>,
+    ReferenceLine: ({ x, y, label }: any) => <div data-testid="reference-line" data-x={x} data-y={y} data-label={label?.value} />,
+    // Mock SVG elements to avoid React warnings about casing
+    linearGradient: React.forwardRef(({ children, ...props }: any, ref: any) => 
+      React.createElement('linearGradient', { ...props, ref }, children)
+    ),
+    stop: React.forwardRef((props: any, ref: any) => 
+      React.createElement('stop', { ...props, ref })
+    ),
+    defs: React.forwardRef(({ children, ...props }: any, ref: any) => 
+      React.createElement('defs', { ...props, ref }, children)
+    )
+  }
+})
+
+describe('ROITimeline Component', () => {
+  const defaultResult: CalculationResult = {
+    totalCost: 100000,
+    adjustedCost: 100000,
+    monthlySalary: 5000,
+    breakevenMonths: 48,
+    netWorth10Years: 260000,
+    employmentRate: 85,
+    riskText: 'Medium Risk',
+    doubtScore: 35,
+    roi: 160,
+    opportunityCost: 80000
+  }
+
+  describe('Rendering', () => {
+    it('should render with all main elements', () => {
+      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+
+      expect(screen.getByText('ROI Timeline')).toBeInTheDocument()
+      expect(screen.getByText('Your journey from debt to profit over 10 years')).toBeInTheDocument()
+      expect(screen.getByTestId('responsive-container')).toBeInTheDocument()
+      expect(screen.getByTestId('area-chart')).toBeInTheDocument()
+    })
+
+    it('should display the breakeven explanation card', () => {
+      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+
+      expect(screen.getByText('Understanding Your Breakeven Point')).toBeInTheDocument()
+      expect(screen.getByText(/The breakeven point shows when your cumulative earnings/)).toBeInTheDocument()
+      expect(screen.getByText(/That's why it's not at \$0/)).toBeInTheDocument()
+    })
+
+    it('should display summary statistics', () => {
+      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+
+      expect(screen.getByText('Initial Investment')).toBeInTheDocument()
+      expect(screen.getByText('-$100,000')).toBeInTheDocument()
+      
+      expect(screen.getByText('Breakeven')).toBeInTheDocument()
+      expect(screen.getByText('48 months')).toBeInTheDocument()
+      
+      expect(screen.getByText('10-Year Net Worth')).toBeInTheDocument()
+      expect(screen.getByText('$260,000')).toBeInTheDocument()
+    })
+  })
+
+  describe('Data Processing', () => {
+    it('should generate correct data points for the chart', () => {
+      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+
+      const chart = screen.getByTestId('area-chart')
+      const dataPoints = JSON.parse(chart.getAttribute('data-points') || '[]')
+
+      // Should have data points every 3 months for 10 years
+      expect(dataPoints.length).toBeGreaterThan(0)
+      
+      // Check first point (start)
+      const firstPoint = dataPoints[0]
+      expect(firstPoint.month).toBe(0)
+      expect(firstPoint.netWorth).toBe(-100000)
+      expect(firstPoint.year).toBe('Start')
+
+      // Check if breakeven point is included
+      const breakevenPoint = dataPoints.find((p: any) => p.isBreakeven)
+      expect(breakevenPoint).toBeDefined()
+    })
+
+    it('should calculate net worth correctly over time', () => {
+      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+
+      const chart = screen.getByTestId('area-chart')
+      const dataPoints = JSON.parse(chart.getAttribute('data-points') || '[]')
+
+      // Monthly net gain = $5000 * 0.6 = $3000
+      // After 12 months: -100000 + (3000 * 12) = -64000
+      const yearOnePoint = dataPoints.find((p: any) => p.month === 12)
+      expect(yearOnePoint?.netWorth).toBe(-64000)
+      expect(yearOnePoint?.year).toBe('1 yr')
+
+      // After 24 months: -100000 + (3000 * 24) = -28000
+      const yearTwoPoint = dataPoints.find((p: any) => p.month === 24)
+      expect(yearTwoPoint?.netWorth).toBe(-28000)
+      expect(yearTwoPoint?.year).toBe('2 yrs')
+    })
+
+    it('should handle never breakeven scenario', () => {
+      const neverBreakevenResult = {
+        ...defaultResult,
+        breakevenMonths: 150, // More than 120 months
+        monthlySalary: 1000 // Very low salary
+      }
+
+      render(<ROITimeline result={neverBreakevenResult} pathName="Low Paying Path" />)
+
+      expect(screen.getByText('Never')).toBeInTheDocument()
+    })
+  })
+
+  describe('Chart Components', () => {
+    it('should render all required chart components', () => {
+      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+
+      // Check axes
+      expect(screen.getByTestId('x-axis')).toBeInTheDocument()
+      expect(screen.getByTestId('y-axis')).toBeInTheDocument()
+      expect(screen.getByTestId('x-axis')).toHaveAttribute('data-label', 'Time')
+      expect(screen.getByTestId('y-axis')).toHaveAttribute('data-label', 'Net Worth')
+
+      // Check grid
+      expect(screen.getByTestId('grid')).toBeInTheDocument()
+
+      // Check tooltip
+      expect(screen.getByTestId('tooltip')).toBeInTheDocument()
+
+      // Check areas for positive and negative values
+      const areaElements = screen.getAllByTestId(/area-function/)
+      expect(areaElements.length).toBeGreaterThanOrEqual(1) // At least one area element
+
+      // Check line
+      expect(screen.getByTestId('line-netWorth')).toBeInTheDocument()
+    })
+
+    it('should render reference lines', () => {
+      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+
+      const referenceLines = screen.getAllByTestId('reference-line')
+      
+      // Should have at least 2 reference lines (breakeven line at y=0 and breakeven point)
+      expect(referenceLines.length).toBeGreaterThanOrEqual(2)
+
+      // Check breakeven line at y=0
+      const breakevenLine = referenceLines.find(line => line.getAttribute('data-y') === '0')
+      expect(breakevenLine).toBeDefined()
+      expect(breakevenLine).toHaveAttribute('data-label', 'Breakeven Line')
+
+      // Check breakeven point marker
+      const breakevenPoint = referenceLines.find(line => line.getAttribute('data-x') === '48')
+      expect(breakevenPoint).toBeDefined()
+      expect(breakevenPoint).toHaveAttribute('data-label', 'Breakeven: 48 months')
+    })
+
+    it('should not render breakeven marker if beyond 10 years', () => {
+      const lateBreakevenResult = {
+        ...defaultResult,
+        breakevenMonths: 150 // Beyond chart range
+      }
+
+      render(<ROITimeline result={lateBreakevenResult} pathName="Late Breakeven Path" />)
+
+      const referenceLines = screen.getAllByTestId('reference-line')
+      const breakevenPoint = referenceLines.find(line => line.getAttribute('data-x') === '150')
+      expect(breakevenPoint).toBeUndefined()
+    })
+  })
+
+  describe('Edge Cases', () => {
+    it('should handle zero monthly salary', () => {
+      const zeroSalaryResult = {
+        ...defaultResult,
+        monthlySalary: 0,
+        breakevenMonths: 999
+      }
+
+      render(<ROITimeline result={zeroSalaryResult} pathName="No Income Path" />)
+
+      const chart = screen.getByTestId('area-chart')
+      const dataPoints = JSON.parse(chart.getAttribute('data-points') || '[]')
+
+      // All points should remain at initial debt
+      const allNegative = dataPoints.every((p: any) => p.netWorth === -100000)
+      expect(allNegative).toBe(true)
+    })
+
+    it('should handle very high salary', () => {
+      const highSalaryResult = {
+        ...defaultResult,
+        monthlySalary: 20000,
+        breakevenMonths: 12,
+        netWorth10Years: 1340000
+      }
+
+      render(<ROITimeline result={highSalaryResult} pathName="High Income Path" />)
+
+      expect(screen.getByText('12 months')).toBeInTheDocument()
+      expect(screen.getByText('$1,340,000')).toBeInTheDocument()
+
+      const chart = screen.getByTestId('area-chart')
+      const dataPoints = JSON.parse(chart.getAttribute('data-points') || '[]')
+
+      // Should reach positive quickly
+      const positivePoints = dataPoints.filter((p: any) => p.netWorth > 0)
+      expect(positivePoints.length).toBeGreaterThan(0)
+    })
+
+    it('should handle negative ROI scenario', () => {
+      const negativeROIResult = {
+        ...defaultResult,
+        totalCost: 500000,
+        monthlySalary: 2000,
+        breakevenMonths: 200,
+        netWorth10Years: -356000,
+        roi: -71
+      }
+
+      render(<ROITimeline result={negativeROIResult} pathName="Negative ROI Path" />)
+
+      expect(screen.getByText('-$500,000')).toBeInTheDocument()
+      expect(screen.getByText('Never')).toBeInTheDocument() // Breakeven beyond 120 months
+      // Check for the final net worth - it might be formatted differently
+      const finalNetWorthElement = screen.getByText('10-Year Net Worth').parentElement?.parentElement
+      expect(finalNetWorthElement?.textContent).toContain('356')
+    })
+
+    it('should handle exact breakeven at chart boundary', () => {
+      const boundaryResult = {
+        ...defaultResult,
+        breakevenMonths: 120 // Exactly at 10 years
+      }
+
+      render(<ROITimeline result={boundaryResult} pathName="Boundary Path" />)
+
+      expect(screen.getByText('120 months')).toBeInTheDocument()
+
+      const referenceLines = screen.getAllByTestId('reference-line')
+      const breakevenPoint = referenceLines.find(line => line.getAttribute('data-x') === '120')
+      expect(breakevenPoint).toBeDefined()
+    })
+  })
+
+  describe('Year Labels', () => {
+    it('should display correct year labels on x-axis', () => {
+      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+
+      const chart = screen.getByTestId('area-chart')
+      const dataPoints = JSON.parse(chart.getAttribute('data-points') || '[]')
+
+      // Check specific year labels
+      expect(dataPoints.find((p: any) => p.month === 0)?.year).toBe('Start')
+      expect(dataPoints.find((p: any) => p.month === 12)?.year).toBe('1 yr')
+      expect(dataPoints.find((p: any) => p.month === 24)?.year).toBe('2 yrs')
+      expect(dataPoints.find((p: any) => p.month === 36)?.year).toBe('3 yrs')
+      expect(dataPoints.find((p: any) => p.month === 48)?.year).toBe('4 yrs')
+      expect(dataPoints.find((p: any) => p.month === 60)?.year).toBe('5 yrs')
+      expect(dataPoints.find((p: any) => p.month === 120)?.year).toBe('10 yrs')
+    })
+  })
+
+  describe('Responsive Design', () => {
+    it('should use ResponsiveContainer for chart sizing', () => {
+      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+
+      const container = screen.getByTestId('responsive-container')
+      expect(container).toBeInTheDocument()
+      
+      // The actual AreaChart should be inside the ResponsiveContainer
+      const chart = container.querySelector('[data-testid="area-chart"]')
+      expect(chart).toBeInTheDocument()
+    })
+  })
+})

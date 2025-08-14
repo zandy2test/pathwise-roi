@@ -47,7 +47,6 @@ export default function HomePage() {
   const [errors1, setErrors1] = useState<string[]>([])
   const [errors2, setErrors2] = useState<string[]>([])
   const [result1, setResult1] = useState<CalculationResult | null>(null)
-  const [result2, setResult2] = useState<CalculationResult | null>(null)
   const [comparison, setComparison] = useState<ReturnType<typeof comparePaths> | null>(null)
   const [showComparison, setShowComparison] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -98,7 +97,6 @@ export default function HomePage() {
     const result = comparePaths(inputs1, inputs2)
     setComparison(result)
     setResult1(result.result1)
-    setResult2(result.result2)
     
     // Track analytics
     const path1 = educationPaths[inputs1.path]
@@ -167,7 +165,6 @@ export default function HomePage() {
       )
       setComparison(result)
       setResult1(result.result1)
-      setResult2(result.result2)
     }, 100)
   }
 
@@ -299,7 +296,6 @@ export default function HomePage() {
                         livingCost: '',
                         scholarships: 0
                       })
-                      setResult2(null)
                       setComparison(null)
                     }}
                     variant="outline"

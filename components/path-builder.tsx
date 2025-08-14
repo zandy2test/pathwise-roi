@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { 
-  educationPaths, 
   locationMultipliers, 
   schoolTiers, 
   livingCosts,
@@ -23,6 +22,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import analytics from '@/lib/analytics'
 
 interface PathBuilderProps {
   inputs: CalculatorInputs
@@ -89,6 +89,13 @@ export default function PathBuilder({
   }, [educationType, field, program])
 
   const handleEducationTypeChange = (value: string) => {
+    // Track analytics
+    if (educationType) {
+      analytics.pathChanged(educationType, value, 1)
+    } else {
+      analytics.pathSelected(value)
+    }
+    
     setEducationType(value)
     setField('') // Reset field when education type changes
     setProgram('') // Reset program when education type changes
@@ -102,6 +109,13 @@ export default function PathBuilder({
   }
 
   const handleFieldChange = (value: string) => {
+    // Track analytics
+    if (field) {
+      analytics.pathChanged(field, value, 2)
+    } else {
+      analytics.pathSelected(educationType, value)
+    }
+    
     setField(value)
     setProgram('') // Reset program when field changes
     setInputs({
@@ -113,6 +127,13 @@ export default function PathBuilder({
   }
 
   const handleProgramChange = (value: string) => {
+    // Track analytics
+    if (program) {
+      analytics.pathChanged(program, value, 3)
+    } else {
+      analytics.pathSelected(educationType, field, value)
+    }
+    
     setProgram(value)
     const pathKey = buildPathKey(educationType, field, value)
     setInputs({
@@ -120,6 +141,11 @@ export default function PathBuilder({
       program: value,
       path: pathKey || ''
     })
+    
+    // Track funnel completion when all selections are made
+    if (pathKey) {
+      analytics.funnelStep(3, 'Program Selected', true)
+    }
   }
 
   const educationTypeOptions = getEducationTypeOptions()
@@ -148,7 +174,7 @@ export default function PathBuilder({
             </Tooltip>
           </div>
           <Select value={educationType} onValueChange={handleEducationTypeChange}>
-            <SelectTrigger>
+            <SelectTrigger data-testid="education-type-select">
               <SelectValue placeholder="Select education type" />
             </SelectTrigger>
             <SelectContent>
@@ -175,7 +201,7 @@ export default function PathBuilder({
               </Tooltip>
             </div>
             <Select value={field} onValueChange={handleFieldChange}>
-              <SelectTrigger>
+              <SelectTrigger data-testid="field-select">
                 <SelectValue placeholder="Select field of study" />
               </SelectTrigger>
               <SelectContent>
@@ -203,7 +229,7 @@ export default function PathBuilder({
               </Tooltip>
             </div>
             <Select value={program} onValueChange={handleProgramChange}>
-              <SelectTrigger>
+              <SelectTrigger data-testid="program-select">
                 <SelectValue placeholder="Select program" />
               </SelectTrigger>
               <SelectContent>
@@ -229,8 +255,11 @@ export default function PathBuilder({
               </TooltipContent>
             </Tooltip>
           </div>
-          <Select value={inputs.location} onValueChange={(value) => setInputs({...inputs, location: value})}>
-            <SelectTrigger>
+          <Select value={inputs.location} onValueChange={(value) => {
+            analytics.featureEngagement('location', value)
+            setInputs({...inputs, location: value})
+          }}>
+            <SelectTrigger data-testid="location-select">
               <SelectValue placeholder="Select location" />
             </SelectTrigger>
             <SelectContent>
@@ -255,8 +284,11 @@ export default function PathBuilder({
               </TooltipContent>
             </Tooltip>
           </div>
-          <Select value={inputs.schoolTier} onValueChange={(value) => setInputs({...inputs, schoolTier: value})}>
-            <SelectTrigger>
+          <Select value={inputs.schoolTier} onValueChange={(value) => {
+            analytics.featureEngagement('schoolTier', value)
+            setInputs({...inputs, schoolTier: value})
+          }}>
+            <SelectTrigger data-testid="school-tier-select">
               <SelectValue placeholder="Select school tier" />
             </SelectTrigger>
             <SelectContent>
@@ -281,8 +313,11 @@ export default function PathBuilder({
               </TooltipContent>
             </Tooltip>
           </div>
-          <Select value={inputs.livingCost} onValueChange={(value) => setInputs({...inputs, livingCost: value})}>
-            <SelectTrigger>
+          <Select value={inputs.livingCost} onValueChange={(value) => {
+            analytics.featureEngagement('livingCost', value)
+            setInputs({...inputs, livingCost: value})
+          }}>
+            <SelectTrigger data-testid="living-cost-select">
               <SelectValue placeholder="Select living situation" />
             </SelectTrigger>
             <SelectContent>
@@ -311,8 +346,19 @@ export default function PathBuilder({
             type="number"
             placeholder="0"
             value={inputs.scholarships || ''}
-            onChange={(e) => setInputs({...inputs, scholarships: parseFloat(e.target.value) || 0})}
+            onChange={(e) => {
+              const value = parseFloat(e.target.value) || 0
+              analytics.costEntered('scholarships', value, inputs.path || 'unknown')
+              setInputs({...inputs, scholarships: value})
+            }}
+            onBlur={() => {
+              // Track when user finishes entering scholarships
+              if (inputs.scholarships) {
+                analytics.featureEngagement('scholarships', 'completed')
+              }
+            }}
             max={100000}
+            data-testid="scholarships-input"
           />
           <p className="text-xs text-muted-foreground">Maximum: $100,000</p>
         </div>

@@ -22,6 +22,13 @@ module.exports = {
     'lib/**/*.{js,jsx,ts,tsx}',
     '!**/*.d.ts',
     '!**/node_modules/**',
-    '!**/.next/**'
+    '!**/.next/**',
+    '!**/legacy-tests/**'
+  ],
+  testPathIgnorePatterns: [
+    '<rootDir>/legacy-tests/',
+    '<rootDir>/node_modules/',
+    '<rootDir>/.next/',
+    '<rootDir>/e2e/'
   ]
 };

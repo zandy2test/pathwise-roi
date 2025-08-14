@@ -29,6 +29,7 @@ import {
   Zap
 } from 'lucide-react'
 import ShareResultCard from '@/components/share-result-card'
+import analytics from '@/lib/analytics'
 
 export default function ResultsPage() {
   const router = useRouter()
@@ -73,21 +74,46 @@ export default function ResultsPage() {
     setScamScore(scamResult.totalScore)
     setShockingStats(stats)
     
+    // Track page view and calculation completion
+    analytics.pageView('/results', '/calculate')
+    analytics.calculationCompleted(
+      path.name, 
+      calculationResult.roi, 
+      calculationResult.totalCost,
+      Math.round(calculationResult.breakevenMonths / 12)
+    )
+    
+    // Track conversion goal
+    analytics.conversionGoal('calculation_completed', calculationResult.totalCost)
+    
     // Show confetti for good scores, delayed for dramatic effect
     if (scamResult.totalScore < 30) {
       setTimeout(() => setShowConfetti(true), 2000)
     }
     
     // Show alternatives and comparisons after initial load
-    setTimeout(() => setShowAlternatives(true), 3000)
-    setTimeout(() => setShowWhatYouCouldBuy(true), 3500)
+    setTimeout(() => {
+      setShowAlternatives(true)
+      if (scamResult.totalScore > 40) {
+        analytics.featureEngagement('alternatives', 'shown')
+      }
+    }, 3000)
+    
+    setTimeout(() => {
+      setShowWhatYouCouldBuy(true)
+      if (calculationResult.totalCost > 20000) {
+        analytics.featureEngagement('what-you-could-buy', 'shown')
+      }
+    }, 3500)
   }, [router])
 
   const handleRecalculate = () => {
+    analytics.ctaClicked('recalculate', 'results-page')
     router.push('/calculate')
   }
 
   const handleCompare = () => {
+    analytics.ctaClicked('compare-paths', 'results-page')
     // TODO: Navigate to compare page
     router.push('/calculate')
   }
@@ -180,7 +206,6 @@ export default function ResultsPage() {
   // Calculate years of life lost to debt
   const getYearsLostToDebt = () => {
     if (!result) return 0
-    const monthlyPayment = result.totalCost * 0.01 // Assuming 1% monthly payment
     const yearsPayingDebt = result.breakevenMonths / 12
     const stressYears = yearsPayingDebt * 0.5 // Stress factor
     return Math.round(yearsPayingDebt + stressYears)
@@ -511,6 +536,9 @@ export default function ResultsPage() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.5 + index * 0.15 }}
                         className="flex items-center justify-between p-4 bg-green-950/30 rounded-lg border border-green-600/30 hover:bg-green-950/50 transition-all cursor-pointer"
+                        onClick={() => {
+                          analytics.featureEngagement('alternative-path', alt.name)
+                        }}
                       >
                         <div className="flex items-center gap-3">
                           <alt.icon className="h-8 w-8 text-green-500" />
@@ -565,7 +593,10 @@ export default function ResultsPage() {
             Compare Paths
           </Button>
           <Button
-            onClick={() => setShowShareModal(true)}
+            onClick={() => {
+              analytics.shareButtonClicked('results-page')
+              setShowShareModal(true)
+            }}
             variant="outline"
             className="border-gray-600 text-gray-400 hover:bg-gray-900 font-bold py-6 px-8"
           >

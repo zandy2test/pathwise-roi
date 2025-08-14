@@ -256,7 +256,7 @@ export default function ShareCard({ result, pathName, comparison }: ShareCardPro
               ? `${pathName} vs ${comparison.path2Name} - See the shocking difference!`
               : `My ${pathName} path breaks even in ${result.breakevenMonths} months!`
           })
-        } catch (err) {
+        } catch {
           // Share failed - silently fall back to download
         }
       } else {
