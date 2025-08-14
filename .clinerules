@@ -1,0 +1,131 @@
+# 📊 PATHWISE ROI - WORKSPACE RULES
+
+These rules extend the global development philosophy with PathwiseROI-specific patterns.
+
+## 🎯 PROJECT CONTEXT
+
+**Stack:** Next.js 14, React 18 (not 19!), TypeScript, Tailwind CSS  
+**Testing:** Jest (unit), Playwright (E2E)  
+**Deployment:** Vercel  
+**Core Logic:** `lib/calculator.ts` (ROI calculations), `lib/data.json` (calculation data)  
+**Key Features:** ROI calculations, viral sharing, scam scoring
+
+## 📝 PROJECT MEMORY
+
+**Context File:** `PROJECT_CONTEXT.md` (auto-update on task completion)  
+**Documentation:** Check `docs/` for historical decisions, `CURRENT-STATE.md` for latest status
+
+## ⚡ QUICK COMMANDS
+
+```bash
+npm run dev          # Start dev server (port 3000)
+npm test            # Run Jest unit tests
+npm run test:e2e    # Run Playwright E2E tests
+npm run build       # Production build
+npm run type-check  # TypeScript validation
+npm run lint        # ESLint check
+```
+
+## 🛠️ AVAILABLE MCP SERVERS
+
+When needed, use these servers for specific tasks:
+- **filesystem**: File operations (already using via Cline)
+- **firecrawl**: Competitor analysis, market research
+- **context7**: React/Next.js documentation lookups
+- **sequential-thinking**: Complex problem solving
+- **playwright**: Browser automation for testing
+- **supabase** (2x): Database operations if needed
+- **github**: Repository operations
+
+## 🔒 PROJECT-SPECIFIC SAFETY
+
+- **React Version:** Stay on React 18 (v19 has known CI failures - see `docs/REACT19_CI_FAILURE_INCIDENT_REPORT.md`)
+- **Bundle Size:** Current ~200KB, warn if >500KB
+- **Vercel Limits:** Check function size <50MB
+- **Share URLs:** Always validate before deployment
+- **Calculation Accuracy:** Test edge cases in `__tests__/calculator.test.ts`
+
+## 🧪 TESTING STRATEGY
+
+### Required Tests:
+- Calculator logic: Unit tests for all calculation functions
+- Share functionality: E2E test for viral sharing flow
+- Mobile responsiveness: E2E mobile viewport tests
+- Scam scoring: Unit tests for score calculations
+
+### Test Files:
+- Unit: `__tests__/` directory
+- E2E: `e2e/` directory
+- Legacy: `legacy-tests/` (reference only, don't modify)
+
+## 📁 PROJECT STRUCTURE
+
+```
+app/              # Next.js app router pages
+components/       # React components
+lib/              # Core business logic
+  calculator.ts   # ROI calculation engine
+  data.json       # Calculation data
+  scam-score.ts   # Scam scoring logic
+__tests__/        # Jest unit tests
+e2e/              # Playwright E2E tests
+docs/             # Documentation & decisions
+public/           # Static assets
+```
+
+## 💡 PATHWISEROID PATTERNS
+
+### Commit Prefixes:
+- `calc:` - Calculator logic changes
+- `viral:` - Sharing feature updates
+- `scam:` - Scam score updates
+- `ui:` - UI/UX improvements
+- Standard prefixes from global rules apply
+
+### Working with Data:
+- Calculator data lives in `lib/data.json`
+- Don't modify without updating tests
+- Validate all calculation changes against test suite
+
+### Deployment Checklist:
+1. Run full test suite (`npm test && npm run test:e2e`)
+2. Check bundle size (`npm run build`)
+3. Validate share URLs work
+4. Test on mobile viewport
+5. Deploy to Vercel
+
+## 🚀 DEVELOPMENT FLOW
+
+1. **Feature Development:**
+   - Write test first (TDD)
+   - Implement minimal solution
+   - Verify all tests pass
+   - Refactor if needed
+
+2. **Bug Fixes:**
+   - Write failing test to reproduce
+   - Fix the issue
+   - Ensure regression test prevents recurrence
+
+3. **UI Changes:**
+   - Update components in `components/`
+   - Test responsive design
+   - Run E2E tests for user flows
+
+## 📊 PERFORMANCE TARGETS
+
+- Lighthouse score: >90 for all metrics
+- Bundle size: <500KB
+- First contentful paint: <1.5s
+- Time to interactive: <3s
+
+## 🎨 STYLING CONVENTIONS
+
+- Use Tailwind classes (no custom CSS unless necessary)
+- Component files: `components/[name].tsx`
+- Maintain consistent spacing with Tailwind's scale
+- Dark mode considerations in all UI updates
+
+---
+
+**Remember:** These workspace rules extend (not replace) the global rules. When in doubt, prefer simplicity and test coverage over complexity.
