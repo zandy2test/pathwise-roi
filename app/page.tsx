@@ -1,147 +1,156 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import PathBuilder from '@/components/path-builder'
-import ROITimeline from '@/components/roi-timeline'
-import { GlossaryTerm } from '@/components/glossary-term'
-import { calculateROI, comparePaths } from '@/lib/calculator'
-import { validateCalculatorInputs } from '@/lib/validation'
-import { educationPaths, viralComparisons } from '@/lib/data'
-import analytics from '@/lib/analytics'
-import type { CalculatorInputs, CalculationResult } from '@/lib/types'
-import { 
-  ArrowRight, 
-  Calculator, 
-  TrendingUp, 
-  Shield, 
-  Calendar, 
-  DollarSign, 
-  Trophy, 
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import PathBuilder from '@/components/path-builder';
+import ROITimeline from '@/components/roi-timeline';
+import { GlossaryTerm } from '@/components/glossary-term';
+import { calculateROI, comparePaths } from '@/lib/calculator';
+import { validateCalculatorInputs } from '@/lib/validation';
+import { educationPaths, viralComparisons } from '@/lib/data';
+import analytics from '@/lib/analytics';
+import type { CalculatorInputs, CalculationResult } from '@/lib/types';
+import {
+  ArrowRight,
+  Calculator,
+  TrendingUp,
+  Shield,
+  Calendar,
+  DollarSign,
+  Trophy,
   AlertCircle,
   AlertTriangle,
   Plus,
   Share2,
   Check,
   Crown,
-  X
-} from 'lucide-react'
+  X,
+} from 'lucide-react';
 
 export default function HomePage() {
-  const [mode, setMode] = useState<'intro' | 'calculator' | 'compare'>('intro')
+  const [mode, setMode] = useState<'intro' | 'calculator' | 'compare'>('intro');
   const [inputs1, setInputs1] = useState<CalculatorInputs>({
     path: '',
     location: '',
     schoolTier: '',
     livingCost: '',
-    scholarships: 0
-  })
+    scholarships: 0,
+  });
   const [inputs2, setInputs2] = useState<CalculatorInputs>({
     path: '',
     location: '',
     schoolTier: '',
     livingCost: '',
-    scholarships: 0
-  })
-  const [errors1, setErrors1] = useState<string[]>([])
-  const [errors2, setErrors2] = useState<string[]>([])
-  const [result1, setResult1] = useState<CalculationResult | null>(null)
-  const [comparison, setComparison] = useState<ReturnType<typeof comparePaths> | null>(null)
-  const [showComparison, setShowComparison] = useState(false)
-  const [copied, setCopied] = useState(false)
-  const [showPremiumModal, setShowPremiumModal] = useState(false)
+    scholarships: 0,
+  });
+  const [errors1, setErrors1] = useState<string[]>([]);
+  const [errors2, setErrors2] = useState<string[]>([]);
+  const [result1, setResult1] = useState<CalculationResult | null>(null);
+  const [comparison, setComparison] = useState<ReturnType<typeof comparePaths> | null>(null);
+  const [showComparison, setShowComparison] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
 
   const handleCalculate = () => {
-    const validationErrors = validateCalculatorInputs(inputs1)
+    const validationErrors = validateCalculatorInputs(inputs1);
     if (validationErrors.length > 0) {
-      setErrors1(validationErrors)
-      setResult1(null)
-      return
+      setErrors1(validationErrors);
+      setResult1(null);
+      return;
     }
-    
-    setErrors1([])
-    const calculationResult = calculateROI(inputs1)
-    setResult1(calculationResult)
-    setMode('calculator')
-    
+
+    setErrors1([]);
+    const calculationResult = calculateROI(inputs1);
+    setResult1(calculationResult);
+    setMode('calculator');
+
     // Track analytics
-    const path = educationPaths[inputs1.path]
+    const path = educationPaths[inputs1.path];
     if (path && calculationResult) {
-      const roi = ((calculationResult.netWorth10Years - calculationResult.totalCost) / calculationResult.totalCost) * 100
-      analytics.calculationCompleted(
-        path.name,
-        roi,
-        calculationResult.totalCost
-      )
+      const roi =
+        ((calculationResult.netWorth10Years - calculationResult.totalCost) /
+          calculationResult.totalCost) *
+        100;
+      analytics.calculationCompleted(path.name, roi, calculationResult.totalCost);
     }
-  }
+  };
 
   const handleAddComparison = () => {
-    setShowComparison(true)
-    setMode('compare')
-  }
+    setShowComparison(true);
+    setMode('compare');
+  };
 
   const handleCompare = () => {
-    const validationErrors1 = validateCalculatorInputs(inputs1)
-    const validationErrors2 = validateCalculatorInputs(inputs2)
-    
-    setErrors1(validationErrors1)
-    setErrors2(validationErrors2)
-    
+    const validationErrors1 = validateCalculatorInputs(inputs1);
+    const validationErrors2 = validateCalculatorInputs(inputs2);
+
+    setErrors1(validationErrors1);
+    setErrors2(validationErrors2);
+
     if (validationErrors1.length > 0 || validationErrors2.length > 0) {
-      setComparison(null)
-      return
+      setComparison(null);
+      return;
     }
-    
-    const result = comparePaths(inputs1, inputs2)
-    setComparison(result)
-    setResult1(result.result1)
-    
+
+    const result = comparePaths(inputs1, inputs2);
+    setComparison(result);
+    setResult1(result.result1);
+
     // Track analytics
-    const path1 = educationPaths[inputs1.path]
-    const path2 = educationPaths[inputs2.path]
-    if (path1 && path2 && result.winner) {
+    const path1 = educationPaths[inputs1.path];
+    const path2 = educationPaths[inputs2.path];
+    if (path1 && path2 && result.winner && result.result1 && result.result2) {
+      const path1ROI =
+        ((result.result1.netWorth10Years - result.result1.totalCost) / result.result1.totalCost) *
+        100;
+      const path2ROI =
+        ((result.result2.netWorth10Years - result.result2.totalCost) / result.result2.totalCost) *
+        100;
       analytics.comparisonCompleted(
         path1.name,
         path2.name,
-        result.winner === 'path1' ? path1.name : path2.name
-      )
+        result.winner === 'path1' ? path1.name : path2.name,
+        path1ROI,
+        path2ROI
+      );
     }
-  }
+  };
 
   const handleShare = () => {
     const shareData = {
       title: 'PathwiseROI Calculator',
-      text: result1 
+      text: result1
         ? `My education path breaks even in ${result1.breakevenMonths} months!`
         : 'Calculate your education ROI with PathwiseROI',
-      url: window.location.href
-    }
+      url: window.location.href,
+    };
 
     if (navigator.share && navigator.canShare(shareData)) {
-      navigator.share(shareData)
+      navigator
+        .share(shareData)
         .then(() => {
-          analytics.shareAttempted('webshare', true)
+          analytics.shareAttempted('webshare', undefined, true);
         })
         .catch(() => {
           // User cancelled or error
-          analytics.shareAttempted('webshare', false)
-        })
+          analytics.shareAttempted('webshare', undefined, false);
+        });
     } else {
       // Fallback: Copy to clipboard
-      const shareText = `${shareData.text} - ${shareData.url}`
-      navigator.clipboard.writeText(shareText)
+      const shareText = `${shareData.text} - ${shareData.url}`;
+      navigator.clipboard
+        .writeText(shareText)
         .then(() => {
-          setCopied(true)
-          setTimeout(() => setCopied(false), 2000)
-          analytics.shareAttempted('clipboard', true)
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+          analytics.shareAttempted('clipboard', undefined, true);
         })
         .catch(() => {
-          analytics.shareAttempted('clipboard', false)
-        })
+          analytics.shareAttempted('clipboard', undefined, false);
+        });
     }
-  }
+  };
 
   const handleQuickCompare = (path1: string, path2: string) => {
     // Set default values for quick comparison
@@ -149,24 +158,24 @@ export default function HomePage() {
       location: 'nyc',
       schoolTier: 'average',
       livingCost: 'oncampus',
-      scholarships: 0
-    }
-    
-    setInputs1({ ...defaultInputs, path: path1 })
-    setInputs2({ ...defaultInputs, path: path2 })
-    setShowComparison(true)
-    setMode('compare')
-    
+      scholarships: 0,
+    };
+
+    setInputs1({ ...defaultInputs, path: path1 });
+    setInputs2({ ...defaultInputs, path: path2 });
+    setShowComparison(true);
+    setMode('compare');
+
     // Auto-calculate after a brief delay to allow state updates
     setTimeout(() => {
       const result = comparePaths(
         { ...defaultInputs, path: path1 },
         { ...defaultInputs, path: path2 }
-      )
-      setComparison(result)
-      setResult1(result.result1)
-    }, 100)
-  }
+      );
+      setComparison(result);
+      setResult1(result.result1);
+    }, 100);
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -185,14 +194,14 @@ export default function HomePage() {
             <br className="hidden sm:block" />
             <span className="text-gray-900">Is College Worth It?</span>
           </h1>
-          
+
           <div className="max-w-3xl mx-auto space-y-4">
             <p className="text-2xl font-bold text-gray-800">
               Find out if you're getting <span className="text-red-600 underline">SCAMMED</span>
             </p>
             <p className="text-lg text-gray-600">
-              Our controversial calculator exposes the brutal truth about education ROI. 
-              Compare degrees vs trades vs going straight to work - the results will shock you.
+              Our controversial calculator exposes the brutal truth about education ROI. Compare
+              degrees vs trades vs going straight to work - the results will shock you.
             </p>
           </div>
 
@@ -213,17 +222,17 @@ export default function HomePage() {
           </div>
 
           <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="gap-2 bg-red-600 hover:bg-red-700 text-white px-8 py-4 text-lg font-bold"
               onClick={() => setMode('calculator')}
             >
               <AlertTriangle className="h-6 w-6" />
               Calculate My Scam Score™
             </Button>
-            <Button 
+            <Button
               variant="outline"
-              size="lg" 
+              size="lg"
               className="gap-2 border-2 border-red-600 text-red-600 hover:bg-red-50 px-8 py-4 text-lg font-semibold"
               onClick={() => handleQuickCompare('trades_plumbing', 'college_liberal_arts')}
             >
@@ -239,8 +248,8 @@ export default function HomePage() {
               <div className="text-left">
                 <p className="font-bold text-yellow-800 mb-2">⚠️ Reality Check Incoming</p>
                 <p className="text-sm text-yellow-700">
-                  This calculator uses REAL data from Bureau of Labor Statistics, MIT studies, and industry reports. 
-                  Prepare to question everything you've been told about education.
+                  This calculator uses REAL data from Bureau of Labor Statistics, MIT studies, and
+                  industry reports. Prepare to question everything you've been told about education.
                 </p>
               </div>
             </div>
@@ -256,7 +265,7 @@ export default function HomePage() {
               {showComparison ? 'Compare Education Paths' : 'Calculate Your Education ROI'}
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              {showComparison 
+              {showComparison
                 ? 'Compare two different education paths side by side'
                 : 'Enter your details to see when your education investment pays off'}
             </p>
@@ -264,17 +273,21 @@ export default function HomePage() {
 
           <div className={`grid ${showComparison ? 'lg:grid-cols-2' : 'lg:grid-cols-3'} gap-8`}>
             {/* Path 1 Input */}
-            <Card className={showComparison && comparison?.winner === 'path1' ? 'border-primary' : ''}>
+            <Card
+              className={showComparison && comparison?.winner === 'path1' ? 'border-primary' : ''}
+            >
               <CardHeader>
                 <CardTitle>{showComparison ? 'Path 1' : 'Your Education Path'}</CardTitle>
                 <CardDescription>
-                  {showComparison ? 'First education path' : 'Select your education and personal details'}
+                  {showComparison
+                    ? 'First education path'
+                    : 'Select your education and personal details'}
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <PathBuilder 
-                  inputs={inputs1} 
-                  setInputs={setInputs1} 
+                <PathBuilder
+                  inputs={inputs1}
+                  setInputs={setInputs1}
                   errors={errors1}
                   title=""
                   description=""
@@ -285,18 +298,18 @@ export default function HomePage() {
                   </Button>
                 )}
                 {showComparison && (
-                  <Button 
+                  <Button
                     onClick={() => {
-                      setShowComparison(false)
-                      setMode('calculator')
+                      setShowComparison(false);
+                      setMode('calculator');
                       setInputs2({
                         path: '',
                         location: '',
                         schoolTier: '',
                         livingCost: '',
-                        scholarships: 0
-                      })
-                      setComparison(null)
+                        scholarships: 0,
+                      });
+                      setComparison(null);
                     }}
                     variant="outline"
                     className="w-full mt-4 gap-2"
@@ -316,9 +329,9 @@ export default function HomePage() {
                   <CardDescription>Second education path</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <PathBuilder 
-                    inputs={inputs2} 
-                    setInputs={setInputs2} 
+                  <PathBuilder
+                    inputs={inputs2}
+                    setInputs={setInputs2}
                     errors={errors2}
                     title=""
                     description=""
@@ -333,12 +346,7 @@ export default function HomePage() {
                 <CardHeader>
                   <CardTitle>Your Results</CardTitle>
                   <div className="flex gap-2 mt-2">
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={handleShare}
-                      className="gap-2"
-                    >
+                    <Button variant="outline" size="sm" onClick={handleShare} className="gap-2">
                       {copied ? (
                         <>
                           <Check className="h-4 w-4" />
@@ -351,8 +359,8 @@ export default function HomePage() {
                         </>
                       )}
                     </Button>
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       size="sm"
                       onClick={handleAddComparison}
                       className="gap-2"
@@ -366,7 +374,7 @@ export default function HomePage() {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1">
                       <p className="text-sm text-muted-foreground">
-                        <GlossaryTerm 
+                        <GlossaryTerm
                           term="Total Cost"
                           definition="The complete cost of your education including tuition, fees, materials, and living expenses throughout the entire program duration."
                           example="A 4-year degree with $30,000/year tuition plus $15,000/year living costs = $180,000 total"
@@ -378,7 +386,7 @@ export default function HomePage() {
                     </div>
                     <div className="space-y-1">
                       <p className="text-sm text-muted-foreground">
-                        <GlossaryTerm 
+                        <GlossaryTerm
                           term="Net Cost"
                           definition="Your actual out-of-pocket expense after subtracting scholarships, grants, and other financial aid from the total cost."
                           example="$180,000 total cost - $40,000 scholarships = $140,000 net cost"
@@ -394,7 +402,7 @@ export default function HomePage() {
                     <div className="flex items-center gap-2 mb-2">
                       <Calendar className="h-4 w-4 text-primary" />
                       <p className="text-sm font-medium">
-                        <GlossaryTerm 
+                        <GlossaryTerm
                           term="Breakeven Time"
                           definition="The point when your cumulative earnings after graduation equal your total education investment. This is when your education has 'paid for itself'."
                           example="If you spent $100,000 on education and earn $50,000/year more than without the degree, you break even in 2 years"
@@ -404,11 +412,14 @@ export default function HomePage() {
                       </p>
                     </div>
                     <p className="text-3xl font-bold text-primary">
-                      {result1.breakevenMonths > 120 ? 'Never' : `${result1.breakevenMonths} months`}
+                      {result1.breakevenMonths > 120
+                        ? 'Never'
+                        : `${result1.breakevenMonths} months`}
                     </p>
                     {result1.breakevenMonths <= 120 && (
                       <p className="text-sm text-muted-foreground">
-                        ({Math.floor(result1.breakevenMonths / 12)} years {result1.breakevenMonths % 12} months)
+                        ({Math.floor(result1.breakevenMonths / 12)} years{' '}
+                        {result1.breakevenMonths % 12} months)
                       </p>
                     )}
                   </div>
@@ -418,14 +429,16 @@ export default function HomePage() {
                       <DollarSign className="h-4 w-4 text-primary" />
                       <p className="text-sm font-medium">Monthly Salary</p>
                     </div>
-                    <p className="text-2xl font-bold">${Math.round(result1.monthlySalary).toLocaleString()}</p>
+                    <p className="text-2xl font-bold">
+                      ${Math.round(result1.monthlySalary).toLocaleString()}
+                    </p>
                   </div>
 
                   <div className="border-t pt-4">
                     <div className="flex items-center gap-2 mb-2">
                       <TrendingUp className="h-4 w-4 text-primary" />
                       <p className="text-sm font-medium">
-                        <GlossaryTerm 
+                        <GlossaryTerm
                           term="10-Year Net Worth"
                           definition="Your projected total accumulated wealth 10 years after starting your education path, accounting for all income earned minus education costs and living expenses."
                           example="Earning $70,000/year for 6 years after a 4-year degree, minus costs = $250,000 net worth"
@@ -457,11 +470,11 @@ export default function HomePage() {
                         <h3 className="font-semibold">Want deeper insights?</h3>
                       </div>
                       <p className="text-sm text-muted-foreground mb-4">
-                        Premium members get 20-year projections, tax optimization strategies, 
-                        and personalized career pathway recommendations.
+                        Premium members get 20-year projections, tax optimization strategies, and
+                        personalized career pathway recommendations.
                       </p>
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         className="w-full"
                         onClick={() => setShowPremiumModal(true)}
@@ -477,9 +490,9 @@ export default function HomePage() {
 
           {/* Timeline Graph - Show after results for single path */}
           {!showComparison && result1 && (
-            <ROITimeline 
-              result={result1} 
-              pathName={educationPaths[inputs1.path]?.name || 'Your Path'} 
+            <ROITimeline
+              result={result1}
+              pathName={educationPaths[inputs1.path]?.name || 'Your Path'}
             />
           )}
 
@@ -501,14 +514,22 @@ export default function HomePage() {
                   <CardHeader>
                     <div className="flex items-center gap-2">
                       <Trophy className="h-6 w-6 text-primary" />
-                      <CardTitle>Winner: Path {comparison.winner === 'path1' ? '1' : '2'}</CardTitle>
+                      <CardTitle>
+                        Winner: Path {comparison.winner === 'path1' ? '1' : '2'}
+                      </CardTitle>
                     </div>
                   </CardHeader>
                   <CardContent>
                     <p className="text-lg">
-                      Breaks even <span className="font-bold text-primary">{comparison.differenceMonths} months faster</span> and 
-                      generates <span className="font-bold text-primary">${comparison.differenceAmount.toLocaleString()}</span> more 
-                      wealth over 10 years
+                      Breaks even{' '}
+                      <span className="font-bold text-primary">
+                        {comparison.differenceMonths} months faster
+                      </span>{' '}
+                      and generates{' '}
+                      <span className="font-bold text-primary">
+                        ${comparison.differenceAmount.toLocaleString()}
+                      </span>{' '}
+                      more wealth over 10 years
                     </p>
                   </CardContent>
                 </Card>
@@ -524,21 +545,27 @@ export default function HomePage() {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <p className="text-sm text-muted-foreground">Total Cost</p>
-                        <p className="text-xl font-bold">${comparison.result1.totalCost.toLocaleString()}</p>
+                        <p className="text-xl font-bold">
+                          ${comparison.result1.totalCost.toLocaleString()}
+                        </p>
                       </div>
                       <div>
                         <p className="text-sm text-muted-foreground">Net Cost</p>
-                        <p className="text-xl font-bold">${comparison.result1.adjustedCost.toLocaleString()}</p>
+                        <p className="text-xl font-bold">
+                          ${comparison.result1.adjustedCost.toLocaleString()}
+                        </p>
                       </div>
                     </div>
-                    
+
                     <div className="border-t pt-4">
                       <div className="flex items-center gap-2 mb-1">
                         <Calendar className="h-4 w-4" />
                         <p className="text-sm text-muted-foreground">Breakeven</p>
                       </div>
                       <p className="text-2xl font-bold">
-                        {comparison.result1.breakevenMonths > 120 ? 'Never' : `${comparison.result1.breakevenMonths} months`}
+                        {comparison.result1.breakevenMonths > 120
+                          ? 'Never'
+                          : `${comparison.result1.breakevenMonths} months`}
                       </p>
                     </div>
 
@@ -562,21 +589,27 @@ export default function HomePage() {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <p className="text-sm text-muted-foreground">Total Cost</p>
-                        <p className="text-xl font-bold">${comparison.result2.totalCost.toLocaleString()}</p>
+                        <p className="text-xl font-bold">
+                          ${comparison.result2.totalCost.toLocaleString()}
+                        </p>
                       </div>
                       <div>
                         <p className="text-sm text-muted-foreground">Net Cost</p>
-                        <p className="text-xl font-bold">${comparison.result2.adjustedCost.toLocaleString()}</p>
+                        <p className="text-xl font-bold">
+                          ${comparison.result2.adjustedCost.toLocaleString()}
+                        </p>
                       </div>
                     </div>
-                    
+
                     <div className="border-t pt-4">
                       <div className="flex items-center gap-2 mb-1">
                         <Calendar className="h-4 w-4" />
                         <p className="text-sm text-muted-foreground">Breakeven</p>
                       </div>
                       <p className="text-2xl font-bold">
-                        {comparison.result2.breakevenMonths > 120 ? 'Never' : `${comparison.result2.breakevenMonths} months`}
+                        {comparison.result2.breakevenMonths > 120
+                          ? 'Never'
+                          : `${comparison.result2.breakevenMonths} months`}
                       </p>
                     </div>
 
@@ -595,13 +628,13 @@ export default function HomePage() {
 
               {/* Timeline Graphs for Comparison */}
               <div className="grid lg:grid-cols-2 gap-6 mt-6">
-                <ROITimeline 
-                  result={comparison.result1} 
-                  pathName={educationPaths[inputs1.path]?.name || 'Path 1'} 
+                <ROITimeline
+                  result={comparison.result1}
+                  pathName={educationPaths[inputs1.path]?.name || 'Path 1'}
                 />
-                <ROITimeline 
-                  result={comparison.result2} 
-                  pathName={educationPaths[inputs2.path]?.name || 'Path 2'} 
+                <ROITimeline
+                  result={comparison.result2}
+                  pathName={educationPaths[inputs2.path]?.name || 'Path 2'}
                 />
               </div>
             </div>
@@ -610,7 +643,9 @@ export default function HomePage() {
       )}
 
       {/* Viral Comparisons - Show on intro and after results */}
-      {(mode === 'intro' || (mode === 'calculator' && result1) || (mode === 'compare' && comparison)) && (
+      {(mode === 'intro' ||
+        (mode === 'calculator' && result1) ||
+        (mode === 'compare' && comparison)) && (
         <section className="py-16 space-y-8">
           <div className="text-center">
             <h2 className="text-3xl font-bold">Mind-Blowing Comparisons</h2>
@@ -625,8 +660,8 @@ export default function HomePage() {
                   <CardTitle className="text-lg">{comparison.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     className="w-full"
                     onClick={() => handleQuickCompare(comparison.path1, comparison.path2)}
                   >
@@ -640,20 +675,21 @@ export default function HomePage() {
       )}
 
       {/* Premium Section - Always visible, anchor for footer link */}
-      <section id="premium" className="py-16 bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl my-8">
+      <section
+        id="premium"
+        className="py-16 bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl my-8"
+      >
         <div className="container mx-auto px-4">
           <div className="text-center space-y-6">
             <div className="flex justify-center">
               <Crown className="h-16 w-16 text-yellow-500" />
             </div>
-            <h2 className="text-4xl font-bold">
-              Unlock Premium Insights
-            </h2>
+            <h2 className="text-4xl font-bold">Unlock Premium Insights</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Take your education planning to the next level with advanced analytics, 
-              personalized recommendations, and long-term financial projections
+              Take your education planning to the next level with advanced analytics, personalized
+              recommendations, and long-term financial projections
             </p>
-            
+
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 mb-8">
               <Card className="text-left">
                 <CardContent className="pt-6">
@@ -664,7 +700,7 @@ export default function HomePage() {
                   </p>
                 </CardContent>
               </Card>
-              
+
               <Card className="text-left">
                 <CardContent className="pt-6">
                   <Shield className="h-8 w-8 text-primary mb-3" />
@@ -674,7 +710,7 @@ export default function HomePage() {
                   </p>
                 </CardContent>
               </Card>
-              
+
               <Card className="text-left">
                 <CardContent className="pt-6">
                   <Calculator className="h-8 w-8 text-primary mb-3" />
@@ -684,7 +720,7 @@ export default function HomePage() {
                   </p>
                 </CardContent>
               </Card>
-              
+
               <Card className="text-left">
                 <CardContent className="pt-6">
                   <Trophy className="h-8 w-8 text-primary mb-3" />
@@ -695,18 +731,18 @@ export default function HomePage() {
                 </CardContent>
               </Card>
             </div>
-            
+
             <div className="bg-white rounded-lg p-8 max-w-md mx-auto shadow-lg">
               <div className="text-3xl font-bold mb-2">$9.99/month</div>
               <p className="text-muted-foreground mb-6">
                 Cancel anytime • 30-day money-back guarantee
               </p>
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 className="w-full gap-2"
                 onClick={() => {
-                  setShowPremiumModal(true)
-                  analytics.premiumClicked()
+                  setShowPremiumModal(true);
+                  analytics.premiumClicked('premium_section');
                 }}
               >
                 <Crown className="h-5 w-5" />
@@ -719,7 +755,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
 
       {/* Premium Modal */}
       {showPremiumModal && (
@@ -738,9 +773,7 @@ export default function HomePage() {
                 <Crown className="h-6 w-6 text-yellow-500" />
                 <CardTitle>Upgrade to Premium</CardTitle>
               </div>
-              <CardDescription>
-                Unlock advanced features and deeper insights
-              </CardDescription>
+              <CardDescription>Unlock advanced features and deeper insights</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-3">
@@ -748,14 +781,18 @@ export default function HomePage() {
                   <Check className="h-5 w-5 text-green-500 mt-0.5" />
                   <div>
                     <p className="font-medium">Extended 20-Year Projections</p>
-                    <p className="text-sm text-muted-foreground">See long-term career growth and earnings</p>
+                    <p className="text-sm text-muted-foreground">
+                      See long-term career growth and earnings
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-green-500 mt-0.5" />
                   <div>
                     <p className="font-medium">Location-Specific Adjustments</p>
-                    <p className="text-sm text-muted-foreground">Precise salary data for 100+ cities</p>
+                    <p className="text-sm text-muted-foreground">
+                      Precise salary data for 100+ cities
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
@@ -769,23 +806,27 @@ export default function HomePage() {
                   <Check className="h-5 w-5 text-green-500 mt-0.5" />
                   <div>
                     <p className="font-medium">Unlimited Comparisons</p>
-                    <p className="text-sm text-muted-foreground">Save and export all calculations</p>
+                    <p className="text-sm text-muted-foreground">
+                      Save and export all calculations
+                    </p>
                   </div>
                 </div>
               </div>
-              
+
               <div className="border-t pt-4">
                 <div className="text-center mb-4">
                   <p className="text-3xl font-bold">$9.99</p>
                   <p className="text-sm text-muted-foreground">per month</p>
                 </div>
-                <Button 
+                <Button
                   className="w-full"
                   onClick={() => {
-                    analytics.premiumClicked()
+                    analytics.premiumClicked('premium_modal');
                     // Here you would integrate Stripe or your payment processor
-                    alert('Payment integration would be implemented here with Stripe, PayPal, or similar service')
-                    setShowPremiumModal(false)
+                    alert(
+                      'Payment integration would be implemented here with Stripe, PayPal, or similar service'
+                    );
+                    setShowPremiumModal(false);
                   }}
                 >
                   Get Premium Access
@@ -810,5 +851,5 @@ export default function HomePage() {
         </Button>
       )}
     </div>
-  )
+  );
 }
