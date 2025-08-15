@@ -1,32 +1,54 @@
 import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import ROITimeline from '@/components/roi-timeline'
 import { CalculationResult } from '@/lib/types'
 
+interface MockProps {
+  children?: React.ReactNode
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any
+}
+
+interface DataPoint {
+  month: number
+  netWorth: number
+  year: string
+  isBreakeven?: boolean
+}
+
 // Mock recharts components - handle SVG elements properly to avoid React warnings
 jest.mock('recharts', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const React = require('react')
+  const LinearGradient = React.forwardRef(({ children, ...props }: MockProps, ref: unknown) => 
+    React.createElement('linearGradient', { ...props, ref }, children)
+  )
+  LinearGradient.displayName = 'LinearGradient'
+  
+  const Stop = React.forwardRef((props: MockProps, ref: unknown) => 
+    React.createElement('stop', { ...props, ref })
+  )
+  Stop.displayName = 'Stop'
+  
+  const Defs = React.forwardRef(({ children, ...props }: MockProps, ref: unknown) => 
+    React.createElement('defs', { ...props, ref }, children)
+  )
+  Defs.displayName = 'Defs'
+  
   return {
-    ResponsiveContainer: ({ children }: any) => <div data-testid="responsive-container">{children}</div>,
-    AreaChart: ({ children, data }: any) => <div data-testid="area-chart" data-points={JSON.stringify(data)}>{children}</div>,
-    Area: ({ dataKey }: any) => <div data-testid={`area-${typeof dataKey === 'function' ? 'function' : dataKey}`} />,
-    Line: ({ dataKey }: any) => <div data-testid={`line-${dataKey}`} />,
-    XAxis: ({ tickFormatter, label }: any) => <div data-testid="x-axis" data-label={label?.value} />,
-    YAxis: ({ tickFormatter, label }: any) => <div data-testid="y-axis" data-label={label?.value} />,
+    ResponsiveContainer: ({ children }: MockProps) => <div data-testid="responsive-container">{children}</div>,
+    AreaChart: ({ children, data }: MockProps) => <div data-testid="area-chart" data-points={JSON.stringify(data)}>{children}</div>,
+    Area: ({ dataKey }: MockProps) => <div data-testid={`area-${typeof dataKey === 'function' ? 'function' : dataKey}`} />,
+    Line: ({ dataKey }: MockProps) => <div data-testid={`line-${dataKey}`} />,
+    XAxis: ({ label }: MockProps) => <div data-testid="x-axis" data-label={label?.value} />,
+    YAxis: ({ label }: MockProps) => <div data-testid="y-axis" data-label={label?.value} />,
     CartesianGrid: () => <div data-testid="grid" />,
-    Tooltip: ({ content }: any) => <div data-testid="tooltip">{content && typeof content === 'function' ? 'CustomTooltip' : null}</div>,
-    ReferenceLine: ({ x, y, label }: any) => <div data-testid="reference-line" data-x={x} data-y={y} data-label={label?.value} />,
-    // Mock SVG elements to avoid React warnings about casing
-    linearGradient: React.forwardRef(({ children, ...props }: any, ref: any) => 
-      React.createElement('linearGradient', { ...props, ref }, children)
-    ),
-    stop: React.forwardRef((props: any, ref: any) => 
-      React.createElement('stop', { ...props, ref })
-    ),
-    defs: React.forwardRef(({ children, ...props }: any, ref: any) => 
-      React.createElement('defs', { ...props, ref }, children)
-    )
+    Tooltip: ({ content }: MockProps) => <div data-testid="tooltip">{content && typeof content === 'function' ? 'CustomTooltip' : null}</div>,
+    ReferenceLine: ({ x, y, label }: MockProps) => <div data-testid="reference-line" data-x={x} data-y={y} data-label={label?.value} />,
+    linearGradient: LinearGradient,
+    stop: Stop,
+    defs: Defs
   }
 })
 
@@ -54,12 +76,13 @@ describe('ROITimeline Component', () => {
       expect(screen.getByTestId('area-chart')).toBeInTheDocument()
     })
 
-    it('should display the breakeven explanation card', () => {
+    it('should display the breakeven explanation tooltip icon', () => {
       render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
 
-      expect(screen.getByText('Understanding Your Breakeven Point')).toBeInTheDocument()
-      expect(screen.getByText(/The breakeven point shows when your cumulative earnings/)).toBeInTheDocument()
-      expect(screen.getByText(/That's why it's not at \$0/)).toBeInTheDocument()
+      // Check for the help icon instead of the explanation card
+      const helpIcon = document.querySelector('.lucide-circle-help')
+      expect(helpIcon).toBeInTheDocument()
+      expect(helpIcon).toHaveClass('cursor-help')
     })
 
     it('should display summary statistics', () => {
@@ -93,7 +116,7 @@ describe('ROITimeline Component', () => {
       expect(firstPoint.year).toBe('Start')
 
       // Check if breakeven point is included
-      const breakevenPoint = dataPoints.find((p: any) => p.isBreakeven)
+      const breakevenPoint = dataPoints.find((p: DataPoint) => p.isBreakeven)
       expect(breakevenPoint).toBeDefined()
     })
 
@@ -105,12 +128,12 @@ describe('ROITimeline Component', () => {
 
       // Monthly net gain = $5000 * 0.6 = $3000
       // After 12 months: -100000 + (3000 * 12) = -64000
-      const yearOnePoint = dataPoints.find((p: any) => p.month === 12)
+      const yearOnePoint = dataPoints.find((p: DataPoint) => p.month === 12)
       expect(yearOnePoint?.netWorth).toBe(-64000)
       expect(yearOnePoint?.year).toBe('1 yr')
 
       // After 24 months: -100000 + (3000 * 24) = -28000
-      const yearTwoPoint = dataPoints.find((p: any) => p.month === 24)
+      const yearTwoPoint = dataPoints.find((p: DataPoint) => p.month === 24)
       expect(yearTwoPoint?.netWorth).toBe(-28000)
       expect(yearTwoPoint?.year).toBe('2 yrs')
     })
@@ -199,7 +222,7 @@ describe('ROITimeline Component', () => {
       const dataPoints = JSON.parse(chart.getAttribute('data-points') || '[]')
 
       // All points should remain at initial debt
-      const allNegative = dataPoints.every((p: any) => p.netWorth === -100000)
+      const allNegative = dataPoints.every((p: DataPoint) => p.netWorth === -100000)
       expect(allNegative).toBe(true)
     })
 
@@ -220,7 +243,7 @@ describe('ROITimeline Component', () => {
       const dataPoints = JSON.parse(chart.getAttribute('data-points') || '[]')
 
       // Should reach positive quickly
-      const positivePoints = dataPoints.filter((p: any) => p.netWorth > 0)
+      const positivePoints = dataPoints.filter((p: DataPoint) => p.netWorth > 0)
       expect(positivePoints.length).toBeGreaterThan(0)
     })
 
@@ -267,13 +290,13 @@ describe('ROITimeline Component', () => {
       const dataPoints = JSON.parse(chart.getAttribute('data-points') || '[]')
 
       // Check specific year labels
-      expect(dataPoints.find((p: any) => p.month === 0)?.year).toBe('Start')
-      expect(dataPoints.find((p: any) => p.month === 12)?.year).toBe('1 yr')
-      expect(dataPoints.find((p: any) => p.month === 24)?.year).toBe('2 yrs')
-      expect(dataPoints.find((p: any) => p.month === 36)?.year).toBe('3 yrs')
-      expect(dataPoints.find((p: any) => p.month === 48)?.year).toBe('4 yrs')
-      expect(dataPoints.find((p: any) => p.month === 60)?.year).toBe('5 yrs')
-      expect(dataPoints.find((p: any) => p.month === 120)?.year).toBe('10 yrs')
+      expect(dataPoints.find((p: DataPoint) => p.month === 0)?.year).toBe('Start')
+      expect(dataPoints.find((p: DataPoint) => p.month === 12)?.year).toBe('1 yr')
+      expect(dataPoints.find((p: DataPoint) => p.month === 24)?.year).toBe('2 yrs')
+      expect(dataPoints.find((p: DataPoint) => p.month === 36)?.year).toBe('3 yrs')
+      expect(dataPoints.find((p: DataPoint) => p.month === 48)?.year).toBe('4 yrs')
+      expect(dataPoints.find((p: DataPoint) => p.month === 60)?.year).toBe('5 yrs')
+      expect(dataPoints.find((p: DataPoint) => p.month === 120)?.year).toBe('10 yrs')
     })
   })
 

@@ -3,17 +3,22 @@
 import { useMemo } from 'react'
 import {
   Line,
+  LineChart,
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
+  Tooltip as RechartsTooltip,
   ResponsiveContainer,
-  ReferenceLine,
-  Area,
-  AreaChart
+  ReferenceLine
 } from 'recharts'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Info } from 'lucide-react'
+import { Info, HelpCircle } from 'lucide-react'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import type { CalculationResult } from '@/lib/types'
 
 interface ROITimelineProps {
@@ -39,24 +44,38 @@ interface TooltipProps {
 
 const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
   if (active && payload && payload.length) {
-    const value = payload[0].value as number
+    // Find the netWorth value from the Line component
+    const netWorthPayload = payload.find(p => p.dataKey === 'netWorth')
+    const value = netWorthPayload ? netWorthPayload.value as number : payload[0].value as number
+    
     const month = label as number
     const years = Math.floor(month / 12)
     const months = month % 12
     
+    // Only consider values very close to 0 as "breaking even" (within $100)
+    const isBreakingEven = Math.abs(value) < 100
+    
     return (
       <div className="bg-white p-3 border rounded-lg shadow-lg">
-        <p className="font-semibold text-sm">
+        <p className="font-semibold text-sm text-gray-900">
           {years > 0 ? `Year ${years}${months > 0 ? `, Month ${months}` : ''}` : `Month ${month}`}
         </p>
-        <p className={`font-bold ${value >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-          ${value.toLocaleString()}
-        </p>
-        {value < 0 && (
-          <p className="text-xs text-muted-foreground">Still in debt</p>
-        )}
-        {value >= 0 && (
-          <p className="text-xs text-green-600">Profit!</p>
+        {isBreakingEven ? (
+          <p className="font-bold text-blue-600">Breaking Even!</p>
+        ) : value > 0 ? (
+          <>
+            <p className="font-bold text-green-600">
+              Net Gain: +${value.toLocaleString()}
+            </p>
+            <p className="text-xs text-green-600">Profit!</p>
+          </>
+        ) : (
+          <>
+            <p className="font-bold text-red-600">
+              Debt: -${Math.abs(value).toLocaleString()}
+            </p>
+            <p className="text-xs text-gray-600">Still in debt</p>
+          </>
         )}
       </div>
     )
@@ -64,7 +83,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
   return null
 }
 
-export default function ROITimeline({ result }: ROITimelineProps) {
+export default function ROITimeline({ result, pathName }: ROITimelineProps) {
   const data = useMemo(() => {
     const points: DataPoint[] = []
     const monthlyNetGain = result.monthlySalary * 0.6 // After taxes and expenses
@@ -125,35 +144,38 @@ export default function ROITimeline({ result }: ROITimelineProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>ROI Timeline</CardTitle>
-        <CardDescription>
-          Your journey from debt to profit over 10 years
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="pt-6">
-        {/* Breakeven Explanation Card */}
-        <Card className="bg-blue-50 border-blue-200 mb-6">
-          <CardContent className="pt-6">
-            <div className="flex gap-3">
-              <Info className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
-              <div className="space-y-2">
-                <p className="font-medium text-blue-900">Understanding Your Breakeven Point</p>
-                <p className="text-sm text-blue-800">
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle className="text-gray-100">ROI Timeline</CardTitle>
+            <CardDescription className="text-gray-300">
+              Your journey from debt to profit over 10 years
+            </CardDescription>
+          </div>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <HelpCircle className="h-5 w-5 text-gray-400 hover:text-gray-600 cursor-help" />
+              </TooltipTrigger>
+              <TooltipContent className="max-w-sm bg-gray-800 border-gray-700">
+                <p className="font-medium text-white mb-2">Understanding Your Breakeven Point</p>
+                <p className="text-sm text-gray-100">
                   The breakeven point shows when your cumulative earnings after graduation 
                   equal your total education investment including opportunity costs 
                   (the money you could have earned if working instead of studying).
                 </p>
-                <p className="text-sm text-blue-800">
+                <p className="text-sm text-gray-100 mt-2">
                   That's why it's not at $0 - it factors in both what you paid AND 
                   what you didn't earn while in school.
                 </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+      </CardHeader>
+      <CardContent className="pt-6">
         
         <ResponsiveContainer width="100%" height={400}>
-          <AreaChart 
+          <LineChart 
             data={data}
             margin={{ top: 10, right: 30, left: 10, bottom: 40 }}
           >
@@ -199,7 +221,7 @@ export default function ROITimeline({ result }: ROITimelineProps) {
               }}
             />
             
-            <Tooltip content={<CustomTooltip />} />
+            <RechartsTooltip content={<CustomTooltip />} />
             
             {/* Reference line at 0 (breakeven) */}
             <ReferenceLine 
@@ -228,24 +250,7 @@ export default function ROITimeline({ result }: ROITimelineProps) {
               />
             )}
             
-            {/* Negative area (debt) */}
-            <Area
-              type="monotone"
-              dataKey={(item) => Math.min(0, item.netWorth)}
-              stroke="none"
-              fill="url(#colorNegative)"
-              fillOpacity={1}
-            />
-            
-            {/* Positive area (profit) */}
-            <Area
-              type="monotone"
-              dataKey={(item) => Math.max(0, item.netWorth)}
-              stroke="none"
-              fill="url(#colorPositive)"
-              fillOpacity={1}
-            />
-            
+            {/* Line component only - Areas temporarily removed to fix tooltip */}
             <Line 
               type="monotone" 
               dataKey="netWorth" 
@@ -254,24 +259,24 @@ export default function ROITimeline({ result }: ROITimelineProps) {
               dot={false}
               activeDot={{ r: 6, fill: '#2563eb' }}
             />
-          </AreaChart>
+          </LineChart>
         </ResponsiveContainer>
         
         <div className="mt-6 grid grid-cols-3 gap-4 text-center">
           <div>
-            <p className="text-sm text-muted-foreground">Initial Investment</p>
+            <p className="text-sm text-gray-600">Initial Investment</p>
             <p className="text-xl font-bold text-red-600">
               -${result.totalCost.toLocaleString()}
             </p>
           </div>
           <div>
-            <p className="text-sm text-muted-foreground">Breakeven</p>
-            <p className="text-xl font-bold text-primary">
+            <p className="text-sm text-gray-600">Breakeven</p>
+            <p className="text-xl font-bold text-blue-600">
               {result.breakevenMonths > 120 ? 'Never' : `${result.breakevenMonths} months`}
             </p>
           </div>
           <div>
-            <p className="text-sm text-muted-foreground">10-Year Net Worth</p>
+            <p className="text-sm text-gray-600">10-Year Net Worth</p>
             <p className="text-xl font-bold text-green-600">
               ${result.netWorth10Years.toLocaleString()}
             </p>
