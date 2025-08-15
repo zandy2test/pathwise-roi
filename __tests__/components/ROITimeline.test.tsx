@@ -38,8 +38,7 @@ jest.mock('recharts', () => {
   
   return {
     ResponsiveContainer: ({ children }: MockProps) => <div data-testid="responsive-container">{children}</div>,
-    AreaChart: ({ children, data }: MockProps) => <div data-testid="area-chart" data-points={JSON.stringify(data)}>{children}</div>,
-    Area: ({ dataKey }: MockProps) => <div data-testid={`area-${typeof dataKey === 'function' ? 'function' : dataKey}`} />,
+    LineChart: ({ children, data }: MockProps) => <div data-testid="line-chart" data-points={JSON.stringify(data)}>{children}</div>,
     Line: ({ dataKey }: MockProps) => <div data-testid={`line-${dataKey}`} />,
     XAxis: ({ label }: MockProps) => <div data-testid="x-axis" data-label={label?.value} />,
     YAxis: ({ label }: MockProps) => <div data-testid="y-axis" data-label={label?.value} />,
@@ -73,7 +72,7 @@ describe('ROITimeline Component', () => {
       expect(screen.getByText('ROI Timeline')).toBeInTheDocument()
       expect(screen.getByText('Your journey from debt to profit over 10 years')).toBeInTheDocument()
       expect(screen.getByTestId('responsive-container')).toBeInTheDocument()
-      expect(screen.getByTestId('area-chart')).toBeInTheDocument()
+      expect(screen.getByTestId('line-chart')).toBeInTheDocument()
     })
 
     it('should display the breakeven explanation tooltip icon', () => {
@@ -103,7 +102,7 @@ describe('ROITimeline Component', () => {
     it('should generate correct data points for the chart', () => {
       render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
 
-      const chart = screen.getByTestId('area-chart')
+      const chart = screen.getByTestId('line-chart')
       const dataPoints = JSON.parse(chart.getAttribute('data-points') || '[]')
 
       // Should have data points every 3 months for 10 years
@@ -123,7 +122,7 @@ describe('ROITimeline Component', () => {
     it('should calculate net worth correctly over time', () => {
       render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
 
-      const chart = screen.getByTestId('area-chart')
+      const chart = screen.getByTestId('line-chart')
       const dataPoints = JSON.parse(chart.getAttribute('data-points') || '[]')
 
       // Monthly net gain = $5000 * 0.6 = $3000
@@ -166,10 +165,6 @@ describe('ROITimeline Component', () => {
 
       // Check tooltip
       expect(screen.getByTestId('tooltip')).toBeInTheDocument()
-
-      // Check areas for positive and negative values
-      const areaElements = screen.getAllByTestId(/area-function/)
-      expect(areaElements.length).toBeGreaterThanOrEqual(1) // At least one area element
 
       // Check line
       expect(screen.getByTestId('line-netWorth')).toBeInTheDocument()
@@ -218,7 +213,7 @@ describe('ROITimeline Component', () => {
 
       render(<ROITimeline result={zeroSalaryResult} pathName="No Income Path" />)
 
-      const chart = screen.getByTestId('area-chart')
+      const chart = screen.getByTestId('line-chart')
       const dataPoints = JSON.parse(chart.getAttribute('data-points') || '[]')
 
       // All points should remain at initial debt
@@ -239,7 +234,7 @@ describe('ROITimeline Component', () => {
       expect(screen.getByText('12 months')).toBeInTheDocument()
       expect(screen.getByText('$1,340,000')).toBeInTheDocument()
 
-      const chart = screen.getByTestId('area-chart')
+      const chart = screen.getByTestId('line-chart')
       const dataPoints = JSON.parse(chart.getAttribute('data-points') || '[]')
 
       // Should reach positive quickly
@@ -286,7 +281,7 @@ describe('ROITimeline Component', () => {
     it('should display correct year labels on x-axis', () => {
       render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
 
-      const chart = screen.getByTestId('area-chart')
+      const chart = screen.getByTestId('line-chart')
       const dataPoints = JSON.parse(chart.getAttribute('data-points') || '[]')
 
       // Check specific year labels
@@ -307,8 +302,8 @@ describe('ROITimeline Component', () => {
       const container = screen.getByTestId('responsive-container')
       expect(container).toBeInTheDocument()
       
-      // The actual AreaChart should be inside the ResponsiveContainer
-      const chart = container.querySelector('[data-testid="area-chart"]')
+      // The actual LineChart should be inside the ResponsiveContainer
+      const chart = container.querySelector('[data-testid="line-chart"]')
       expect(chart).toBeInTheDocument()
     })
   })
