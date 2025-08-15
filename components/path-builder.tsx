@@ -163,7 +163,7 @@ export default function PathBuilder({
         
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Label htmlFor="educationType">Education Type</Label>
+            <Label htmlFor="educationType" className="text-gray-900">Education Type</Label>
             <Tooltip>
               <TooltipTrigger asChild>
                 <HelpCircle className="h-3 w-3 text-muted-foreground" />
@@ -190,7 +190,7 @@ export default function PathBuilder({
         {educationType && (
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <Label htmlFor="field">Field of Study</Label>
+              <Label htmlFor="field" className="text-gray-900">Field of Study</Label>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <HelpCircle className="h-3 w-3 text-muted-foreground" />
@@ -218,7 +218,7 @@ export default function PathBuilder({
         {educationType && field && programOptions.length > 0 && (
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <Label htmlFor="program">Program/Degree</Label>
+              <Label htmlFor="program" className="text-gray-900">Program/Degree</Label>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <HelpCircle className="h-3 w-3 text-muted-foreground" />
@@ -245,7 +245,7 @@ export default function PathBuilder({
 
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Label htmlFor="location">Your Location</Label>
+            <Label htmlFor="location" className="text-gray-900">Your Location</Label>
             <Tooltip>
               <TooltipTrigger asChild>
                 <HelpCircle className="h-3 w-3 text-muted-foreground" />
@@ -274,7 +274,7 @@ export default function PathBuilder({
 
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Label htmlFor="schoolTier">School Quality</Label>
+            <Label htmlFor="schoolTier" className="text-gray-900">School Quality</Label>
             <Tooltip>
               <TooltipTrigger asChild>
                 <HelpCircle className="h-3 w-3 text-muted-foreground" />
@@ -303,7 +303,7 @@ export default function PathBuilder({
 
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Label htmlFor="livingCost">Living Situation</Label>
+            <Label htmlFor="livingCost" className="text-gray-900">Living Situation</Label>
             <Tooltip>
               <TooltipTrigger asChild>
                 <HelpCircle className="h-3 w-3 text-muted-foreground" />
@@ -332,13 +332,13 @@ export default function PathBuilder({
 
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Label htmlFor="scholarships">Scholarships/Aid ($)</Label>
+            <Label htmlFor="scholarships" className="text-gray-900">Scholarships/Aid ($)</Label>
             <Tooltip>
               <TooltipTrigger asChild>
                 <HelpCircle className="h-3 w-3 text-muted-foreground" />
               </TooltipTrigger>
               <TooltipContent>
-                <p className="max-w-xs">Total financial aid, grants, and scholarships you expect to receive</p>
+                <p className="max-w-xs">Total financial aid, grants, and scholarships you expect to receive. Maximum: $100,000</p>
               </TooltipContent>
             </Tooltip>
           </div>
@@ -360,7 +360,6 @@ export default function PathBuilder({
             max={100000}
             data-testid="scholarships-input"
           />
-          <p className="text-xs text-muted-foreground">Maximum: $100,000</p>
         </div>
 
         {errors.length > 0 && (
