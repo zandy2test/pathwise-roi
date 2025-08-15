@@ -1,210 +1,213 @@
-# 🎯 PathwiseROI - Project Context & Current State
+# PROJECT CONTEXT - PathwiseROI
 
-## Single Source of Truth for AI Assistants & Developers
+## 🚀 CURRENT STATUS (August 15, 2025 - 9:20 PM)
 
-**Last Updated:** August 15, 2025, 6:15 PM Brisbane Time
+### ✅ COMPLETED: Single-Page Refactor
 
----
+- **Date**: August 15, 2025
+- **Status**: READY FOR DEPLOYMENT
+- **Build**: ✅ Successful
+- **Tests**: ✅ All 76 tests passing
+- **Branch**: feature/single-page-refactor
 
-## 🚀 CURRENT PRODUCTION STATE
+### What Was Done:
 
-### Live URL: https://pathwise-roi.vercel.app/
+1. **Consolidated all functionality into single-page app** (app/page.tsx)
+2. **Fixed all identified issues**:
+   - Navigation links now point to #top
+   - Feature cards always visible (not conditional on mode)
+   - Results section ID properly placed for scrolling
+   - Added ROI Timeline charts to comparison results
+   - Cleaned up FloatingNavbar component
+3. **Verified production build**: No critical errors
+4. **All TypeScript errors resolved**
 
-### Current Design Implementation
+## 📊 APPLICATION OVERVIEW
 
-- **Theme:** LIGHT/WHITE theme with professional appearance
-- **Branding:** "Scam Score™" terminology used throughout
-- **Color Scheme:** White backgrounds, blue/cyan accents, colored alerts
-- **Typography:** Clean, professional hierarchy
-- **Messaging:** Data-driven ROI calculator with edgy "scam detection" angle
+**PathwiseROI** is a financial education ROI calculator that helps users determine if their education investment is worth it through "Scam Score™" analysis.
 
-### What's Actually Deployed
+### Core Features:
 
-- **Landing Page:** Light gradient background with Scam Score™ branding
-- **Calculator Page:** White/gray backgrounds with blue accents
-- **Results Page:** Light theme with colored alert boxes
-- **Navigation:** White navbar with backdrop blur
-- **Statistics:** Shows $1.7T debt, 73% negative ROI, 42% underemployed
+- **Single-page experience** with smooth transitions
+- **Scam Score™ Algorithm**: Proprietary scoring based on ROI metrics
+- **Path Comparison**: Compare education paths side-by-side
+- **ROI Timeline Visualization**: 10-year financial projections
+- **Real-time Calculations**: Instant feedback on education investments
+- **Share Functionality**: Social sharing with clipboard fallback
+- **Premium Features**: Advanced analytics (modal only for now)
 
-### Key Features Live Now
+## 🏗️ TECHNICAL ARCHITECTURE
 
-1. **Scam Score™ Algorithm** - Calculates education ROI
-2. **Path Comparison Tool** - Compare two education paths
-3. **Breakeven Analysis** - Shows when investment pays off
-4. **Share Functionality** - Web share API integration
-5. **Premium Modal** - Lead generation (no payment integration yet)
-6. **Analytics** - Partial Vercel Analytics implementation
+### Tech Stack:
 
----
+- **Framework**: Next.js 15.2.4 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS + Custom Premium Components
+- **Analytics**: Google Analytics 4 (GA4)
+- **Charts**: Recharts
+- **Animation**: Framer Motion
+- **Testing**: Jest + React Testing Library
+- **Deployment**: Vercel
 
-## 📁 PROJECT STRUCTURE
+### Single-Page Architecture:
 
 ```
-PathwiseROI/
-├── app/
-│   ├── page.tsx                 # ✅ ACTIVE - Light theme homepage
-│   ├── page-redesign.tsx        # ⚠️ UNUSED - Dark theme prototype
-│   ├── calculate/page.tsx       # ✅ ACTIVE - Calculator page
-│   ├── results/page.tsx         # ✅ ACTIVE - Results display
-│   └── globals.css              # Global styles
-│
-├── components/
-│   ├── magic/                   # Magic UI components (active)
-│   │   ├── animated-gradient-text.tsx
-│   │   ├── shimmer-button.tsx
-│   │   └── number-ticker.tsx
-│   │
-│   ├── premium/                 # Premium components (created but NOT deployed)
-│   │   ├── aurora-background.tsx
-│   │   ├── floating-navbar.tsx
-│   │   └── [other dark theme components]
-│   │
-│   └── ui/                      # Core UI components
-│       ├── button.tsx
-│       ├── card.tsx
-│       └── [other shadcn components]
-│
-├── lib/
-│   ├── calculator.ts            # ROI calculation logic
-│   ├── analytics.ts             # Analytics implementation
-│   └── data.ts                  # Education paths data
-│
-└── __tests__/                   # Test suite (76 tests passing)
+app/page.tsx
+├── Intro Mode (Hero + Feature Cards)
+├── Calculator Mode (Single Path)
+└── Compare Mode (Dual Path Comparison)
 ```
 
----
+### Component Structure:
 
-## 🎨 DESIGN DECISIONS
+```
+components/
+├── ui/               # Base UI components
+├── magic/            # Animated components
+├── premium/          # Glass morphism components
+├── path-builder.tsx  # Input form component
+├── roi-timeline.tsx  # Chart visualization
+└── footer.tsx        # Site footer
+```
 
-### Why Light Theme?
+## 📈 KEY METRICS
 
-- Professional, trustworthy appearance
-- Better readability for financial data
-- Appeals to broader audience
-- Maintains edgy messaging without aggressive visuals
+### Performance:
 
-### Dark Theme Status
+- **First Load JS**: 308 kB (homepage)
+- **Build Time**: ~30 seconds
+- **Test Coverage**: 76 unit tests
+- **Lighthouse Score**: TBD (needs measurement)
 
-- Exists in `app/page-redesign.tsx`
-- Fully functional but NOT deployed
-- Could be used for A/B testing
-- Premium glass morphism effects included
+### User Experience:
 
-### Branding Strategy
+- **Mobile Responsive**: ✅ Yes
+- **Accessibility**: Basic ARIA labels
+- **Browser Support**: Modern browsers
+- **PWA Ready**: No (future enhancement)
 
-- "Scam Score™" - Memorable, shareable concept
-- Data-driven messaging
-- Warning badges for urgency
-- Professional yet provocative
+## 🚦 DEPLOYMENT STATUS
 
----
+### Production Environment:
 
-## 📊 TECHNICAL STATUS
+- **URL**: https://pathwise-roi.vercel.app
+- **Provider**: Vercel
+- **Branch**: main
+- **Auto-Deploy**: Yes (on push to main)
 
-### Build & Performance
+### Current Deployment:
 
-- **Build Status:** ✅ Successful
-- **Bundle Size:** 274 KB (acceptable)
-- **TypeScript Errors:** 0
-- **ESLint Warnings:** Minor (unused imports)
-- **Test Suite:** 76/76 passing
-- **Lighthouse Score:** 92+
+- **Last Deploy**: August 14, 2025
+- **Version**: 1.1.0
+- **Status**: Needs update with single-page refactor
 
-### Dependencies
+## 🔄 RECENT CHANGES
 
-- **Framework:** Next.js 14 (App Router)
-- **UI:** shadcn/ui + Tailwind CSS
-- **Animations:** Framer Motion
-- **Charts:** Recharts
-- **Analytics:** Vercel Analytics (partial)
+### August 15, 2025 - Single-Page Refactor:
 
-### Known Issues
+- Consolidated /calculate and /results into main page
+- Removed separate route pages
+- Fixed navigation and UI issues
+- Added comparison charts
+- Improved user flow
 
-- Analytics implementation incomplete
-- No E2E tests yet
-- Premium payment not integrated
-- Some accessibility improvements needed
+### August 14, 2025 - Visual Overhaul:
 
----
+- Premium glass morphism design
+- Magic UI components integration
+- Scam Score™ branding
+- Light theme implementation
 
-## 🎯 IMMEDIATE PRIORITIES
+## 🎯 NEXT STEPS
 
-### High Priority
+### Immediate (Before Deploy):
 
-1. **Complete Analytics** - Finish Vercel Analytics setup
-2. **E2E Testing** - Add Playwright tests
-3. **Performance Monitoring** - Integrate Sentry
+1. ✅ Test build locally
+2. ✅ Commit changes
+3. ⏳ Push to GitHub
+4. ⏳ Verify Vercel deployment
+5. ⏳ Test production site
 
-### Medium Priority
+### Short-term Enhancements:
 
-4. **SEO Improvements** - Structured data, meta tags
-5. **Loading States** - Add skeletons
-6. **Documentation** - Keep this file updated
+- Implement actual premium features
+- Add more education paths
+- Enhance mobile experience
+- Add testimonials section
+- Implement email capture
 
-### Nice to Have
+### Long-term Goals:
 
-7. **Payment Integration** - Stripe for premium
-8. **PDF Export** - Results download
-9. **More Education Paths** - Expand options
+- Backend API for calculations
+- User accounts & saved comparisons
+- Real payment integration
+- Advanced analytics dashboard
+- Mobile app version
 
----
+## 📝 KNOWN ISSUES
 
-## 🚫 IMPORTANT NOTES
+### Minor Issues:
 
-### DO NOT
+- Some unused imports (non-critical warnings)
+- Console warnings in tests (linearGradient casing)
+- Share functionality needs real social integration
 
-- Deploy dark theme without testing
-- Remove Scam Score™ branding (it's working)
-- Delete page-redesign.tsx (keep for reference)
-- Change calculator logic without tests
+### Technical Debt:
 
-### Files to Ignore/Archive
+- Premium features are placeholder only
+- No backend API (all client-side)
+- Limited error boundaries
+- No service worker for offline
 
-- `VISUAL_OVERHAUL_IMPLEMENTATION_REPORT.md` - Outdated, about dark theme
-- `VISUAL_OVERHAUL_PLAN.md` - Outdated planning doc
-- Anything mentioning "premium dark theme deployment"
+## � DEVELOPMENT NOTES
 
----
-
-## 💡 QUICK START FOR NEW DEVELOPERS
+### Local Development:
 
 ```bash
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-
-# Run tests
-npm test
-
-# Build for production
-npm run build
+npm run dev        # Start dev server
+npm run build      # Production build
+npm test           # Run tests
+npm run lint       # Check code quality
 ```
 
-Visit http://localhost:3000 to see the light theme with Scam Score™ branding.
+### Git Workflow:
+
+```bash
+# Current branch: feature/single-page-refactor
+git push origin feature/single-page-refactor
+# Create PR to main
+# Merge and auto-deploy
+```
+
+### Environment Variables:
+
+- `NEXT_PUBLIC_GA_MEASUREMENT_ID`: Google Analytics ID
+- No other env vars required currently
+
+## 📚 DOCUMENTATION
+
+### Key Files:
+
+- `README.md`: Setup and overview
+- `SINGLE_PAGE_REFACTOR_PLAN.md`: Refactor details
+- `PROJECT_STATUS_CURRENT.md`: Previous status
+- `DEPLOYMENT_STATUS_2025_08_15.md`: Deploy notes
+
+### Testing:
+
+- Unit tests: `__tests__/` directory
+- E2E tests: `e2e/` directory (Playwright)
+- Manual testing checklist: `MANUAL-TEST-SCRIPT.md`
+
+## 👥 TEAM & CONTACT
+
+- **Developer**: AI-assisted development
+- **Design**: Premium glass morphism theme
+- **Content**: Scam Score™ branding focus
+- **Analytics**: GA4 tracking implemented
 
 ---
 
-## 📝 COMMIT HISTORY CONTEXT
-
-Recent significant commits:
-
-- Light theme with Scam Score™ branding (current production)
-- Magic UI components integration
-- Analytics partial setup
-- Premium modal for lead generation
-
----
-
-## 🔮 FUTURE CONSIDERATIONS
-
-1. **A/B Testing** - Light vs Dark theme
-2. **Monetization** - Premium features implementation
-3. **Mobile App** - React Native version
-4. **API** - Public API for education ROI data
-5. **Partnerships** - Education platforms integration
-
----
-
-**Remember:** This file is the source of truth. If other docs conflict, this one is correct.
+**Last Updated**: August 15, 2025, 9:20 PM AEST
+**Status**: READY FOR PRODUCTION DEPLOYMENT
+**Version**: 1.2.0 (Single-Page Refactor)
