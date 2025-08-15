@@ -12,6 +12,9 @@ import { calculateROI } from '@/lib/calculator'
 import { educationPaths } from '@/lib/data'
 import type { CalculatorInputs, EducationPath } from '@/lib/types'
 import { validateCalculatorInputs } from '@/lib/validation'
+import { AnimatedGradientHeading, AnimatedGradientText } from '@/components/magic/animated-gradient-text'
+import { CTAButton } from '@/components/magic/shimmer-button'
+import { NumberTicker } from '@/components/magic/number-ticker'
 import { 
   DollarSign, 
   Brain, 
@@ -117,7 +120,7 @@ export default function CalculatePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-red-950 to-black">
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-blue-50">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
         <motion.div
@@ -125,10 +128,10 @@ export default function CalculatePage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <h1 className="text-4xl md:text-5xl font-black text-white mb-4">
-            Calculate Your <span className="text-red-500">Scam Score™</span>
-          </h1>
-          <p className="text-xl text-gray-300">
+          <AnimatedGradientHeading className="text-4xl md:text-5xl font-black mb-4">
+            Calculate Your Scam Score™
+          </AnimatedGradientHeading>
+          <p className="text-xl text-gray-700">
             Let's find out if you're about to get played by the education industrial complex
           </p>
         </motion.div>
@@ -136,12 +139,12 @@ export default function CalculatePage() {
         <div className="grid md:grid-cols-3 gap-8">
           {/* Main Calculator Form */}
           <div className="md:col-span-2">
-            <Card className="bg-gray-900/90 border-red-900/50 backdrop-blur-sm">
+            <Card className="bg-white/90 border-gray-200 shadow-xl backdrop-blur-sm">
               <CardHeader>
-                <CardTitle className="text-2xl text-white">
+                <CardTitle className="text-2xl text-gray-900">
                   Your Education Path
                 </CardTitle>
-                <CardDescription className="text-gray-400">
+                <CardDescription className="text-gray-600">
                   Choose wisely... your financial future depends on it
                 </CardDescription>
               </CardHeader>
@@ -154,10 +157,10 @@ export default function CalculatePage() {
                 
                 {/* Calculate Button */}
                 <motion.div className="mt-8">
-                  <Button
+                  <CTAButton
                     onClick={handleCalculate}
                     disabled={!inputs.path || isCalculating}
-                    className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-6 text-lg shadow-lg transition-all duration-200 disabled:opacity-50"
+                    className="w-full"
                   >
                     {isCalculating ? (
                       <motion.div
@@ -172,7 +175,7 @@ export default function CalculatePage() {
                         <Zap className="ml-2 h-5 w-5" />
                       </>
                     )}
-                  </Button>
+                  </CTAButton>
                 </motion.div>
               </CardContent>
             </Card>
@@ -186,9 +189,9 @@ export default function CalculatePage() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
             >
-              <Card className="bg-gray-900/90 border-red-900/50 backdrop-blur-sm overflow-hidden">
+              <Card className="bg-white/90 border-gray-200 shadow-xl backdrop-blur-sm overflow-hidden">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-lg text-white">
+                  <CardTitle className="text-lg text-gray-900">
                     Live Scam Score™
                   </CardTitle>
                 </CardHeader>
@@ -225,20 +228,15 @@ export default function CalculatePage() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                 >
-                  <Card className="bg-gray-900/90 border-red-900/50 backdrop-blur-sm">
+                  <Card className="bg-white/90 border-gray-200 shadow-xl backdrop-blur-sm">
                     <CardContent className="pt-6">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-gray-400">Total Debt</span>
+                        <span className="text-gray-600">Total Debt</span>
                         <DollarSign className="h-5 w-5 text-red-500" />
                       </div>
-                      <motion.div
-                        key={debtAmount}
-                        initial={{ scale: 1.2 }}
-                        animate={{ scale: 1 }}
-                        className={`text-3xl font-black ${getDebtColor(debtAmount)}`}
-                      >
-                        ${debtAmount.toLocaleString()}
-                      </motion.div>
+                      <div className={`text-3xl font-black ${getDebtColor(debtAmount)}`}>
+                        $<NumberTicker value={debtAmount} delay={0.2} />
+                      </div>
                       {debtAmount > 100000 && (
                         <motion.p
                           initial={{ opacity: 0 }}
@@ -262,20 +260,20 @@ export default function CalculatePage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                 >
-                  <Card className={`border ${
+                  <Card className={`border-2 shadow-xl ${
                     (selectedPath.aiRiskScore || 0) > 60 
-                      ? 'bg-red-950/90 border-red-500' 
-                      : 'bg-yellow-950/90 border-yellow-600'
+                      ? 'bg-red-50 border-red-400' 
+                      : 'bg-yellow-50 border-yellow-400'
                   }`}>
                     <CardContent className="pt-6">
                       <div className="flex items-center gap-2 mb-2">
-                        <Brain className="h-5 w-5 text-yellow-500" />
-                        <span className="text-white font-semibold">AI Risk</span>
+                        <Brain className="h-5 w-5 text-yellow-600" />
+                        <span className="text-gray-900 font-semibold">AI Risk</span>
                       </div>
-                      <div className="text-2xl font-black text-yellow-400">
-                        {selectedPath.aiRiskScore || 0}%
+                      <div className="text-2xl font-black text-yellow-600">
+                        <NumberTicker value={selectedPath.aiRiskScore || 0} suffix="%" delay={0.3} />
                       </div>
-                      <p className="text-sm mt-2 text-gray-300">
+                      <p className="text-sm mt-2 text-gray-700">
                         {(selectedPath.aiRiskScore || 0) > 60 
                           ? "🤖 AI APOCALYPSE ALERT!"
                           : "Moderate automation risk"}
@@ -293,13 +291,15 @@ export default function CalculatePage() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
-                  className="bg-red-600/20 border-2 border-red-600 rounded-lg p-4"
+                  className="bg-red-50 border-2 border-red-400 rounded-lg p-4 shadow-xl"
                 >
                   <div className="flex items-center gap-2">
-                    <Skull className="h-6 w-6 text-red-500 animate-pulse" />
-                    <span className="font-bold text-red-400">DANGER ZONE!</span>
+                    <Skull className="h-6 w-6 text-red-600 animate-pulse" />
+                    <span className="font-bold text-red-600">
+                      DANGER ZONE!
+                    </span>
                   </div>
-                  <p className="text-sm text-red-300 mt-1">
+                  <p className="text-sm text-red-700 mt-1">
                     You're entering life-crushing debt territory
                   </p>
                 </motion.div>
@@ -313,13 +313,15 @@ export default function CalculatePage() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
-                  className="bg-green-600/20 border-2 border-green-600 rounded-lg p-4"
+                  className="bg-green-50 border-2 border-green-400 rounded-lg p-4 shadow-xl"
                 >
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-6 w-6 text-green-500" />
-                    <span className="font-bold text-green-400">SMART CHOICE!</span>
+                    <CheckCircle2 className="h-6 w-6 text-green-600" />
+                    <span className="font-bold text-green-600">
+                      SMART CHOICE!
+                    </span>
                   </div>
-                  <p className="text-sm text-green-300 mt-1">
+                  <p className="text-sm text-green-700 mt-1">
                     High ROI potential detected
                   </p>
                 </motion.div>
@@ -333,12 +335,12 @@ export default function CalculatePage() {
                   initial={{ opacity: 0, rotate: -2 }}
                   animate={{ opacity: 1, rotate: 0 }}
                   exit={{ opacity: 0, rotate: 2 }}
-                  className="bg-gray-800/90 border border-gray-700 rounded-lg p-4"
+                  className="bg-white border border-gray-300 rounded-lg p-4 shadow-xl"
                 >
-                  <p className="text-sm font-semibold text-gray-400 mb-1">
+                  <p className="text-sm font-semibold text-gray-600 mb-1">
                     Reality Check:
                   </p>
-                  <p className="text-white italic">
+                  <p className="text-gray-900 italic">
                     "{selectedPath.brutalTruth}"
                   </p>
                 </motion.div>
@@ -354,7 +356,7 @@ export default function CalculatePage() {
           transition={{ delay: 0.5 }}
           className="mt-8 text-center"
         >
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-600 text-sm">
             * Results based on real data. Your mileage may vary. 
             Student loan companies hate this calculator.
           </p>

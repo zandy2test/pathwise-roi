@@ -10,6 +10,9 @@ import { calculateScamScore, generateShockingStats } from '@/lib/scam-score'
 import { calculateROI } from '@/lib/calculator'
 import { educationPaths } from '@/lib/data'
 import type { CalculatorInputs, EducationPath, CalculationResult } from '@/lib/types'
+import { AnimatedGradientHeading } from '@/components/magic/animated-gradient-text'
+import { CTAButton, ShimmerButton } from '@/components/magic/shimmer-button'
+import { NumberTicker } from '@/components/magic/number-ticker'
 import { 
   ArrowLeft,
   Share2,
@@ -120,7 +123,7 @@ export default function ResultsPage() {
 
   if (!inputs || !educationPath || !result) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-black via-red-950 to-black flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-blue-50 flex items-center justify-center">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
@@ -212,7 +215,7 @@ export default function ResultsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-red-950 to-black relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-blue-50 relative overflow-hidden">
       {/* Confetti Animation for Good Scores */}
       <AnimatePresence>
         {showConfetti && (
@@ -274,15 +277,15 @@ export default function ResultsPage() {
           <Button
             onClick={handleRecalculate}
             variant="ghost"
-            className="text-white hover:text-red-400 mb-4"
+            className="text-gray-700 hover:text-blue-600 mb-4"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Calculator
           </Button>
           
-          <h1 className="text-4xl md:text-5xl font-black text-white text-center mb-4">
-            Your <span className="text-red-500">Scam Score™</span> Results
-          </h1>
+          <AnimatedGradientHeading className="text-4xl md:text-5xl font-black text-center mb-4">
+            Your Scam Score™ Results
+          </AnimatedGradientHeading>
         </motion.div>
 
         {/* Main Results Grid */}
@@ -309,9 +312,9 @@ export default function ResultsPage() {
             className="space-y-4"
           >
             {/* Verdict */}
-            <Card className="bg-gray-900/90 border-red-900/50 backdrop-blur-sm">
+            <Card className="bg-white/90 border-gray-200 shadow-xl backdrop-blur-sm">
               <CardContent className="pt-6">
-                <h3 className="text-2xl font-black mb-2 text-white">The Verdict:</h3>
+                <h3 className="text-2xl font-black mb-2 text-gray-900">The Verdict:</h3>
                 <p className={`text-3xl font-black ${getVerdictColor(scamScore)}`}>
                   {getVerdictText(scamScore)}
                 </p>
@@ -319,46 +322,46 @@ export default function ResultsPage() {
             </Card>
 
             {/* Financial Breakdown */}
-            <Card className="bg-gray-900/90 border-red-900/50 backdrop-blur-sm">
+            <Card className="bg-white/90 border-gray-200 shadow-xl backdrop-blur-sm">
               <CardContent className="pt-6 space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-400 flex items-center gap-2">
+                  <span className="text-gray-600 flex items-center gap-2">
                     <DollarSign className="h-4 w-4" />
                     Total Cost
                   </span>
-                  <span className="text-xl font-bold text-red-400">
-                    ${result.totalCost.toLocaleString()}
+                  <span className="text-xl font-bold text-red-600">
+                    $<NumberTicker value={result.totalCost} delay={0.3} />
                   </span>
                 </div>
                 
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-400 flex items-center gap-2">
+                  <span className="text-gray-600 flex items-center gap-2">
                     <Clock className="h-4 w-4" />
                     Time to Break Even
                   </span>
-                  <span className="text-xl font-bold text-yellow-400">
-                    {Math.round(result.breakevenMonths / 12)} years
+                  <span className="text-xl font-bold text-yellow-600">
+                    <NumberTicker value={Math.round(result.breakevenMonths / 12)} delay={0.5} /> years
                   </span>
                 </div>
                 
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-400 flex items-center gap-2">
+                  <span className="text-gray-600 flex items-center gap-2">
                     <TrendingDown className="h-4 w-4" />
                     ROI
                   </span>
-                  <span className={`text-xl font-bold ${result.roi > 50 ? 'text-green-400' : 'text-orange-400'}`}>
-                    {result.roi.toFixed(1)}%
+                  <span className={`text-xl font-bold ${result.roi > 50 ? 'text-green-600' : 'text-orange-600'}`}>
+                    <NumberTicker value={result.roi} decimalPlaces={1} suffix="%" delay={0.7} />
                   </span>
                 </div>
 
                 {educationPath.aiRiskScore && educationPath.aiRiskScore > 30 && (
-                  <div className="flex justify-between items-center pt-2 border-t border-gray-700">
-                    <span className="text-gray-400 flex items-center gap-2">
+                  <div className="flex justify-between items-center pt-2 border-t border-gray-300">
+                    <span className="text-gray-600 flex items-center gap-2">
                       <Brain className="h-4 w-4" />
                       AI Risk
                     </span>
-                    <span className="text-xl font-bold text-yellow-400">
-                      {educationPath.aiRiskScore}%
+                    <span className="text-xl font-bold text-yellow-600">
+                      <NumberTicker value={educationPath.aiRiskScore} suffix="%" delay={0.9} />
                     </span>
                   </div>
                 )}
@@ -375,9 +378,9 @@ export default function ResultsPage() {
             transition={{ delay: 0.6 }}
             className="mb-8"
           >
-            <Card className="bg-gray-900/90 border-red-900/50 backdrop-blur-sm">
+            <Card className="bg-white/90 border-gray-200 shadow-xl backdrop-blur-sm">
               <CardHeader>
-                <CardTitle className="text-2xl text-white flex items-center gap-2">
+                <CardTitle className="text-2xl text-gray-900 flex items-center gap-2">
                   <AlertTriangle className="h-6 w-6 text-red-500" />
                   Reality Check
                 </CardTitle>
@@ -393,7 +396,7 @@ export default function ResultsPage() {
                       className="flex items-start gap-2"
                     >
                       <span className="text-xl">{stat.split(' ')[0]}</span>
-                      <p className="text-gray-300">{stat.substring(stat.indexOf(' ') + 1)}</p>
+                      <p className="text-gray-700">{stat.substring(stat.indexOf(' ') + 1)}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -409,29 +412,29 @@ export default function ResultsPage() {
           transition={{ delay: 1 }}
           className="mb-8"
         >
-          <Card className="bg-gray-900/90 border-red-900/50 backdrop-blur-sm">
+          <Card className="bg-white/90 border-gray-200 shadow-xl backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-2xl text-white">10-Year Financial Projection</CardTitle>
+              <CardTitle className="text-2xl text-gray-900">10-Year Financial Projection</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid md:grid-cols-3 gap-6">
                 <div>
-                  <p className="text-gray-400 mb-1">Net Worth at 10 Years</p>
-                  <p className={`text-3xl font-bold ${result.netWorth10Years > 0 ? 'text-green-400' : 'text-red-400'}`}>
-                    ${result.netWorth10Years.toLocaleString()}
-                  </p>
+                  <p className="text-gray-600 mb-1">Net Worth at 10 Years</p>
+                  <div className={`text-3xl font-bold ${result.netWorth10Years > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                    $<NumberTicker value={result.netWorth10Years} delay={1.0} />
+                  </div>
                 </div>
                 <div>
-                  <p className="text-gray-400 mb-1">Employment Rate</p>
-                  <p className="text-3xl font-bold text-yellow-400">
-                    {(result.employmentRate * 100).toFixed(0)}%
-                  </p>
+                  <p className="text-gray-600 mb-1">Employment Rate</p>
+                  <div className="text-3xl font-bold text-yellow-600">
+                    <NumberTicker value={result.employmentRate * 100} suffix="%" delay={1.1} />
+                  </div>
                 </div>
                 <div>
-                  <p className="text-gray-400 mb-1">Opportunity Cost</p>
-                  <p className="text-3xl font-bold text-orange-400">
-                    ${result.opportunityCost.toLocaleString()}
-                  </p>
+                  <p className="text-gray-600 mb-1">Opportunity Cost</p>
+                  <div className="text-3xl font-bold text-orange-600">
+                    $<NumberTicker value={result.opportunityCost} delay={1.2} />
+                  </div>
                 </div>
               </div>
             </CardContent>
@@ -446,22 +449,17 @@ export default function ResultsPage() {
             transition={{ delay: 1.5 }}
             className="mb-8"
           >
-            <Card className="bg-red-950/50 border-2 border-red-600 backdrop-blur-sm">
+            <Card className="bg-red-50 border-2 border-red-400 shadow-xl backdrop-blur-sm">
               <CardContent className="pt-6">
                 <div className="text-center">
-                  <Skull className="h-12 w-12 text-red-500 mx-auto mb-4 animate-pulse" />
-                  <h3 className="text-2xl font-black text-red-400 mb-2">
+                  <Skull className="h-12 w-12 text-red-600 mx-auto mb-4 animate-pulse" />
+                  <h3 className="text-2xl font-black text-red-600 mb-2">
                     Years of Life Lost to Debt
                   </h3>
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 2, type: "spring" }}
-                    className="text-6xl font-black text-red-500"
-                  >
-                    {getYearsLostToDebt()}
-                  </motion.div>
-                  <p className="text-gray-400 mt-2">
+                  <div className="text-6xl font-black text-red-600">
+                    <NumberTicker value={getYearsLostToDebt()} delay={2} />
+                  </div>
+                  <p className="text-gray-700 mt-2">
                     Years you'll spend stressed about money instead of living
                   </p>
                 </div>
@@ -480,10 +478,10 @@ export default function ResultsPage() {
               transition={{ delay: 0.5 }}
               className="mb-8"
             >
-              <Card className="bg-gray-900/90 border-yellow-600/50 backdrop-blur-sm">
+              <Card className="bg-white/90 border-yellow-400 border-2 shadow-xl backdrop-blur-sm">
                 <CardHeader>
-                  <CardTitle className="text-2xl text-white flex items-center gap-2">
-                    <DollarSign className="h-6 w-6 text-yellow-500" />
+                  <CardTitle className="text-2xl text-gray-900 flex items-center gap-2">
+                    <DollarSign className="h-6 w-6 text-yellow-600" />
                     What ${result.totalCost.toLocaleString()} Could Buy Instead
                   </CardTitle>
                 </CardHeader>
@@ -495,12 +493,12 @@ export default function ResultsPage() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.7 + index * 0.1 }}
-                        className="flex items-center gap-3 p-3 bg-yellow-950/30 rounded-lg border border-yellow-600/30"
+                        className="flex items-center gap-3 p-3 bg-yellow-50 rounded-lg border border-yellow-300"
                       >
-                        <item.icon className="h-8 w-8 text-yellow-500 flex-shrink-0" />
+                        <item.icon className="h-8 w-8 text-yellow-600 flex-shrink-0" />
                         <div>
-                          <p className="text-white font-semibold">{item.text}</p>
-                          <p className="text-yellow-400 text-sm">{item.amount}</p>
+                          <p className="text-gray-900 font-semibold">{item.text}</p>
+                          <p className="text-yellow-600 text-sm">{item.amount}</p>
                         </div>
                       </motion.div>
                     ))}
@@ -520,10 +518,10 @@ export default function ResultsPage() {
               exit={{ opacity: 0, y: -20 }}
               className="mb-8"
             >
-              <Card className="bg-gray-900/90 border-green-600/50 backdrop-blur-sm">
+              <Card className="bg-white/90 border-green-400 border-2 shadow-xl backdrop-blur-sm">
                 <CardHeader>
-                  <CardTitle className="text-2xl text-white flex items-center gap-2">
-                    <TrendingUp className="h-6 w-6 text-green-500" />
+                  <CardTitle className="text-2xl text-gray-900 flex items-center gap-2">
+                    <TrendingUp className="h-6 w-6 text-green-600" />
                     Better Alternatives to Consider
                   </CardTitle>
                 </CardHeader>
@@ -535,25 +533,25 @@ export default function ResultsPage() {
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.5 + index * 0.15 }}
-                        className="flex items-center justify-between p-4 bg-green-950/30 rounded-lg border border-green-600/30 hover:bg-green-950/50 transition-all cursor-pointer"
+                        className="flex items-center justify-between p-4 bg-green-50 rounded-lg border border-green-300 hover:bg-green-100 transition-all cursor-pointer"
                         onClick={() => {
                           analytics.featureEngagement('alternative-path', alt.name)
                         }}
                       >
                         <div className="flex items-center gap-3">
-                          <alt.icon className="h-8 w-8 text-green-500" />
+                          <alt.icon className="h-8 w-8 text-green-600" />
                           <div>
-                            <h4 className="text-white font-bold">{alt.name}</h4>
-                            <p className="text-green-400 text-sm">
+                            <h4 className="text-gray-900 font-bold">{alt.name}</h4>
+                            <p className="text-green-600 text-sm">
                               Scam Score™: {alt.scamScore} | Cost: ${alt.totalCost.toLocaleString()}
                             </p>
                           </div>
                         </div>
                         <div className="text-right">
-                          <p className="text-green-400 font-bold">
+                          <p className="text-green-600 font-bold">
                             {alt.breakevenYears} years
                           </p>
-                          <p className="text-gray-400 text-xs">to break even</p>
+                          <p className="text-gray-600 text-xs">to break even</p>
                         </div>
                       </motion.div>
                     ))}
@@ -562,7 +560,7 @@ export default function ResultsPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.5 }}
-                    className="text-center text-gray-400 text-sm mt-4"
+                    className="text-center text-gray-600 text-sm mt-4"
                   >
                     💡 Pro tip: Trade schools and bootcamps often have better ROI than traditional degrees
                   </motion.p>
@@ -579,30 +577,32 @@ export default function ResultsPage() {
           transition={{ delay: 1.2 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <Button
+          <CTAButton
             onClick={handleRecalculate}
-            className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-6 px-8"
+            className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800"
           >
             Try Different Path
-          </Button>
-          <Button
+          </CTAButton>
+          <ShimmerButton
             onClick={handleCompare}
-            variant="outline"
-            className="border-red-600 text-red-400 hover:bg-red-950 font-bold py-6 px-8"
+            className="px-8 py-6"
+            shimmerColor="#dc2626"
+            background="transparent"
           >
             Compare Paths
-          </Button>
-          <Button
+          </ShimmerButton>
+          <ShimmerButton
             onClick={() => {
               analytics.shareButtonClicked('results-page')
               setShowShareModal(true)
             }}
-            variant="outline"
-            className="border-gray-600 text-gray-400 hover:bg-gray-900 font-bold py-6 px-8"
+            className="px-8 py-6"
+            shimmerColor="#9ca3af"
+            background="transparent"
           >
             <Share2 className="h-4 w-4 mr-2" />
             Share Results
-          </Button>
+          </ShimmerButton>
         </motion.div>
 
         {/* Bottom Warning */}
@@ -612,7 +612,7 @@ export default function ResultsPage() {
           transition={{ delay: 1.4 }}
           className="mt-8 text-center"
         >
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-600 text-sm">
             * Calculations based on current market data and employment statistics. 
             Individual results may vary. This tool is for educational purposes only.
           </p>

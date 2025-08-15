@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { Footer } from '@/components/footer'
 import ErrorBoundary from '@/components/error-boundary'
+import { Analytics } from '@vercel/analytics/next'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -60,6 +61,7 @@ export default function RootLayout({
             <Footer />
           </div>
         </ErrorBoundary>
+        <Analytics />
       </body>
     </html>
   )
