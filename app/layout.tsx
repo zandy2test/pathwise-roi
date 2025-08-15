@@ -58,7 +58,6 @@ export default function RootLayout({
         <ErrorBoundary>
           <div className="min-h-screen bg-background flex flex-col">
             {children}
-            <Footer />
           </div>
         </ErrorBoundary>
         <Analytics />
