@@ -7,18 +7,26 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-15.2.4-black)](https://nextjs.org/)
 
-Calculate when your education investment pays off. Compare college degrees, trade schools, bootcamps, and work paths to find your optimal education ROI.
+Calculate when your education investment pays off with the **Scam Score™** algorithm. Compare college degrees, trade schools, bootcamps, and work paths to find your optimal education ROI.
 
 ## 🚀 Live Demo
 
-Visit [pathwiseroi.com](https://pathwiseroi.com) (coming soon)
+Visit [https://pathwise-roi.vercel.app/](https://pathwise-roi.vercel.app/) - Live Now!
 
 ## 📚 Overview
 
-PathwiseROI is an education investment calculator that helps students and parents make data-driven decisions about education paths. It calculates the break-even point for different education investments and provides clear, actionable insights.
+PathwiseROI is a data-driven education investment calculator featuring the **Scam Score™** algorithm that helps students and parents make informed decisions about education paths. With a clean, professional light theme and edgy messaging, it calculates the break-even point for different education investments and provides clear, actionable insights.
+
+### Current Design
+
+- **Theme**: Professional light/white theme with blue accents
+- **Branding**: Prominent Scam Score™ terminology throughout
+- **Messaging**: Data-driven approach with provocative \"scam detection\" angle
+- **Stats Display**: $1.7T student debt, 73% negative ROI, 42% underemployed
 
 ### Key Features
 
+- **Scam Score™ Algorithm**: Proprietary calculation that rates education ROI from \"Elite Investment\" to \"Total Scam\"
 - **ROI Calculator**: Calculate when your education investment breaks even with 10-year projections
 - **Path Comparison**: Compare multiple education paths side-by-side with winner determination
 - **Timeline Visualization**: Interactive graphs showing your journey from debt to profitability
@@ -26,17 +34,19 @@ PathwiseROI is an education investment calculator that helps students and parent
 - **Real Data**: Based on actual salary data and education costs for 20+ paths
 - **Location Intelligence**: Salary adjustments for 30+ cities
 - **Mobile Responsive**: Works perfectly on all devices
-- **Analytics**: Comprehensive event tracking and conversion monitoring
+- **Magic UI Components**: Animated gradient text, shimmer buttons, and number tickers
+- **Analytics**: Comprehensive event tracking and conversion monitoring (partial implementation)
 
 ## 🛠 Tech Stack
 
 - **Framework**: Next.js 15.2.4 (App Router)
 - **Language**: TypeScript 5
 - **Styling**: Tailwind CSS 3.4.17
-- **UI Components**: Radix UI (via shadcn/ui)
+- **UI Components**: Radix UI (via shadcn/ui) + Magic UI components
+- **Animations**: Framer Motion
 - **Graphs**: Recharts for timeline visualizations
 - **Deployment**: Vercel
-- **Analytics**: Custom analytics system + Vercel Analytics ready
+- **Analytics**: Vercel Analytics (partial implementation)
 
 ## 🏃‍♂️ Getting Started
 
