@@ -7,7 +7,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import PathBuilder from '@/components/path-builder';
 import ROITimeline from '@/components/roi-timeline';
 import { GlossaryTerm } from '@/components/glossary-term';
-import { Footer } from '@/components/footer';
 import { calculateROI, comparePaths } from '@/lib/calculator';
 import { validateCalculatorInputs } from '@/lib/validation';
 import { educationPaths, viralComparisons } from '@/lib/data';
@@ -78,14 +77,6 @@ export default function HomePage() {
     const calculationResult = calculateROI(inputs1);
     setResult1(calculationResult);
     setMode('calculator');
-
-    // Auto-scroll to results
-    setTimeout(() => {
-      const resultsElement = document.getElementById('results');
-      if (resultsElement) {
-        resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 100);
 
     // Track analytics
     const path = educationPaths[inputs1.path];
@@ -201,27 +192,43 @@ export default function HomePage() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <a href="#top" className="flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <AlertTriangle className="h-6 w-6 text-blue-600" />
               <span className="text-xl font-bold text-gray-900">PathwiseROI</span>
               <span className="text-sm text-blue-600 font-medium">Scam Score™</span>
-            </a>
-            <ShimmerButton
-              onClick={() => setShowPremiumModal(true)}
-              className="px-4 py-2"
-              shimmerColor="rgba(59, 130, 246, 0.3)"
-              background="linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%)"
-            >
-              <Crown className="h-4 w-4 mr-2" />
-              Premium
-            </ShimmerButton>
+            </div>
+            <div className="flex items-center gap-4">
+              <Button
+                variant="ghost"
+                onClick={() => setMode('intro')}
+                className="text-gray-700 hover:text-blue-600"
+              >
+                Home
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => setMode('calculator')}
+                className="text-gray-700 hover:text-blue-600"
+              >
+                Calculate
+              </Button>
+              <ShimmerButton
+                onClick={() => setShowPremiumModal(true)}
+                className="px-4 py-2"
+                shimmerColor="rgba(59, 130, 246, 0.3)"
+                background="linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%)"
+              >
+                <Crown className="h-4 w-4 mr-2" />
+                Premium
+              </ShimmerButton>
+            </div>
           </div>
         </div>
       </nav>
 
       {/* HERO SECTION - Light Theme with Scam Score Branding */}
       {mode === 'intro' && (
-        <section id="top" className="pt-24 pb-20">
+        <section className="pt-24 pb-20">
           <div className="container mx-auto px-4 text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -329,7 +336,8 @@ export default function HomePage() {
       )}
 
       {/* FEATURE CARDS SECTION - Light Theme */}
-      <section className="py-20 bg-white">
+      {mode === 'intro' && (
+        <section className="py-20 bg-white">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0 }}
@@ -469,10 +477,11 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+      )}
 
       {/* Calculator/Comparison Section - Light Theme */}
       {(mode === 'calculator' || mode === 'compare') && (
-        <div id="calculator" className="container mx-auto px-4 py-24">
+        <div className="container mx-auto px-4 py-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -490,7 +499,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className={`grid ${showComparison ? 'lg:grid-cols-1' : 'lg:grid-cols-3'} gap-8`}>
+            <div className={`grid ${showComparison ? 'lg:grid-cols-2' : 'lg:grid-cols-3'} gap-8`}>
               {/* Path 1 Input */}
               <Card
                 className={`bg-white shadow-xl border-2 ${
@@ -553,8 +562,7 @@ export default function HomePage() {
 
               {/* Results Section */}
               {!showComparison && result1 && (
-                <div id="results" className="lg:col-span-2">
-                <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 shadow-xl">
+                <Card className="lg:col-span-2 bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 shadow-xl">
                   <CardHeader>
                     <CardTitle className="text-2xl">Your Scam Score™ Results</CardTitle>
                     <div className="flex gap-2 mt-2">
@@ -651,20 +659,8 @@ export default function HomePage() {
                         />
                       </p>
                     </div>
-
-                    {/* ROI Timeline Chart */}
-                    <div className="bg-white rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <LineChart className="h-4 w-4 text-purple-600" />
-                        <p className="text-sm font-medium text-gray-600">
-                          ROI Timeline
-                        </p>
-                      </div>
-                      <ROITimeline result={result1} pathName="Your Path" />
-                    </div>
                   </CardContent>
                 </Card>
-                </div>
               )}
             </div>
 
@@ -766,28 +762,6 @@ export default function HomePage() {
                         </div>
                       </CardContent>
                     </Card>
-                  </div>
-
-                  {/* ROI Timeline Charts for Comparison */}
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="bg-white rounded-lg border-2 border-gray-200 p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <LineChart className="h-4 w-4 text-purple-600" />
-                        <p className="text-sm font-medium text-gray-600">
-                          Path 1 ROI Timeline
-                        </p>
-                      </div>
-                      <ROITimeline result={comparison.result1} pathName="Path 1" />
-                    </div>
-                    <div className="bg-white rounded-lg border-2 border-gray-200 p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <LineChart className="h-4 w-4 text-purple-600" />
-                        <p className="text-sm font-medium text-gray-600">
-                          Path 2 ROI Timeline
-                        </p>
-                      </div>
-                      <ROITimeline result={comparison.result2} pathName="Path 2" />
-                    </div>
                   </div>
                 </motion.div>
               </AnimatePresence>
@@ -901,9 +875,6 @@ export default function HomePage() {
           </motion.div>
         </AnimatePresence>
       )}
-
-      {/* Footer */}
-      <Footer onPremiumClick={() => setShowPremiumModal(true)} />
     </div>
   );
 }

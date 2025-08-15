@@ -54,24 +54,11 @@ export function FloatingNavbar({ className }: FloatingNavbarProps) {
             </Link>
             
             <div className="flex items-center gap-6">
-              <Link 
-                href="/calculate"
+              <button 
                 className="text-premium-text-secondary hover:text-premium-text-primary transition-colors"
               >
-                Calculate
-              </Link>
-              <Link 
-                href="/how-it-works"
-                className="text-premium-text-secondary hover:text-premium-text-primary transition-colors"
-              >
-                How It Works
-              </Link>
-              <Link 
-                href="/results"
-                className="text-premium-text-secondary hover:text-premium-text-primary transition-colors"
-              >
-                Results
-              </Link>
+                Premium
+              </button>
             </div>
           </nav>
         </motion.div>
