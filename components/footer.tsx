@@ -68,7 +68,7 @@ export function Footer({ onPremiumClick }: FooterProps = {}) {
         <div className="mt-8 pt-6 border-t border-gray-200">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-600">
-              © {currentYear} PathwiseROI. All rights reserved.
+              © {currentYear} PathwiseROI. All rights reserved. | v1.2.7 (8/16 3:13PM)
             </p>
             <p className="text-sm text-gray-600 flex items-center gap-1">
               Made with <Heart className="h-3 w-3 text-red-500 fill-red-500" /> for students everywhere
