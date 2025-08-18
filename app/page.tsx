@@ -18,6 +18,9 @@ import type { CalculatorInputs, CalculationResult } from '@/lib/types';
 import { AnimatedGradientHeading } from '@/components/magic/animated-gradient-text';
 import { CTAButton, PremiumButton, ShimmerButton } from '@/components/magic/shimmer-button';
 import { NumberTicker } from '@/components/magic/number-ticker';
+import { EmailCaptureModal } from '@/components/email-capture-modal';
+import { TestimonialsSection } from '@/components/testimonials-section';
+import { SocialProofSection } from '@/components/social-proof-section';
 import {
   TrendingUp,
   Shield,
@@ -927,6 +930,12 @@ export default function HomePage() {
         </div>
       )}
 
+      {/* Social Proof Section */}
+      <SocialProofSection />
+
+      {/* Testimonials Section */}
+      <TestimonialsSection />
+
       {/* Premium CTA Section - Redesigned */}
       <section className="py-20 bg-gradient-to-br from-purple-600 via-blue-600 to-cyan-600">
         <div className="container mx-auto px-4">
@@ -1037,97 +1046,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Premium Modal - Enhanced */}
-      {showPremiumModal && (
-        <AnimatePresence>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-            onClick={() => setShowPremiumModal(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Card className="max-w-2xl w-full bg-white shadow-2xl">
-                <CardHeader className="relative">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-2 top-2"
-                    onClick={() => setShowPremiumModal(false)}
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                  <div className="flex items-center gap-3 mb-2">
-                    <Crown className="h-8 w-8 text-yellow-500" />
-                    <CardTitle className="text-2xl text-gray-900">
-                      Unlock Premium Scam Detection
-                    </CardTitle>
-                  </div>
-                  <CardDescription className="text-gray-600 text-base">
-                    Get comprehensive analysis and advanced features
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  {/* Premium features grid */}
-                  <div className="grid grid-cols-2 gap-4">
-                    {[
-                      { icon: BarChart3, title: '20-Year Projections', desc: 'Extended financial timeline' },
-                      { icon: Brain, title: 'AI Career Analysis', desc: 'ML-powered path optimization' },
-                      { icon: DollarSign, title: 'Salary Benchmarks', desc: 'Industry-specific data' },
-                      { icon: Target, title: 'Custom Recommendations', desc: 'Personalized degree advice' },
-                      { icon: LineChart, title: 'ROI Optimization', desc: 'Maximize your returns' },
-                      { icon: Shield, title: 'Risk Assessment', desc: 'Market volatility analysis' },
-                      { icon: Zap, title: 'Unlimited Comparisons', desc: 'Compare all paths' },
-                      { icon: AlertCircle, title: 'Scam Alerts', desc: 'Real-time market warnings' },
-                    ].map(({ icon: Icon, title, desc }, index) => (
-                      <motion.div
-                        key={title}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                        className="flex gap-3"
-                      >
-                        <Icon className="h-5 w-5 text-blue-600 mt-1 flex-shrink-0" />
-                        <div>
-                          <p className="font-semibold text-gray-900 text-sm">{title}</p>
-                          <p className="text-xs text-gray-600">{desc}</p>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-
-                  <div className="border-t border-gray-200 pt-4">
-                    <div className="text-center mb-4">
-                      <p className="text-3xl font-bold text-gray-900">$9.99</p>
-                      <p className="text-sm text-gray-600">per month</p>
-                    </div>
-                    <PremiumButton
-                      className="w-full bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500"
-                      onClick={() => {
-                        analytics.premiumClicked('premium_modal');
-                        alert('Payment integration would be implemented here');
-                        setShowPremiumModal(false);
-                      }}
-                    >
-                      Get Premium Access
-                    </PremiumButton>
-                    <p className="text-xs text-gray-500 text-center mt-2">
-                      Cancel anytime. 30-day money-back guarantee.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </motion.div>
-        </AnimatePresence>
-      )}
+      {/* Email Capture Modal */}
+      <EmailCaptureModal 
+        showModal={showPremiumModal} 
+        setShowModal={setShowPremiumModal} 
+      />
 
       {/* Footer */}
       <Footer onPremiumClick={() => setShowPremiumModal(true)} />
