@@ -51,17 +51,21 @@ export default async function handler(req, res) {
     console.log(`User-Agent: ${req.headers['user-agent']}`);
     console.log('========================================');
     
-    // Try Vercel KV if available
-    try {
-      const { kv } = await import('@vercel/kv');
-      if (kv) {
-        await kv.hset('waitlist', email, timestamp);
-        await kv.incr('waitlist_count');
-        console.log('✅ Stored in Vercel KV');
+    // Try Vercel KV if available (only in production)
+    if (process.env.NODE_ENV === 'production') {
+      try {
+        const { kv } = await import('@vercel/kv');
+        if (kv) {
+          await kv.hset('waitlist', email, timestamp);
+          await kv.incr('waitlist_count');
+          console.log('✅ Stored in Vercel KV');
+        }
+      } catch (_) {
+        // KV not configured - that's okay, logs are enough for MVP
+        console.log('ℹ️ Vercel KV not configured - using logs only');
       }
-    } catch (kvError) {
-      // KV not configured - that's okay, logs are enough for MVP
-      console.log('ℹ️ Vercel KV not configured - using logs only');
+    } else {
+      console.log('📝 Local development - email logged to console');
     }
 
     res.status(200).json({ 
