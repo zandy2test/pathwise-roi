@@ -6,19 +6,19 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import PathBuilder from '@/components/path-builder';
 import ROITimeline from '@/components/roi-timeline';
-import { GlossaryTerm } from '@/components/glossary-term';
 import { Footer } from '@/components/footer';
-import { calculateROI, comparePaths } from '@/lib/calculator';
+import { LoanPaymentCalculator } from '@/components/loan-payment-calculator';
+import { CareerTrajectoryChart } from '@/components/career-trajectory-chart';
+import { AIRiskIndicator } from '@/components/ai-risk-indicator';
+import { calculateROI } from '@/lib/calculator';
 import { validateCalculatorInputs } from '@/lib/validation';
-import { educationPaths, viralComparisons } from '@/lib/data';
+import { educationPaths } from '@/lib/data';
 import analytics from '@/lib/analytics';
 import type { CalculatorInputs, CalculationResult } from '@/lib/types';
-import { AnimatedGradientHeading, AnimatedGradientText } from '@/components/magic/animated-gradient-text';
+import { AnimatedGradientHeading } from '@/components/magic/animated-gradient-text';
 import { CTAButton, PremiumButton, ShimmerButton } from '@/components/magic/shimmer-button';
-import { NumberTicker, ROITicker } from '@/components/magic/number-ticker';
+import { NumberTicker } from '@/components/magic/number-ticker';
 import {
-  ArrowRight,
-  Calculator,
   TrendingUp,
   Shield,
   Calendar,
@@ -32,25 +32,24 @@ import {
   X,
   Sparkles,
   BarChart3,
-  GraduationCap,
-  Briefcase,
   Zap,
   Target,
   Brain,
   LineChart,
   AlertTriangle,
-  TrendingDown,
 } from 'lucide-react';
 
 export default function HomePage() {
   const [port, setPort] = useState<string>('....');
-  const [mode, setMode] = useState<'intro' | 'calculator' | 'compare'>('intro');
   const [inputs1, setInputs1] = useState<CalculatorInputs>({
     path: '',
     location: '',
     schoolTier: '',
     livingCost: '',
     scholarships: 0,
+    loanInterestRate: 7,
+    degreeLevel: 'bachelors',
+    region: '',
   });
   const [inputs2, setInputs2] = useState<CalculatorInputs>({
     path: '',
@@ -58,12 +57,14 @@ export default function HomePage() {
     schoolTier: '',
     livingCost: '',
     scholarships: 0,
+    loanInterestRate: 7,
+    degreeLevel: 'bachelors',
+    region: '',
   });
   const [errors1, setErrors1] = useState<string[]>([]);
   const [errors2, setErrors2] = useState<string[]>([]);
   const [result1, setResult1] = useState<CalculationResult | null>(null);
   const [result2, setResult2] = useState<CalculationResult | null>(null);
-  const [comparison, setComparison] = useState<ReturnType<typeof comparePaths> | null>(null);
   const [showComparison, setShowComparison] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showPremiumModal, setShowPremiumModal] = useState(false);
@@ -179,45 +180,27 @@ export default function HomePage() {
     }
   };
 
-  const handleQuickCompare = (path1: string, path2: string) => {
-    const defaultInputs = {
-      location: 'nyc',
-      schoolTier: 'average',
-      livingCost: 'oncampus',
-      scholarships: 0,
-    };
-
-    setInputs1({ ...defaultInputs, path: path1 });
-    setInputs2({ ...defaultInputs, path: path2 });
-    setShowComparison(true);
-    setMode('compare');
-
-    setTimeout(() => {
-      const result = comparePaths(
-        { ...defaultInputs, path: path1 },
-        { ...defaultInputs, path: path2 }
-      );
-      setComparison(result);
-      setResult1(result.result1);
-    }, 100);
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-blue-50">
       {/* Version Indicator for Debugging */}
       <div className="fixed bottom-4 left-4 z-50 bg-black/90 text-white px-3 py-1 rounded-full text-xs font-mono">
-        v1.2.7 | 8/16 3:13PM | Port: {port}
+        v1.3.0 | 8/18 2:58PM | Port: {port}
       </div>
 
       {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <a href="#top" className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+            >
               <AlertTriangle className="h-6 w-6 text-blue-600" />
               <span className="text-xl font-bold text-gray-900">PathwiseROI</span>
               <span className="text-sm text-blue-600 font-medium">Scam Score</span>
-            </a>
+            </button>
             <ShimmerButton
               onClick={() => setShowPremiumModal(true)}
               className="px-4 py-2"
@@ -231,7 +214,9 @@ export default function HomePage() {
       </nav>
 
       {/* HERO SECTION - Progressive Disclosure Design */}
-      <section id="top" className="pt-32 pb-20 bg-gradient-to-b from-red-50 via-white to-white">
+      <section id="top" className="pt-32 pb-20 bg-gradient-to-br from-blue-100 via-blue-50 to-cyan-100 relative overflow-hidden">
+        {/* Background gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-200/30 via-transparent to-cyan-200/30" />
         {/* Red Warning Banner at Top */}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
@@ -258,7 +243,7 @@ export default function HomePage() {
           </motion.div>
         </motion.div>
 
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto px-4 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -308,9 +293,101 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Popular Comparisons Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">
+              📊 Eye-Opening Comparisons
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {[
+                { title: "Welders make more than lawyers until age 35", path1: "trades_welding", path2: "law_degree" },
+                { title: "Nurses beat MBAs by year 7", path1: "nursing_bachelor", path2: "mba_top20" },
+                { title: "Plumbers earn more than liberal arts grads forever", path1: "trades_plumbing", path2: "college_liberal_arts" },
+                { title: "Community college saves $60K, same outcome", path1: "community_transfer", path2: "college_business" },
+                { title: "Bootcamp profitable 44 months before CS degrees", path1: "bootcamp_coding", path2: "college_tech" }
+              ].map((comparison, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Card
+                    className="cursor-pointer hover:shadow-xl transition-all hover:scale-105 bg-white border-2 border-gray-200 hover:border-blue-400"
+                    onClick={() => {
+                      // Set up path 1 inputs
+                      const newInputs1 = {
+                        path: comparison.path1,
+                        location: 'nyc',
+                        schoolTier: 'standard',
+                        livingCost: 'offcampus',
+                        scholarships: 0,
+                        loanInterestRate: 7,
+                        degreeLevel: 'bachelors',
+                        region: '',
+                        // Parse the path to get education type details
+                        educationType: comparison.path1.split('_')[0],
+                        field: '',
+                        program: ''
+                      };
+                      
+                      // Set up path 2 inputs
+                      const newInputs2 = {
+                        path: comparison.path2,
+                        location: 'nyc',
+                        schoolTier: 'standard',
+                        livingCost: 'offcampus',
+                        scholarships: 0,
+                        loanInterestRate: 7,
+                        degreeLevel: 'bachelors',
+                        region: '',
+                        // Parse the path to get education type details
+                        educationType: comparison.path2.split('_')[0],
+                        field: '',
+                        program: ''
+                      };
+                      
+                      // Update inputs to reflect in UI
+                      setInputs1(newInputs1);
+                      setInputs2(newInputs2);
+                      setShowComparison(true);
+                      
+                      // Calculate both results
+                      const result1New = calculateROI(newInputs1);
+                      const result2New = calculateROI(newInputs2);
+                      
+                      setResult1(result1New);
+                      setResult2(result2New);
+                      
+                      // Scroll to results
+                      setTimeout(() => {
+                        const resultsElement = document.getElementById('results');
+                        if (resultsElement) {
+                          resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                      }, 100);
+                    }}
+                  >
+                    <CardContent className="p-4">
+                      <p className="font-semibold text-gray-800">{comparison.title}</p>
+                      <p className="text-sm text-blue-600 mt-2">Click to see comparison →</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Calculator Section - Always Visible */}
-      <div id="calculator" className="container mx-auto px-4 py-24">
+      <div id="calculator" className="container mx-auto px-4 py-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -343,12 +420,45 @@ export default function HomePage() {
                     title=""
                     description=""
                   />
-                  <CTAButton 
-                    onClick={handleCalculate} 
-                    className="w-full mt-6 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700"
-                  >
-                    Calculate Scam Score
-                  </CTAButton>
+                  <div className="flex gap-2 mt-6">
+                    <CTAButton 
+                      onClick={handleCalculate} 
+                      className="flex-1 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700"
+                    >
+                      Calculate Scam Score
+                    </CTAButton>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setInputs1({
+                          path: '',
+                          location: '',
+                          schoolTier: '',
+                          livingCost: '',
+                          scholarships: 0,
+                          loanInterestRate: 7,
+                          degreeLevel: 'bachelors',
+                          region: '',
+                        });
+                        setResult1(null);
+                        setShowComparison(false);
+                        setResult2(null);
+                        setInputs2({
+                          path: '',
+                          location: '',
+                          schoolTier: '',
+                          livingCost: '',
+                          scholarships: 0,
+                          loanInterestRate: 7,
+                          degreeLevel: 'bachelors',
+                          region: '',
+                        });
+                      }}
+                      className="px-4"
+                    >
+                      Clear
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -465,6 +575,21 @@ export default function HomePage() {
                     </div>
                   </CardContent>
                 </Card>
+
+                {/* New Phase 3 Components */}
+                <div className="mt-6 space-y-6">
+                  {/* Loan Payment Calculator */}
+                  <LoanPaymentCalculator 
+                    result={result1} 
+                    loanInterestRate={inputs1.loanInterestRate || 7} 
+                  />
+                  
+                  {/* Career Trajectory Chart */}
+                  <CareerTrajectoryChart inputs={inputs1} result={result1} />
+                  
+                  {/* AI Risk Indicator */}
+                  <AIRiskIndicator inputs={inputs1} />
+                </div>
                 </div>
               ) : (
                 <div id="results" className="lg:col-span-2">

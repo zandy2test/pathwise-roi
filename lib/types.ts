@@ -44,9 +44,12 @@ export interface CalculatorInputs {
   field?: string
   program?: string
   location: string
+  region?: string // For "Other" location
   schoolTier: string
   livingCost: string
   scholarships?: number
+  loanInterestRate?: number // New field for loan interest
+  degreeLevel?: string // New field for degree level
 }
 
 export interface CalculationResult {
