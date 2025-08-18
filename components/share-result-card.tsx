@@ -38,7 +38,7 @@ export default function ShareResultCard({
 
   // Generate QR code on mount
   useEffect(() => {
-    QRCode.toDataURL('https://collegescamcalculator.com', {
+    QRCode.toDataURL('https://collegescam.io', {
       width: 100,
       margin: 1,
       color: {
@@ -59,7 +59,7 @@ export default function ShareResultCard({
         `⏰ Years to break even: ${breakevenYears}\n` +
         `🤖 AI replacement risk: ${aiRisk}%\n\n` +
         `Is college scamming YOU? Find out:\n` +
-        `CollegeScamCalculator.com`
+        `collegescam.io`
       )
     } else {
       setShareText(
@@ -150,7 +150,7 @@ export default function ShareResultCard({
         await navigator.share({
           title: 'My College Scam Score™',
           text: shareText,
-          url: 'https://collegescamcalculator.com'
+          url: 'https://collegescam.io'
         })
         // Track successful share
         analytics.shareAttempted('webshare', undefined, true)
@@ -413,7 +413,7 @@ export default function ShareResultCard({
                         className="font-bold text-white"
                         style={{ fontSize: format === 'tiktok' ? '24px' : '18px' }}
                       >
-                        CollegeScamCalculator.com
+                        collegescam.io
                       </p>
                       <p 
                         className="text-gray-400"

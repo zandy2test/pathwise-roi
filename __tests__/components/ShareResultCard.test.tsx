@@ -17,9 +17,9 @@ jest.mock('html2canvas', () => jest.fn().mockResolvedValue({
 // Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>
+    div: ({ children, ...props }: { children: React.ReactNode, [key: string]: unknown }) => <div {...props}>{children}</div>
   },
-  AnimatePresence: ({ children }: any) => <>{children}</>
+  AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>
 }))
 
 // Mock URL.createObjectURL and URL.revokeObjectURL
@@ -296,7 +296,7 @@ describe('ShareResultCard Component', () => {
         expect(mockShare).toHaveBeenCalledWith({
           title: 'My College Scam Score™',
           text: expect.stringContaining('THE VERDICT IS IN'),
-          url: 'https://collegescamcalculator.com'
+          url: 'https://collegescam.io'
         })
       })
     })
@@ -304,7 +304,7 @@ describe('ShareResultCard Component', () => {
     it('should fall back to clipboard when share API not available', () => {
       // Remove share API
       const originalShare = navigator.share
-      delete (navigator as any).share
+      delete (navigator as { share?: typeof navigator.share }).share
 
       const mockClipboard = {
         writeText: jest.fn().mockResolvedValue(undefined)
@@ -327,12 +327,12 @@ describe('ShareResultCard Component', () => {
 
   describe('QR Code', () => {
     it('should generate QR code on mount', async () => {
-      const QRCode = require('qrcode')
+      const QRCode = await import('qrcode')
       render(<ShareResultCard {...defaultProps} />)
 
       await waitFor(() => {
         expect(QRCode.toDataURL).toHaveBeenCalledWith(
-          'https://collegescamcalculator.com',
+          'https://collegescam.io',
           expect.objectContaining({
             width: 100,
             margin: 1
