@@ -60,7 +60,7 @@ export default async function handler(req, res) {
           await kv.incr('waitlist_count');
           console.log('✅ Stored in Vercel KV');
         }
-      } catch (_) {
+      } catch {
         // KV not configured - that's okay, logs are enough for MVP
         console.log('ℹ️ Vercel KV not configured - using logs only');
       }
