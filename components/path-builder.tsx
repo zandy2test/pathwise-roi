@@ -77,20 +77,20 @@ export default function PathBuilder({
   const [field, setField] = useState<string>(inputs.field || '')
   const [program, setProgram] = useState<string>(inputs.program || '')
 
-  // Initialize from existing path if available AND reset when path is cleared
+  // Effect 1: Handle external inputs (from comparison cards) - sync TO local state
   useEffect(() => {
     // When path is set directly (e.g., from comparison cards)
     if (inputs.path) {
       const mapping = getPathFromMapping(inputs.path)
       if (mapping) {
-        // Only update if values are different to avoid infinite loops
+        // Only update if values are different to avoid unnecessary updates
         if (mapping.type !== educationType || mapping.field !== field || mapping.program !== program) {
           setEducationType(mapping.type)
           setField(mapping.field)
           setProgram(mapping.program)
         }
       }
-    } 
+    }
     // When inputs are cleared (path is empty)
     else if (!inputs.path && !inputs.educationType && !inputs.field && !inputs.program) {
       // Only clear if currently has values
@@ -100,21 +100,39 @@ export default function PathBuilder({
         setProgram('')
       }
     }
-    // When education type is set from inputs but not local state
-    else if (inputs.educationType && !educationType) {
-      setEducationType(inputs.educationType)
+    // Sync individual field changes from external inputs
+    else {
+      if (inputs.educationType && inputs.educationType !== educationType) {
+        setEducationType(inputs.educationType)
+      }
+      if (inputs.field && inputs.field !== field) {
+        setField(inputs.field)
+      }
+      if (inputs.program && inputs.program !== program) {
+        setProgram(inputs.program)
+      }
     }
-    // When field is set from inputs but not local state
-    else if (inputs.field && !field) {
-      setField(inputs.field)
-    }
-    // When program is set from inputs but not local state
-    else if (inputs.program && !program) {
-      setProgram(inputs.program)
-    }
-  }, [inputs.path, educationType, field, program])
+  }, [inputs.path, inputs.educationType, inputs.field, inputs.program])
 
-  // Update the path when selections change
+  // Effect 2: Handle local state changes (user selections) - sync TO parent inputs
+  useEffect(() => {
+    // Only update if local state differs from inputs to avoid unnecessary rerenders
+    const needsUpdate = 
+      educationType !== inputs.educationType ||
+      field !== inputs.field ||
+      program !== inputs.program
+
+    if (needsUpdate) {
+      setInputs({
+        ...inputs,
+        educationType,
+        field,
+        program
+      })
+    }
+  }, [educationType, field, program]) // Remove inputs and setInputs to prevent circular dependency
+
+  // Effect 3: Update path when selections change (combine with field sync to prevent conflicts)
   useEffect(() => {
     if (educationType && field && program) {
       const pathKey = buildPathKey(educationType, field, program)
@@ -128,7 +146,7 @@ export default function PathBuilder({
         })
       }
     }
-  }, [educationType, field, program, inputs, setInputs])
+  }, [educationType, field, program]) // Remove inputs and setInputs to prevent circular dependency
 
   const handleEducationTypeChange = (value: string) => {
     // Track analytics
