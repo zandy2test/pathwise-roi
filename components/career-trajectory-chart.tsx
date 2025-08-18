@@ -69,7 +69,7 @@ export function CareerTrajectoryChart({ inputs }: CareerTrajectoryChartProps) {
 
   if (!path || !chartData) return null;
   
-  const { years, educationSalaries, noDegreeSalaries, crossoverYear, salaryScale } = chartData;
+  const { educationSalaries, noDegreeSalaries, crossoverYear, salaryScale } = chartData;
 
   return (
     <Card className="bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200">
