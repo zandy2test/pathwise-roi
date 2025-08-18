@@ -8,6 +8,9 @@ import PathBuilder from '@/components/path-builder';
 import ROITimeline from '@/components/roi-timeline';
 import { GlossaryTerm } from '@/components/glossary-term';
 import { Footer } from '@/components/footer';
+import { LoanPaymentCalculator } from '@/components/loan-payment-calculator';
+import { CareerTrajectoryChart } from '@/components/career-trajectory-chart';
+import { AIRiskIndicator } from '@/components/ai-risk-indicator';
 import { calculateROI, comparePaths } from '@/lib/calculator';
 import { validateCalculatorInputs } from '@/lib/validation';
 import { educationPaths, viralComparisons } from '@/lib/data';
@@ -607,6 +610,21 @@ export default function HomePage() {
                     </div>
                   </CardContent>
                 </Card>
+
+                {/* New Phase 3 Components */}
+                <div className="mt-6 space-y-6">
+                  {/* Loan Payment Calculator */}
+                  <LoanPaymentCalculator 
+                    result={result1} 
+                    loanInterestRate={inputs1.loanInterestRate || 7} 
+                  />
+                  
+                  {/* Career Trajectory Chart */}
+                  <CareerTrajectoryChart inputs={inputs1} result={result1} />
+                  
+                  {/* AI Risk Indicator */}
+                  <AIRiskIndicator inputs={inputs1} />
+                </div>
                 </div>
               ) : (
                 <div id="results" className="lg:col-span-2">
