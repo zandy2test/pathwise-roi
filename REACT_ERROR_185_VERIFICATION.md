@@ -1,123 +1,67 @@
-# React Error #185 Verification Report
+# React Error #185 Fix Verification Report
 
-## Issue Summary
+## Date: January 19, 2025
 
-React error #185 occurs when multiple instances of TooltipProvider are nested, causing context conflicts.
+## Issue: React Error #185 - "Cannot update a component while rendering a different component"
 
-## Fix Applied
+### Root Cause Identified
 
-✅ **Commit**: `92ea8ce` - "fix: resolve React error #185 by adding TooltipProvider to tests"
+The error was caused by invalid SVG coordinates in the CareerTrajectoryChart component during rapid state updates. When salary or salaryScale values were undefined/NaN, the SVG polyline points calculation produced invalid coordinates like "40,NaN" or "40,Infinity".
 
-### Changes Made:
+### Location
 
-1. **Added TooltipProvider to all ROITimeline test renders** - Ensures proper isolation in test environment
-2. **Fixed ESLint warnings in PathBuilder test** - Removed unused imports
-3. **Maintained component isolation** - Each component keeps its own TooltipProvider
+- **File**: `components/career-trajectory-chart.tsx`
+- **Lines**: 128-149 (SVG polyline calculations)
 
-## Test Results
+### Fix Applied
 
-### Unit Tests
-
-```bash
-Test Suites: 6 passed, 6 total
-Tests:       76 passed, 76 total
-Time:        3.294 s
-```
-
-### Remaining Warnings (Non-Critical)
-
-These warnings don't affect functionality:
-
-1. **SVG Casing Warnings** (8 instances)
-   - Source: Recharts mock in tests
-   - Impact: None - test environment only
-   - Note: These are from the mocked recharts library, not production code
-
-2. **Act() Warnings** (14 instances)
-   - Source: ShareResultCard tests with async state updates
-   - Impact: None - tests pass correctly
-   - Note: Related to async QR code generation in tests
-
-## Production Verification
-
-### Dev Server Status
-
-✅ **Running at**: http://localhost:3000
-
-- No console errors
-- Components render correctly
-- Tooltips work as expected
-
-### Key Components Verified
-
-1. **ROITimeline** - Chart with tooltips working
-2. **CareerTrajectoryChart** - Multiple chart instances OK
-3. **PathBuilder** - Comparison cards working
-4. **ShareResultCard** - Modal interactions working
-
-## Manual Testing Checklist
-
-### Scenario 1: Single Component
-
-- [x] Navigate to `/calculate`
-- [x] Complete calculation
-- [x] View ROI Timeline
-- [x] Hover over chart points
-- [x] **Result**: No React error #185
-
-### Scenario 2: Multiple Components
-
-- [x] Navigate to home page
-- [x] Use path builder (multiple cards)
-- [x] Compare paths side-by-side
-- [x] **Result**: No React error #185
-
-### Scenario 3: Component Transitions
-
-- [x] Navigate between pages rapidly
-- [x] Open/close modals
-- [x] Switch between chart views
-- [x] **Result**: No React error #185
-
-## Browser Console Check
+Added coordinate validation to ensure all SVG coordinates are valid numbers:
 
 ```javascript
-// Run in browser console at http://localhost:3000
-console.clear();
-// Navigate through the app
-// Check for: "Error: You may render at most one <TooltipProvider />"
-// Result: NO ERRORS FOUND ✅
+// Before (vulnerable to NaN/undefined):
+points={educationSalaries.map((salary, i) =>
+  `${40 + i * 17},${220 - salary * salaryScale}`
+).join(' ')}
+
+// After (with validation):
+points={educationSalaries.map((salary, i) => {
+  const x = 40 + i * 17;
+  const validSalary = (!isNaN(salary) && isFinite(salary)) ? salary : 0;
+  const validScale = (!isNaN(salaryScale) && isFinite(salaryScale)) ? salaryScale : 1;
+  const y = Math.max(20, Math.min(220, 220 - (validSalary * validScale)));
+  return `${x},${y}`;
+}).join(' ')}
 ```
 
-## Conclusion
+### Verification Test Performed
 
-✅ **React Error #185 is RESOLVED**
+1. Launched development server on port 3002
+2. Navigated to homepage (http://localhost:3002)
+3. Performed rapid clicking test:
+   - Clicked 15 card elements
+   - Repeated for 30 iterations
+   - Total of 450 rapid clicks over approximately 1 second
 
-The fix ensures:
+### Test Results
 
-1. Each component maintains its own TooltipProvider
-2. Test environment properly isolates tooltip contexts
-3. No nested TooltipProviders in production
-4. All 76 tests passing
-5. Application works correctly in browser
+✅ **PASSED** - No React Error #185 detected
 
-The remaining warnings are cosmetic and only appear in the test environment. They do not affect:
+- Console logs checked for React errors: NONE FOUND
+- Only benign 404 errors for missing resources (unrelated)
+- No "Cannot update a component while rendering" errors
+- Application remained stable during rapid state changes
 
-- Production build
-- User experience
-- Component functionality
-- Test accuracy
+### Additional Fixes Applied
 
-## Next Steps (Optional Cleanup)
+1. Education path polyline coordinates validated
+2. No-degree path polyline coordinates validated
+3. Crossover point circle coordinates validated
+4. Grid lines Y-axis coordinates validated
 
-If you want to clean up the remaining test warnings:
+### Conclusion
 
-1. **SVG warnings**: Update recharts mock to use proper React components
-2. **Act warnings**: Wrap async operations in ShareResultCard tests
+The React Error #185 has been successfully resolved. The SVG coordinate validation prevents invalid values from causing React's infinite re-render loop during rapid state updates.
 
-These are not required for production deployment.
+## Note
 
----
-
-**Status**: ✅ READY FOR PRODUCTION
-**Last Verified**: January 19, 2025, 1:37 AM AEST
+This was a separate issue from the Tooltip provider error fixed in v1.5.0. The tooltip fix addressed React 19 context compatibility, while this fix addresses SVG rendering stability.

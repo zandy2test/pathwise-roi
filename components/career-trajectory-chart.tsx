@@ -85,8 +85,10 @@ export function CareerTrajectoryChart({ inputs }: CareerTrajectoryChartProps) {
           <svg width="100%" height="250" viewBox="0 0 400 250" className="overflow-visible">
             {/* Grid lines - Fix Y-axis overflow */}
             {[0, 50000, 100000, 150000, 200000].map((salary) => {
-              const yPos = Math.max(20, Math.min(220, 220 - (salary * salaryScale))); // Constrain Y position
-              const textYPos = Math.max(25, Math.min(225, 225 - (salary * salaryScale))); // Constrain text Y position
+              // Ensure salaryScale is valid, default to 1 if undefined/NaN
+              const validScale = (!isNaN(salaryScale) && isFinite(salaryScale)) ? salaryScale : 1;
+              const yPos = Math.max(20, Math.min(220, 220 - (salary * validScale))); // Constrain Y position
+              const textYPos = Math.max(25, Math.min(225, 225 - (salary * validScale))); // Constrain text Y position
               return (
                 <g key={salary}>
                   <line
@@ -126,9 +128,14 @@ export function CareerTrajectoryChart({ inputs }: CareerTrajectoryChartProps) {
 
             {/* Education path line */}
             <polyline
-              points={educationSalaries.map((salary, i) => 
-                `${40 + i * 17},${220 - salary * salaryScale}`
-              ).join(' ')}
+              points={educationSalaries.map((salary, i) => {
+                const x = 40 + i * 17;
+                // Ensure salary and salaryScale are valid numbers
+                const validSalary = (!isNaN(salary) && isFinite(salary)) ? salary : 0;
+                const validScale = (!isNaN(salaryScale) && isFinite(salaryScale)) ? salaryScale : 1;
+                const y = Math.max(20, Math.min(220, 220 - (validSalary * validScale)));
+                return `${x},${y}`;
+              }).join(' ')}
               fill="none"
               stroke="#4f46e5"
               strokeWidth="3"
@@ -136,9 +143,14 @@ export function CareerTrajectoryChart({ inputs }: CareerTrajectoryChartProps) {
 
             {/* No degree path line */}
             <polyline
-              points={noDegreeSalaries.map((salary, i) => 
-                `${40 + i * 17},${220 - salary * salaryScale}`
-              ).join(' ')}
+              points={noDegreeSalaries.map((salary, i) => {
+                const x = 40 + i * 17;
+                // Ensure salary and salaryScale are valid numbers
+                const validSalary = (!isNaN(salary) && isFinite(salary)) ? salary : 0;
+                const validScale = (!isNaN(salaryScale) && isFinite(salaryScale)) ? salaryScale : 1;
+                const y = Math.max(20, Math.min(220, 220 - (validSalary * validScale)));
+                return `${x},${y}`;
+              }).join(' ')}
               fill="none"
               stroke="#10b981"
               strokeWidth="3"
@@ -148,7 +160,12 @@ export function CareerTrajectoryChart({ inputs }: CareerTrajectoryChartProps) {
             {crossoverYear > 0 && (
               <circle
                 cx={40 + crossoverYear * 17}
-                cy={220 - educationSalaries[crossoverYear] * salaryScale}
+                cy={(() => {
+                  const salary = educationSalaries[crossoverYear];
+                  const validSalary = (!isNaN(salary) && isFinite(salary)) ? salary : 0;
+                  const validScale = (!isNaN(salaryScale) && isFinite(salaryScale)) ? salaryScale : 1;
+                  return Math.max(20, Math.min(220, 220 - (validSalary * validScale)));
+                })()}
                 r="5"
                 fill="#ef4444"
               />
