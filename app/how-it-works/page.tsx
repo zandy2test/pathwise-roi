@@ -318,7 +318,7 @@ export default function HowItWorksPage() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold mb-2">6. Avoid the Trap</h3>
-                <p className="text-gray-600 mb-3">
+                <p className="text-gray-800 mb-3">
                   Armed with the truth about education costs, scam scores, and real alternatives, you can avoid the debt trap. Share these eye-opening results with friends and family before they fall for the same expensive mistakes.
                 </p>
                 <div className="bg-indigo-50 p-4 rounded-lg">
@@ -486,7 +486,7 @@ export default function HowItWorksPage() {
                     </button>
                     {openFaq === index && (
                       <div className="px-6 pb-4">
-                        <p className="text-gray-600">{faq.answer}</p>
+                        <p className="text-gray-800">{faq.answer}</p>
                       </div>
                     )}
                   </div>

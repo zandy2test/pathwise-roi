@@ -181,7 +181,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-blue-50">
       {/* Version Indicator for Debugging */}
       <div className="fixed bottom-4 left-4 z-50 bg-black/90 text-white px-3 py-1 rounded-full text-xs font-mono">
-        CollegeScam.io v1.4.3 | Port: {port}
+        CollegeScam.io v1.5.0 | Port: {port}
       </div>
 
       {/* Navigation Bar */}
