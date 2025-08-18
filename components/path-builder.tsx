@@ -77,7 +77,7 @@ export default function PathBuilder({
   const [field, setField] = useState<string>(inputs.field || '')
   const [program, setProgram] = useState<string>(inputs.program || '')
 
-  // Initialize from existing path if available
+  // Initialize from existing path if available AND reset when path is cleared
   useEffect(() => {
     if (inputs.path && !educationType) {
       const mapping = getPathFromMapping(inputs.path)
@@ -86,8 +86,13 @@ export default function PathBuilder({
         setField(mapping.field)
         setProgram(mapping.program)
       }
+    } else if (!inputs.path && (educationType || field || program)) {
+      // Reset local state when inputs are cleared
+      setEducationType('')
+      setField('')
+      setProgram('')
     }
-  }, [inputs.path, educationType])
+  }, [inputs.path, educationType, field, program])
 
   // Update the path when selections change
   useEffect(() => {

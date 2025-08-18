@@ -220,28 +220,32 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-br from-red-100 via-orange-50 to-yellow-100 animate-gradient-shift" />
           <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-red-50/30 to-transparent animate-gradient-shift-reverse" />
         </div>
-        {/* Red Warning Banner at Top */}
+        {/* Red Warning Banner at Top - Solid and Prominent */}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="bg-gradient-to-r from-red-600 to-red-500 py-4 mb-12"
+          className="relative z-20 bg-red-600 py-6 mb-12 shadow-xl"
+          style={{
+            background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 50%, #991b1b 100%)',
+            boxShadow: '0 10px 25px rgba(220, 38, 38, 0.3)'
+          }}
         >
           <motion.div 
             animate={{ 
-              scale: [1, 1.01, 1],
+              scale: [1, 1.02, 1],
             }}
             transition={{ 
-              duration: 3,
+              duration: 2.5,
               repeat: Infinity,
               ease: "easeInOut"
             }}
             className="container mx-auto px-4 text-center"
           >
-            <p className="text-2xl md:text-3xl font-black text-white flex items-center justify-center gap-3">
-              <AlertTriangle className="h-8 w-8 animate-pulse" />
+            <p className="text-2xl md:text-4xl font-black text-white flex items-center justify-center gap-3 drop-shadow-lg">
+              <AlertTriangle className="h-8 w-8 md:h-10 md:w-10 animate-pulse" />
               WARNING: 73% OF DEGREES HAVE NEGATIVE ROI
-              <AlertTriangle className="h-8 w-8 animate-pulse" />
+              <AlertTriangle className="h-8 w-8 md:h-10 md:w-10 animate-pulse" />
             </p>
           </motion.div>
         </motion.div>
@@ -518,10 +522,10 @@ export default function HomePage() {
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    {/* Scam Score Display */}
-                    <div className="bg-white rounded-xl p-6 text-center">
-                      <p className="text-sm text-gray-600 mb-2">Your Scam Score</p>
-                      <div className="text-5xl font-black">
+                    {/* Scam Score Display with Detailed Explanation */}
+                    <div className="bg-white rounded-xl p-6">
+                      <p className="text-sm text-gray-600 mb-2 text-center">Your Scam Score</p>
+                      <div className="text-5xl font-black text-center mb-4">
                         {result1.breakevenMonths > 120 ? (
                           <span className="text-red-600">EXTREME SCAM</span>
                         ) : result1.breakevenMonths > 60 ? (
@@ -531,6 +535,22 @@ export default function HomePage() {
                         ) : (
                           <span className="text-green-600">LEGITIMATE</span>
                         )}
+                      </div>
+                      
+                      {/* Detailed Explanation */}
+                      <div className="bg-gray-50 rounded-lg p-4">
+                        <p className="text-sm font-medium text-gray-900 mb-2">Why this score?</p>
+                        <p className="text-xs text-gray-700 leading-relaxed">
+                          {result1.breakevenMonths > 120 ? (
+                            <>🚨 <strong>EXTREME SCAM:</strong> You'll NEVER break even on this investment. After 10+ years, you're still losing money compared to working immediately. The education costs far exceed any salary benefits, creating a financial trap that grows worse over time.</>
+                          ) : result1.breakevenMonths > 60 ? (
+                            <>⚠️ <strong>HIGH RISK:</strong> It takes over 5 years to break even. This is a questionable investment that ties up your money and time for too long. Many people change careers before seeing returns, making this a risky bet on your future.</>
+                          ) : result1.breakevenMonths > 36 ? (
+                            <>🤔 <strong>MODERATE RISK:</strong> Break-even takes 3-5 years. While not terrible, this investment has significant opportunity costs. Consider if you could achieve similar results through alternative paths with less debt.</>
+                          ) : (
+                            <>✅ <strong>LEGITIMATE:</strong> This education pays off within 3 years. The investment makes financial sense with reasonable payback period and positive long-term returns. This appears to be a sound financial decision.</>
+                          )}
+                        </p>
                       </div>
                     </div>
 
@@ -569,6 +589,33 @@ export default function HomePage() {
                           ? 'Never (Scam Alert!)'
                           : `${result1.breakevenMonths} months`}
                       </p>
+                      
+                      {/* Breakeven Explanation */}
+                      {result1.breakevenMonths > 120 ? (
+                        <div className="mt-3 bg-red-50 rounded-lg p-3">
+                          <p className="text-xs text-red-800 leading-relaxed">
+                            <strong>🚨 DEBT TRAP DETECTED:</strong> The salary increase from this education never compensates for its cost. You'd be financially better off working immediately and investing the education money elsewhere. This creates permanent wealth loss.
+                          </p>
+                        </div>
+                      ) : result1.breakevenMonths > 60 ? (
+                        <div className="mt-3 bg-orange-50 rounded-lg p-3">
+                          <p className="text-xs text-orange-800 leading-relaxed">
+                            <strong>⚠️ LONG PAYBACK:</strong> Over 5 years to recover your investment. High risk of career changes, economic shifts, or industry disruption before you see returns.
+                          </p>
+                        </div>
+                      ) : result1.breakevenMonths > 36 ? (
+                        <div className="mt-3 bg-yellow-50 rounded-lg p-3">
+                          <p className="text-xs text-yellow-800 leading-relaxed">
+                            <strong>🤔 MODERATE TIMELINE:</strong> 3-5 year payback period. Consider opportunity costs and whether faster alternatives exist.
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="mt-3 bg-green-50 rounded-lg p-3">
+                          <p className="text-xs text-green-800 leading-relaxed">
+                            <strong>✅ QUICK RETURNS:</strong> Fast payback period under 3 years. This investment recovers its cost quickly and generates positive returns.
+                          </p>
+                        </div>
+                      )}
                     </div>
 
                     <div className="bg-white rounded-lg p-4">

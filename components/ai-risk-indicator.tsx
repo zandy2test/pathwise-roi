@@ -8,84 +8,14 @@ interface AIRiskIndicatorProps {
   inputs: CalculatorInputs;
 }
 
-// AI disruption risk by field (0-100 scale)
-const aiRiskScores: Record<string, { score: number; timeline: string; alternatives: string[] }> = {
-  college_tech: { 
-    score: 45, 
-    timeline: '5-10 years',
-    alternatives: ['AI/ML specialization', 'Cybersecurity', 'Quantum computing']
-  },
-  college_business: { 
-    score: 65, 
-    timeline: '3-7 years',
-    alternatives: ['Data analytics', 'AI strategy', 'Digital transformation']
-  },
-  college_liberal_arts: { 
-    score: 75, 
-    timeline: '2-5 years',
-    alternatives: ['Creative writing', 'Philosophy + Tech', 'UX design']
-  },
-  college_sciences: { 
-    score: 30, 
-    timeline: '10-15 years',
-    alternatives: ['Biotech', 'Materials science', 'Research methodology']
-  },
-  trades_electrical: { 
-    score: 20, 
-    timeline: '15+ years',
-    alternatives: ['Smart home tech', 'Solar installation', 'EV charging']
-  },
-  trades_plumbing: { 
-    score: 15, 
-    timeline: '20+ years',
-    alternatives: ['Water system design', 'Green building', 'Inspection services']
-  },
-  trades_welding: { 
-    score: 35, 
-    timeline: '10-15 years',
-    alternatives: ['Robotic welding operation', 'Underwater welding', 'Inspection']
-  },
-  bootcamp_coding: { 
-    score: 55, 
-    timeline: '3-7 years',
-    alternatives: ['AI prompt engineering', 'System architecture', 'DevOps']
-  },
-  bootcamp_data: { 
-    score: 40, 
-    timeline: '5-10 years',
-    alternatives: ['ML engineering', 'Data strategy', 'AI ethics']
-  },
-  community_transfer: { 
-    score: 50, 
-    timeline: '5-10 years',
-    alternatives: ['Specialized certifications', 'Trade skills', 'Entrepreneurship']
-  },
-  nursing_bachelor: { 
-    score: 25, 
-    timeline: '15+ years',
-    alternatives: ['Nurse practitioner', 'Healthcare IT', 'Telemedicine']
-  },
-  law_degree: { 
-    score: 60, 
-    timeline: '5-10 years',
-    alternatives: ['Tech law', 'Compliance', 'Legal tech consulting']
-  },
-  mba_top20: { 
-    score: 70, 
-    timeline: '3-5 years',
-    alternatives: ['AI strategy', 'Innovation management', 'Venture capital']
-  },
-};
-
 export function AIRiskIndicator({ inputs }: AIRiskIndicatorProps) {
   const path = educationPaths[inputs.path];
   if (!path) return null;
 
-  const riskData = aiRiskScores[inputs.path] || { 
-    score: 50, 
-    timeline: '5-10 years',
-    alternatives: ['Continuous learning', 'Skill diversification', 'Specialization']
-  };
+  // Use actual data from data.json
+  const aiRiskScore = path.aiRiskScore || 50;
+  const aiRiskDescription = path.aiRiskDescription || 'AI impact assessment not available';
+  const brutalTruth = path.brutalTruth || 'Consider the long-term viability of this field';
 
   // Determine risk level and color
   const getRiskLevel = (score: number) => {
@@ -95,7 +25,34 @@ export function AIRiskIndicator({ inputs }: AIRiskIndicatorProps) {
     return { level: 'LOW', color: 'green', bg: 'from-green-50 to-blue-50' };
   };
 
-  const risk = getRiskLevel(riskData.score);
+  const risk = getRiskLevel(aiRiskScore);
+
+  // Timeline based on risk score
+  const getTimeline = (score: number) => {
+    if (score >= 70) return '2-5 years';
+    if (score >= 50) return '5-8 years';
+    if (score >= 30) return '8-15 years';
+    return '15+ years';
+  };
+
+  // Future-proof alternatives based on field
+  const getAlternatives = (pathKey: string) => {
+    const alternatives: Record<string, string[]> = {
+      college_tech: ['AI/ML specialization', 'Cybersecurity expertise', 'System architecture'],
+      college_business: ['AI strategy consulting', 'Data-driven decision making', 'Digital transformation'],
+      college_liberal_arts: ['Creative direction', 'Content strategy', 'Human-centered design'],
+      bootcamp_coding: ['AI prompt engineering', 'DevOps automation', 'Technical leadership'],
+      trades_welding: ['Robotic welding operation', 'Quality inspection', 'Underwater welding'],
+      trades_plumbing: ['Smart home systems', 'Water system design', 'Green building'],
+      nursing_bachelor: ['Nurse practitioner', 'Healthcare technology', 'Patient advocacy'],
+      law_degree: ['Tech law', 'AI ethics', 'Regulatory compliance'],
+      mba_top20: ['AI strategy', 'Innovation management', 'Venture capital'],
+    };
+    return alternatives[pathKey] || ['Continuous learning', 'Skill diversification', 'Leadership skills'];
+  };
+
+  const timeline = getTimeline(aiRiskScore);
+  const alternatives = getAlternatives(inputs.path);
 
   return (
     <Card className={`bg-gradient-to-br ${risk.bg} border-2 border-${risk.color}-200`}>
@@ -111,7 +68,7 @@ export function AIRiskIndicator({ inputs }: AIRiskIndicatorProps) {
           <div className="flex items-center justify-between mb-2">
             <p className="text-sm font-medium text-gray-700">Automation Risk Score</p>
             <span className={`text-2xl font-bold text-${risk.color}-600`}>
-              {riskData.score}/100
+              {aiRiskScore}/100
             </span>
           </div>
           
@@ -124,7 +81,7 @@ export function AIRiskIndicator({ inputs }: AIRiskIndicatorProps) {
                 risk.color === 'yellow' ? 'from-yellow-500 to-yellow-600' :
                 'from-green-500 to-green-600'
               } transition-all duration-500`}
-              style={{ width: `${riskData.score}%` }}
+              style={{ width: `${aiRiskScore}%` }}
             />
           </div>
           
@@ -137,13 +94,28 @@ export function AIRiskIndicator({ inputs }: AIRiskIndicatorProps) {
           </div>
         </div>
 
+        {/* AI Impact Description */}
+        <div className="bg-white rounded-lg p-4">
+          <div className="flex items-center gap-2 mb-2">
+            <AlertTriangle className="h-4 w-4 text-orange-600" />
+            <p className="text-sm font-medium text-gray-700">AI Impact Analysis</p>
+          </div>
+          <p className="text-xs text-gray-700 leading-relaxed mb-3">
+            {aiRiskDescription}
+          </p>
+          <div className="bg-gray-50 rounded-lg p-3">
+            <p className="text-xs font-medium text-gray-800 mb-1">💀 Brutal Truth:</p>
+            <p className="text-xs text-gray-700 italic">"{brutalTruth}"</p>
+          </div>
+        </div>
+
         {/* Timeline */}
         <div className="bg-white rounded-lg p-3">
           <div className="flex items-center gap-2 mb-1">
             <TrendingDown className="h-4 w-4 text-purple-600" />
             <p className="text-sm font-medium text-gray-700">Disruption Timeline</p>
           </div>
-          <p className="text-lg font-bold text-purple-600">{riskData.timeline}</p>
+          <p className="text-lg font-bold text-purple-600">{timeline}</p>
           <p className="text-xs text-gray-500 mt-1">
             Expected timeframe for significant AI impact
           </p>
@@ -156,7 +128,7 @@ export function AIRiskIndicator({ inputs }: AIRiskIndicatorProps) {
             <p className="text-sm font-medium text-gray-700">Future-Proof Skills</p>
           </div>
           <ul className="space-y-1">
-            {riskData.alternatives.map((alt, index) => (
+            {alternatives.map((alt: string, index: number) => (
               <li key={index} className="flex items-start gap-2">
                 <Sparkles className="h-3 w-3 text-blue-500 mt-0.5" />
                 <span className="text-xs text-gray-700">{alt}</span>
@@ -166,7 +138,7 @@ export function AIRiskIndicator({ inputs }: AIRiskIndicatorProps) {
         </div>
 
         {/* Risk Alert */}
-        {riskData.score >= 50 && (
+        {aiRiskScore >= 50 && (
           <div className={`bg-${risk.color}-100 rounded-lg p-3`}>
             <div className="flex items-start gap-2">
               <AlertTriangle className={`h-4 w-4 text-${risk.color}-600 mt-0.5`} />
@@ -174,10 +146,10 @@ export function AIRiskIndicator({ inputs }: AIRiskIndicatorProps) {
                 <p className={`text-sm font-medium text-${risk.color}-900 mb-1`}>
                   ⚠️ High Automation Risk Detected
                 </p>
-                <p className={`text-xs text-${risk.color}-800`}>
-                  {riskData.score >= 70 
-                    ? 'This field faces extreme disruption risk. Consider pivoting to AI-complementary skills immediately.'
-                    : 'Significant portions of this field may be automated. Focus on skills that AI cannot easily replace.'}
+                <p className={`text-xs text-${risk.color}-800 leading-relaxed`}>
+                  {aiRiskScore >= 70 
+                    ? 'This field faces EXTREME disruption risk. AI is rapidly replacing human workers in these roles. Consider pivoting to AI-complementary skills immediately or risk career obsolescence.'
+                    : 'Significant portions of this field may be automated within the next decade. Start developing skills that complement AI rather than compete with it.'}
                 </p>
               </div>
             </div>

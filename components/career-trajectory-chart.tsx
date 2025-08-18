@@ -13,17 +13,29 @@ export function CareerTrajectoryChart({ inputs }: CareerTrajectoryChartProps) {
   const path = educationPaths[inputs.path];
   if (!path) return null;
 
-  // Generate 20-year salary progression
+  // Generate 20-year salary progression using actual data points
   const years = Array.from({ length: 21 }, (_, i) => i);
   
-  // Education path salary progression (with degree)
+  // Education path salary progression (with degree) - using actual data
   const educationSalaries = years.map(year => {
-    if (year < path.duration / 12) return 0; // Still in school (convert months to years)
+    if (year < path.duration / 12) return 0; // Still in school
     const yearsWorking = year - path.duration / 12;
-    const baseSalary = path.salary.year1;
-    // Salary growth: 3-5% per year initially, slowing down over time
-    const growthRate = Math.max(0.02, 0.05 - yearsWorking * 0.002);
-    return Math.round(baseSalary * Math.pow(1 + growthRate, yearsWorking));
+    
+    // Use actual data points from data.json and interpolate
+    if (yearsWorking <= 1) return path.salary.year1;
+    if (yearsWorking <= 5) {
+      // Interpolate between year1 and year5
+      const progress = (yearsWorking - 1) / 4;
+      return Math.round(path.salary.year1 + (path.salary.year5 - path.salary.year1) * progress);
+    }
+    if (yearsWorking <= 10) {
+      // Interpolate between year5 and year10
+      const progress = (yearsWorking - 5) / 5;
+      return Math.round(path.salary.year5 + (path.salary.year10 - path.salary.year5) * progress);
+    }
+    // After year 10, continue growing at 2% annually
+    const yearsBeyond10 = yearsWorking - 10;
+    return Math.round(path.salary.year10 * Math.pow(1.02, yearsBeyond10));
   });
 
   // Alternative path (no degree, immediate work)
@@ -55,28 +67,32 @@ export function CareerTrajectoryChart({ inputs }: CareerTrajectoryChartProps) {
         {/* SVG Chart */}
         <div className="bg-white rounded-lg p-4">
           <svg width="100%" height="250" viewBox="0 0 400 250" className="overflow-visible">
-            {/* Grid lines */}
-            {[0, 50000, 100000, 150000].map((salary) => (
-              <g key={salary}>
-                <line
-                  x1="40"
-                  y1={220 - (salary * salaryScale)}
-                  x2="380"
-                  y2={220 - (salary * salaryScale)}
-                  stroke="#e5e7eb"
-                  strokeDasharray="2,2"
-                />
-                <text
-                  x="35"
-                  y={225 - (salary * salaryScale)}
-                  fontSize="10"
-                  fill="#6b7280"
-                  textAnchor="end"
-                >
-                  ${(salary / 1000)}k
-                </text>
-              </g>
-            ))}
+            {/* Grid lines - Fix Y-axis overflow */}
+            {[0, 50000, 100000, 150000, 200000].map((salary) => {
+              const yPos = Math.max(20, Math.min(220, 220 - (salary * salaryScale))); // Constrain Y position
+              const textYPos = Math.max(25, Math.min(225, 225 - (salary * salaryScale))); // Constrain text Y position
+              return (
+                <g key={salary}>
+                  <line
+                    x1="40"
+                    y1={yPos}
+                    x2="380"
+                    y2={yPos}
+                    stroke="#e5e7eb"
+                    strokeDasharray="2,2"
+                  />
+                  <text
+                    x="35"
+                    y={textYPos}
+                    fontSize="10"
+                    fill="#6b7280"
+                    textAnchor="end"
+                  >
+                    ${(salary / 1000)}k
+                  </text>
+                </g>
+              );
+            })}
 
             {/* X-axis labels */}
             {[0, 5, 10, 15, 20].map(year => (
@@ -138,12 +154,12 @@ export function CareerTrajectoryChart({ inputs }: CareerTrajectoryChartProps) {
           <div className="bg-white rounded-lg p-3">
             <div className="flex items-center gap-1 mb-1">
               <GraduationCap className="h-4 w-4 text-indigo-600" />
-              <p className="text-xs font-medium text-gray-700">Peak Salary</p>
+              <p className="text-xs font-medium text-gray-700">Projected Salary</p>
             </div>
             <p className="text-lg font-bold text-indigo-600">
               ${Math.round(educationSalaries[20] / 1000)}k
             </p>
-            <p className="text-xs text-gray-500">After 20 years</p>
+            <p className="text-xs text-gray-500">After 20 years (est.)</p>
           </div>
 
           <div className="bg-white rounded-lg p-3">
