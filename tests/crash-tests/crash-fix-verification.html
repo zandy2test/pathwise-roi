@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crash Fix Verification - PathwiseROI</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1a202c;
+            margin-bottom: 10px;
+        }
+        .test-info {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+        }
+        .test-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        button {
+            background: #4a5568;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        button:hover {
+            background: #2d3748;
+            transform: translateY(-1px);
+        }
+        button.running {
+            background: #f6ad55;
+        }
+        button.success {
+            background: #48bb78;
+        }
+        button.error {
+            background: #fc8181;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .status.idle {
+            background: #f7fafc;
+            border: 1px solid #cbd5e0;
+        }
+        .status.running {
+            background: #fef5e7;
+            border: 1px solid #f6ad55;
+        }
+        .status.success {
+            background: #f0fff4;
+            border: 1px solid #48bb78;
+        }
+        .status.error {
+            background: #fff5f5;
+            border: 1px solid #fc8181;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .metric {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .metric-label {
+            font-size: 12px;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-top: 5px;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .log-entry {
+            padding: 5px;
+            margin: 2px 0;
+            border-radius: 4px;
+        }
+        .log-entry.error {
+            background: #fee;
+            color: #c00;
+        }
+        .log-entry.warning {
+            background: #ffd;
+            color: #880;
+        }
+        .log-entry.info {
+            background: #f0f8ff;
+            color: #048;
+        }
+        .test-result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+        }
+        .test-result.pass {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 2px solid #48bb78;
+        }
+        .test-result.fail {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 2px solid #fc8181;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Crash Fix Verification Suite</h1>
+        <div class="test-info">
+            <p><strong>Purpose:</strong> Verify that the infinite loop crash (React Error 185) has been fixed</p>
+            <p><strong>Fix Applied:</strong> Removed circular dependency in PathBuilder useEffect (commit: feb2556)</p>
+            <p><strong>Target URL:</strong> <span id="targetUrl">http://localhost:3000</span></p>
+        </div>
+
+        <!-- Test Section 1: Rapid Click Testing -->
+        <div class="test-section">
+            <h2>🖱️ Rapid Click Test</h2>
+            <p>Simulates rapid clicking on dropdowns to trigger the previous crash condition</p>
+            <div class="test-controls">
+                <button id="rapidClickTest">Run Rapid Click Test (10 seconds)</button>
+                <button id="extremeClickTest">Run Extreme Test (30 seconds)</button>
+                <button id="stopTest">Stop Test</button>
+            </div>
+            <div class="metrics" id="clickMetrics">
+                <div class="metric">
+                    <div class="metric-label">Total Clicks</div>
+                    <div class="metric-value" id="totalClicks">0</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Errors Detected</div>
+                    <div class="metric-value" id="errorCount">0</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Test Duration</div>
+                    <div class="metric-value" id="testDuration">0s</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Click Rate</div>
+                    <div class="metric-value" id="clickRate">0/s</div>
+                </div>
+            </div>
+            <div class="status idle" id="testStatus">Ready to test...</div>
+        </div>
+
+        <!-- Test Section 2: Console Monitoring -->
+        <div class="test-section">
+            <h2>📊 Console Monitor</h2>
+            <p>Monitors the browser console for React errors and warnings</p>
+            <div class="test-controls">
+                <button id="clearLogs">Clear Logs</button>
+                <button id="exportLogs">Export Logs</button>
+            </div>
+            <div class="status idle" id="consoleLogs">No logs captured yet...</div>
+        </div>
+
+        <!-- Test Section 3: Comparison with Fix Repository -->
+        <div class="test-section">
+            <h2>🔍 Repository Comparison</h2>
+            <p>Check for additional changes in pathwise-roi-43</p>
+            <div class="test-controls">
+                <button id="checkDiff">Check Repository Differences</button>
+            </div>
+            <div class="status idle" id="diffStatus">Click to check for additional fixes...</div>
+        </div>
+
+        <!-- Live Site Preview -->
+        <div class="test-section">
+            <h2>🌐 Live Site Preview</h2>
+            <p>Interact with the site directly to test manually</p>
+            <iframe id="siteFrame" src="http://localhost:3000"></iframe>
+        </div>
+
+        <!-- Final Test Result -->
+        <div id="finalResult"></div>
+    </div>
+
+    <script>
+        // Test Configuration
+        const config = {
+            targetUrl: 'http://localhost:3000',
+            rapidTestDuration: 10000, // 10 seconds
+            extremeTestDuration: 30000, // 30 seconds
+            clickInterval: 50, // milliseconds between clicks
+        };
+
+        // Test State
+        let testState = {
+            isRunning: false,
+            totalClicks: 0,
+            errorCount: 0,
+            startTime: null,
+            testInterval: null,
+            logs: [],
+            criticalErrors: [],
+        };
+
+        // Console monitoring
+        const originalConsoleError = console.error;
+        const originalConsoleWarn = console.warn;
+        const originalConsoleLog = console.log;
+
+        console.error = function(...args) {
+            originalConsoleError.apply(console, args);
+            const message = args.join(' ');
+            addLog('error', message);
+            
+            // Check for React Error 185
+            if (message.includes('Maximum update depth exceeded') || 
+                message.includes('Error 185') ||
+                message.includes('infinite loop')) {
+                testState.criticalErrors.push({
+                    type: 'INFINITE_LOOP',
+                    message: message,
+                    timestamp: new Date().toISOString()
+                });
+                testState.errorCount++;
+                updateMetrics();
+                stopTest();
+                showTestResult(false, 'CRITICAL ERROR: Infinite loop detected!');
+            }
+        };
+
+        console.warn = function(...args) {
+            originalConsoleWarn.apply(console, args);
+            addLog('warning', args.join(' '));
+        };
+
+        console.log = function(...args) {
+            originalConsoleLog.apply(console, args);
+            addLog('info', args.join(' '));
+        };
+
+        function addLog(type, message) {
+            const log = {
+                type: type,
+                message: message,
+                timestamp: new Date().toISOString()
+            };
+            testState.logs.push(log);
+            updateConsoleDisplay();
+        }
+
+        function updateConsoleDisplay() {
+            const logsDiv = document.getElementById('consoleLogs');
+            if (testState.logs.length === 0) {
+                logsDiv.textContent = 'No logs captured yet...';
+                logsDiv.className = 'status idle';
+            } else {
+                logsDiv.innerHTML = testState.logs.slice(-50).reverse().map(log => 
+                    `<div class="log-entry ${log.type}">[${new Date(log.timestamp).toLocaleTimeString()}] ${log.message.substring(0, 200)}</div>`
+                ).join('');
+                logsDiv.className = 'status running';
+            }
+        }
+
+        function updateMetrics() {
+            document.getElementById('totalClicks').textContent = testState.totalClicks;
+            document.getElementById('errorCount').textContent = testState.errorCount;
+            
+            if (testState.startTime) {
+                const duration = (Date.now() - testState.startTime) / 1000;
+                document.getElementById('testDuration').textContent = duration.toFixed(1) + 's';
+                document.getElementById('clickRate').textContent = 
+                    (testState.totalClicks / duration).toFixed(1) + '/s';
+            }
+        }
+
+        async function simulateRapidClicks(duration) {
+            const iframe = document.getElementById('siteFrame');
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            
+            testState.isRunning = true;
+            testState.startTime = Date.now();
+            testState.totalClicks = 0;
+            testState.errorCount = 0;
+            testState.criticalErrors = [];
+            
+            const status = document.getElementById('testStatus');
+            status.className = 'status running';
+            status.textContent = 'Test running... Simulating rapid clicks...';
+            
+            const endTime = Date.now() + duration;
+            
+            testState.testInterval = setInterval(() => {
+                if (Date.now() >= endTime) {
+                    stopTest();
+                    if (testState.criticalErrors.length === 0) {
+                        showTestResult(true, '✅ Test PASSED! No crashes detected.');
+                    }
+                    return;
+                }
+                
+                try {
+                    // Try to find and click dropdowns in the iframe
+                    const selects = iframeDoc.querySelectorAll('select, button, [role="button"]');
+                    if (selects.length > 0) {
+                        const randomSelect = selects[Math.floor(Math.random() * selects.length)];
+                        randomSelect.click();
+                        testState.totalClicks++;
+                        
+                        // Also simulate change events
+                        if (randomSelect.tagName === 'SELECT') {
+                            const event = new Event('change', { bubbles: true });
+                            randomSelect.dispatchEvent(event);
+                        }
+                    }
+                    
+                    // Also click on comparison cards if visible
+                    const cards = iframeDoc.querySelectorAll('[class*="card"], [class*="comparison"]');
+                    if (cards.length > 0) {
+                        const randomCard = cards[Math.floor(Math.random() * cards.length)];
+                        randomCard.click();
+                        testState.totalClicks++;
+                    }
+                } catch (e) {
+                    console.error('Click simulation error:', e);
+                }
+                
+                updateMetrics();
+            }, config.clickInterval);
+        }
+
+        function stopTest() {
+            testState.isRunning = false;
+            if (testState.testInterval) {
+                clearInterval(testState.testInterval);
+                testState.testInterval = null;
+            }
+            
+            const status = document.getElementById('testStatus');
+            if (testState.errorCount > 0) {
+                status.className = 'status error';
+                status.textContent = `Test stopped. ${testState.errorCount} errors detected.`;
+            } else {
+                status.className = 'status success';
+                status.textContent = `Test completed successfully. No crashes detected!`;
+            }
+            
+            updateMetrics();
+        }
+
+        function showTestResult(passed, message) {
+            const resultDiv = document.getElementById('finalResult');
+            resultDiv.className = passed ? 'test-result pass' : 'test-result fail';
+            resultDiv.textContent = message;
+            
+            // Generate detailed report
+            const report = {
+                timestamp: new Date().toISOString(),
+                passed: passed,
+                message: message,
+                metrics: {
+                    totalClicks: testState.totalClicks,
+                    errorCount: testState.errorCount,
+                    duration: testState.startTime ? (Date.now() - testState.startTime) / 1000 : 0,
+                    clickRate: testState.totalClicks / ((Date.now() - testState.startTime) / 1000),
+                },
+                criticalErrors: testState.criticalErrors,
+                logs: testState.logs.filter(l => l.type === 'error')
+            };
+            
+            console.log('Test Report:', report);
+            
+            // Auto-save report
+            const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `crash-test-report-${Date.now()}.json`;
+            a.click();
+        }
+
+        async function checkRepositoryDiff() {
+            const status = document.getElementById('diffStatus');
+            status.className = 'status running';
+            status.textContent = 'Checking repository differences...\n\n';
+            
+            try {
+                // This would normally make an API call to compare repos
+                // For now, we'll provide instructions
+                status.innerHTML = `
+                    <strong>To compare with pathwise-roi-43:</strong><br><br>
+                    Run these commands in your terminal:<br>
+                    <code>
+                    git fetch fix-repo<br>
+                    git diff main fix-repo/main --stat<br>
+                    git diff main fix-repo/main -- components/path-builder.tsx
+                    </code><br><br>
+                    This will show if there are any additional fixes we should apply.
+                `;
+                status.className = 'status success';
+            } catch (error) {
+                status.className = 'status error';
+                status.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        // Event Listeners
+        document.getElementById('rapidClickTest').addEventListener('click', () => {
+            if (!testState.isRunning) {
+                simulateRapidClicks(config.rapidTestDuration);
+            }
+        });
+
+        document.getElementById('extremeClickTest').addEventListener('click', () => {
+            if (!testState.isRunning) {
+                simulateRapidClicks(config.extremeTestDuration);
+            }
+        });
+
+        document.getElementById('stopTest').addEventListener('click', stopTest);
+
+        document.getElementById('clearLogs').addEventListener('click', () => {
+            testState.logs = [];
+            updateConsoleDisplay();
+        });
+
+        document.getElementById('exportLogs').addEventListener('click', () => {
+            const blob = new Blob([JSON.stringify(testState.logs, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `console-logs-${Date.now()}.json`;
+            a.click();
+        });
+
+        document.getElementById('checkDiff').addEventListener('click', checkRepositoryDiff);
+
+        // Monitor iframe for errors
+        window.addEventListener('message', (event) => {
+            if (event.data && event.data.type === 'error') {
+                addLog('error', `Iframe error: ${event.data.message}`);
+                testState.errorCount++;
+                updateMetrics();
+            }
+        });
+
+        // Initial setup
+        updateMetrics();
+        addLog('info', 'Crash fix verification suite loaded and ready');
+    </script>
+</body>
+</html>

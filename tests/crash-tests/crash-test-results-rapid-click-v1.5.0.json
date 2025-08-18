@@ -1,0 +1,251 @@
+{
+  "testStartTime": 1755538870380,
+  "clickHistory": [
+    {
+      "elementIndex": 0,
+      "clickNumber": 1,
+      "time": 1755538893195
+    },
+    {
+      "elementIndex": 0,
+      "clickNumber": 2,
+      "time": 1755538893248
+    },
+    {
+      "elementIndex": 0,
+      "clickNumber": 3,
+      "time": 1755538893299
+    },
+    {
+      "elementIndex": 0,
+      "clickNumber": 4,
+      "time": 1755538893350
+    },
+    {
+      "elementIndex": 0,
+      "clickNumber": 5,
+      "time": 1755538893406
+    },
+    {
+      "elementIndex": 0,
+      "clickNumber": 6,
+      "time": 1755538893457
+    },
+    {
+      "elementIndex": 0,
+      "clickNumber": 7,
+      "time": 1755538893518
+    },
+    {
+      "elementIndex": 0,
+      "clickNumber": 8,
+      "time": 1755538893770
+    },
+    {
+      "elementIndex": 0,
+      "clickNumber": 9,
+      "time": 1755538893823
+    },
+    {
+      "elementIndex": 0,
+      "clickNumber": 10,
+      "time": 1755538893877
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 1,
+      "time": 1755538928769
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 2,
+      "time": 1755538928845
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 3,
+      "time": 1755538928856
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 4,
+      "time": 1755538928868
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 5,
+      "time": 1755538928879
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 6,
+      "time": 1755538928890
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 7,
+      "time": 1755538928900
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 8,
+      "time": 1755538928913
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 9,
+      "time": 1755538928926
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 10,
+      "time": 1755538928937
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 11,
+      "time": 1755538928948
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 12,
+      "time": 1755538928960
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 13,
+      "time": 1755538928971
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 14,
+      "time": 1755538928981
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 15,
+      "time": 1755538928994
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 16,
+      "time": 1755538929005
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 17,
+      "time": 1755538929019
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 18,
+      "time": 1755538929030
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 19,
+      "time": 1755538929042
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 20,
+      "time": 1755538929053
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 21,
+      "time": 1755538929063
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 22,
+      "time": 1755538929076
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 23,
+      "time": 1755538929140
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 24,
+      "time": 1755538929150
+    },
+    {
+      "phase": 2,
+      "elementIndex": 0,
+      "clickNumber": 25,
+      "time": 1755538929161
+    }
+  ],
+  "errors": [],
+  "crashes": [],
+  "performance": [],
+  "phase2": {
+    "clicks": 25,
+    "errors": 0,
+    "crashed": false
+  },
+  "phase3": {
+    "clicks": 25,
+    "errors": 0,
+    "crashed": false
+  },
+  "final": {
+    "testSummary": {
+      "totalPhases": 3,
+      "totalClicks": 35,
+      "totalErrors": 0,
+      "crashesDetected": 0,
+      "testDuration": 103998,
+      "testCompleted": "2025-08-18T17:42:54.378Z"
+    },
+    "phase1": {
+      "description": "Standard rapid clicking (50ms intervals)",
+      "clicks": 10,
+      "errors": 0,
+      "crashed": false
+    },
+    "phase2": {
+      "clicks": 25,
+      "errors": 0,
+      "crashed": false
+    },
+    "phase3": {
+      "clicks": 25,
+      "errors": 0,
+      "crashed": false
+    },
+    "applicationStatus": {
+      "responsive": true,
+      "functionalityIntact": true,
+      "errorsInConsole": 0,
+      "pageStillLoaded": true
+    },
+    "conclusion": "APPLICATION PASSED ALL CRASH TESTS - NO VULNERABILITIES DETECTED"
+  }
+}

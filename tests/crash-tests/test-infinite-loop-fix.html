@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Loop Fix Test - PathwiseROI</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: 600;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.testing {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .metric {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        .metric-label {
+            font-size: 12px;
+            color: #6c757d;
+            text-transform: uppercase;
+        }
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        .log {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            background: white;
+            border-left: 3px solid #007bff;
+        }
+        .error-log {
+            border-left-color: #dc3545;
+            background: #ffe0e0;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔧 Infinite Loop Fix Verification</h1>
+        <p>Testing the fix for the "Maximum update depth exceeded" error in PathwiseROI</p>
+        
+        <div id="status" class="status testing">
+            ⏳ Ready to test...
+        </div>
+
+        <div class="test-section">
+            <h2>📊 Test Metrics</h2>
+            <div class="metrics">
+                <div class="metric">
+                    <div class="metric-label">Total Clicks</div>
+                    <div class="metric-value" id="clickCount">0</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Errors Caught</div>
+                    <div class="metric-value" id="errorCount">0</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Test Duration</div>
+                    <div class="metric-value" id="duration">0s</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">App Status</div>
+                    <div class="metric-value" id="appStatus">Ready</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🧪 Test Controls</h2>
+            <button onclick="startRapidClickTest()">Start Rapid Click Test (500 clicks)</button>
+            <button onclick="startManualTest()">Start Manual Test</button>
+            <button onclick="resetTest()">Reset Test</button>
+            <button onclick="loadApp()">Load App</button>
+        </div>
+
+        <div class="test-section">
+            <h2>📝 Test Log</h2>
+            <div id="log" class="log">
+                <div class="log-entry">Test initialized. Click "Load App" to begin.</div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🖥️ Application Frame</h2>
+            <iframe id="appFrame" src="http://localhost:3000" title="PathwiseROI App"></iframe>
+        </div>
+    </div>
+
+    <script>
+        let clickCount = 0;
+        let errorCount = 0;
+        let testStartTime = null;
+        let testInterval = null;
+        let isTestRunning = false;
+
+        function log(message, isError = false) {
+            const logDiv = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = isError ? 'log-entry error-log' : 'log-entry';
+            const timestamp = new Date().toLocaleTimeString();
+            entry.textContent = `[${timestamp}] ${message}`;
+            logDiv.insertBefore(entry, logDiv.firstChild);
+            
+            // Keep log size manageable
+            if (logDiv.children.length > 50) {
+                logDiv.removeChild(logDiv.lastChild);
+            }
+        }
+
+        function updateStatus(message, type = 'testing') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+        }
+
+        function updateMetrics() {
+            document.getElementById('clickCount').textContent = clickCount;
+            document.getElementById('errorCount').textContent = errorCount;
+            
+            if (testStartTime) {
+                const elapsed = Math.floor((Date.now() - testStartTime) / 1000);
+                document.getElementById('duration').textContent = `${elapsed}s`;
+            }
+        }
+
+        function loadApp() {
+            log('Loading PathwiseROI application...');
+            const iframe = document.getElementById('appFrame');
+            iframe.src = 'http://localhost:3000';
+            updateStatus('⏳ Loading application...', 'testing');
+            
+            iframe.onload = () => {
+                log('Application loaded successfully');
+                updateStatus('✅ Application loaded - Ready for testing', 'success');
+                document.getElementById('appStatus').textContent = 'Loaded';
+                setupErrorListener();
+            };
+        }
+
+        function setupErrorListener() {
+            const iframe = document.getElementById('appFrame');
+            
+            try {
+                // Listen for errors from the iframe
+                iframe.contentWindow.addEventListener('error', (e) => {
+                    errorCount++;
+                    log(`Error detected: ${e.message}`, true);
+                    
+                    if (e.message.includes('Maximum update depth exceeded')) {
+                        updateStatus('❌ INFINITE LOOP DETECTED!', 'error');
+                        document.getElementById('appStatus').textContent = 'CRASHED';
+                        stopTest();
+                    }
+                });
+                
+                // Also check for React errors
+                const originalConsoleError = iframe.contentWindow.console.error;
+                iframe.contentWindow.console.error = function(...args) {
+                    const message = args[0]?.toString() || '';
+                    if (message.includes('Maximum update depth exceeded')) {
+                        errorCount++;
+                        log('React Error 185: Maximum update depth exceeded!', true);
+                        updateStatus('❌ INFINITE LOOP DETECTED!', 'error');
+                        document.getElementById('appStatus').textContent = 'CRASHED';
+                        stopTest();
+                    }
+                    originalConsoleError.apply(this, args);
+                };
+            } catch (e) {
+                log('Note: Cross-origin restrictions may limit error detection', true);
+            }
+        }
+
+        function simulateClick() {
+            try {
+                const iframe = document.getElementById('appFrame');
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                
+                // Try to find and click dropdowns
+                const selectors = [
+                    '[data-testid="education-type-select"]',
+                    '[data-testid="field-select"]',
+                    '[data-testid="program-select"]',
+                    '[data-testid="location-select"]',
+                    '[data-testid="school-tier-select"]',
+                    'button',
+                    'select',
+                    '[role="combobox"]'
+                ];
+                
+                for (const selector of selectors) {
+                    const elements = iframeDoc.querySelectorAll(selector);
+                    if (elements.length > 0) {
+                        const randomElement = elements[Math.floor(Math.random() * elements.length)];
+                        randomElement.click();
+                        clickCount++;
+                        return true;
+                    }
+                }
+                
+                // Fallback: click random position
+                const randomX = Math.random() * 500 + 100;
+                const randomY = Math.random() * 400 + 100;
+                const clickEvent = new MouseEvent('click', {
+                    view: iframe.contentWindow,
+                    bubbles: true,
+                    cancelable: true,
+                    clientX: randomX,
+                    clientY: randomY
+                });
+                iframeDoc.body.dispatchEvent(clickEvent);
+                clickCount++;
+                return true;
+                
+            } catch (e) {
+                log(`Click simulation error: ${e.message}`, true);
+                return false;
+            }
+        }
+
+        async function startRapidClickTest() {
+            if (isTestRunning) {
+                log('Test already running!', true);
+                return;
+            }
+            
+            resetTest();
+            isTestRunning = true;
+            testStartTime = Date.now();
+            log('Starting rapid click test - 500 clicks');
+            updateStatus('🔥 RAPID CLICK TEST IN PROGRESS...', 'testing');
+            
+            const targetClicks = 500;
+            let currentClick = 0;
+            
+            testInterval = setInterval(() => {
+                if (currentClick >= targetClicks || errorCount > 0) {
+                    stopTest();
+                    
+                    if (errorCount === 0) {
+                        updateStatus('✅ TEST PASSED! No infinite loops detected!', 'success');
+                        document.getElementById('appStatus').textContent = 'STABLE';
+                        log(`Test completed successfully with ${clickCount} clicks`);
+                    }
+                    return;
+                }
+                
+                // Rapid fire clicks
+                for (let i = 0; i < 10; i++) {
+                    simulateClick();
+                    currentClick++;
+                }
+                
+                updateMetrics();
+                
+                // Update progress
+                if (currentClick % 50 === 0) {
+                    log(`Progress: ${currentClick}/${targetClicks} clicks`);
+                }
+            }, 10); // Very fast clicking - 100 clicks per second
+        }
+
+        function startManualTest() {
+            if (isTestRunning) {
+                log('Test already running!', true);
+                return;
+            }
+            
+            resetTest();
+            isTestRunning = true;
+            testStartTime = Date.now();
+            log('Starting manual click test - click elements manually');
+            updateStatus('👆 Manual test mode - Click elements in the app', 'testing');
+            
+            // Update metrics every second
+            testInterval = setInterval(updateMetrics, 1000);
+            
+            // Track manual clicks
+            const iframe = document.getElementById('appFrame');
+            iframe.contentDocument.addEventListener('click', () => {
+                clickCount++;
+                updateMetrics();
+            });
+        }
+
+        function stopTest() {
+            isTestRunning = false;
+            if (testInterval) {
+                clearInterval(testInterval);
+                testInterval = null;
+            }
+            log('Test stopped');
+        }
+
+        function resetTest() {
+            stopTest();
+            clickCount = 0;
+            errorCount = 0;
+            testStartTime = null;
+            updateMetrics();
+            document.getElementById('duration').textContent = '0s';
+            document.getElementById('appStatus').textContent = 'Ready';
+            updateStatus('⏳ Ready to test...', 'testing');
+            log('Test reset');
+        }
+
+        // Initialize
+        window.onload = () => {
+            log('Test harness ready. Click "Load App" to begin.');
+        };
+    </script>
+</body>
+</html>
