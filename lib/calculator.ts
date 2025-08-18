@@ -1,18 +1,57 @@
 import type { CalculatorInputs, CalculationResult } from './types'
 import { getEducationPath, getLocationMultiplier, getSchoolTier, getLivingCost } from './data'
 
+// Regional multipliers for "Other" location
+const regionMultipliers: Record<string, number> = {
+  'midwest': 0.85,
+  'south': 0.90,
+  'northeast': 1.15,
+  'west': 1.10,
+  'rural': 0.75,
+  'international': 1.00
+}
+
+// Degree level duration adjustments
+const degreeLevelAdjustments: Record<string, number> = {
+  'bachelors': 1.0,  // Standard 4 years
+  'masters': 1.5,    // 6 years total
+  'phd': 2.0         // 8 years total
+}
+
 export function calculateROI(inputs: CalculatorInputs): CalculationResult | null {
   const path = getEducationPath(inputs.path)
   if (!path) return null
 
-  const locationMultiplier = getLocationMultiplier(inputs.location)
+  // Get location multiplier - use regional if location is "Other"
+  let locationMultiplier = getLocationMultiplier(inputs.location)
+  if (inputs.location === 'Other' && inputs.region) {
+    locationMultiplier = regionMultipliers[inputs.region] || 1.0
+  }
+  
   const schoolTier = getSchoolTier(inputs.schoolTier)
   const livingCost = getLivingCost(inputs.livingCost)
+  
+  // Adjust duration based on degree level
+  let adjustedDuration = path.duration
+  if (inputs.degreeLevel && inputs.educationType === 'college') {
+    const durationMultiplier = degreeLevelAdjustments[inputs.degreeLevel] || 1.0
+    adjustedDuration = path.duration * durationMultiplier
+  }
 
   // Calculate total education cost
   const baseCost = path.totalCost * schoolTier.costMultiplier
-  const livingExpenses = livingCost.monthly * path.duration
-  const totalCost = baseCost + livingExpenses - (inputs.scholarships || 0)
+  const livingExpenses = livingCost.monthly * adjustedDuration
+  const netEducationCost = baseCost + livingExpenses - (inputs.scholarships || 0)
+  
+  // Calculate loan interest if applicable
+  let totalCost = netEducationCost
+  if (netEducationCost > 0 && inputs.loanInterestRate) {
+    // Simple interest calculation for demonstration
+    // Assumes loan is for the full net cost and paid back over 10 years
+    const loanInterest = netEducationCost * (inputs.loanInterestRate / 100) * 10
+    totalCost = netEducationCost + loanInterest
+  }
+  
   const adjustedCost = Math.max(0, totalCost)
 
   // Calculate adjusted salary
@@ -20,7 +59,7 @@ export function calculateROI(inputs: CalculatorInputs): CalculationResult | null
   const monthlySalary = adjustedSalary / 12
 
   // Calculate opportunity cost (what you could earn working instead)
-  const opportunityCost = 35000 * path.duration / 12 // Base retail salary over education duration
+  const opportunityCost = 35000 * adjustedDuration / 12 // Base retail salary over education duration
   const monthlyOpportunityCost = 35000 / 12
 
   // Calculate breakeven months

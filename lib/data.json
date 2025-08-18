@@ -153,7 +153,7 @@
         "year10": 130000
       },
       "riskText": "Requires strong math background",
-      "employmentRate": 0.60
+      "employmentRate": 0.6
     },
     "nursing_associate": {
       "name": "Associate Nursing",
@@ -230,7 +230,7 @@
         "year10": 140000
       },
       "riskText": "Only 60% pass bar exam first try",
-      "employmentRate": 0.60
+      "employmentRate": 0.6
     },
     "medical_school": {
       "name": "Medical School",
@@ -283,15 +283,16 @@
   },
   "locationMultipliers": {
     "nyc": 1.35,
-    "sf": 1.40,
-    "la": 1.20,
-    "chicago": 1.10,
+    "sf": 1.4,
+    "la": 1.2,
+    "chicago": 1.1,
     "houston": 1.05,
-    "phoenix": 1.00,
+    "phoenix": 1.0,
     "philadelphia": 1.08,
     "atlanta": 1.03,
     "denver": 1.12,
-    "seattle": 1.25
+    "seattle": 1.25,
+    "Other": 1.0
   },
   "schoolTiers": {
     "premium": {

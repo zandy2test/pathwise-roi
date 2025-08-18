@@ -24,6 +24,23 @@ import {
 } from '@/components/ui/tooltip'
 import analytics from '@/lib/analytics'
 
+// Region options for "Other" location
+const regions = [
+  { value: 'midwest', label: 'Midwest (e.g., Ohio, Michigan)', multiplier: 0.85 },
+  { value: 'south', label: 'South (e.g., Texas, Florida)', multiplier: 0.90 },
+  { value: 'northeast', label: 'Northeast (e.g., Boston, NYC suburbs)', multiplier: 1.15 },
+  { value: 'west', label: 'West (e.g., Denver, Portland)', multiplier: 1.10 },
+  { value: 'rural', label: 'Rural/Small Town', multiplier: 0.75 },
+  { value: 'international', label: 'International', multiplier: 1.0 }
+]
+
+// Degree level options
+const degreeLevels = [
+  { value: 'bachelors', label: 'Bachelor\'s Degree', years: 4 },
+  { value: 'masters', label: 'Master\'s Degree', years: 6 },
+  { value: 'phd', label: 'PhD/Doctorate', years: 8 }
+]
+
 interface PathBuilderProps {
   inputs: CalculatorInputs
   setInputs: (inputs: CalculatorInputs) => void
@@ -272,6 +289,38 @@ export default function PathBuilder({
           </Select>
         </div>
 
+        {/* Regional Selector - Shows when location is "Other" */}
+        {inputs.location === 'Other' && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Label htmlFor="region" className="text-gray-900">Select Region</Label>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="max-w-xs">Select your region for more accurate cost and salary estimates</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+            <Select value={inputs.region || ''} onValueChange={(value) => {
+              analytics.featureEngagement('region', value)
+              setInputs({...inputs, region: value})
+            }}>
+              <SelectTrigger data-testid="region-select">
+                <SelectValue placeholder="Select your region" />
+              </SelectTrigger>
+              <SelectContent>
+                {regions.map((region) => (
+                  <SelectItem key={region.value} value={region.value}>
+                    {region.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <Label htmlFor="schoolTier" className="text-gray-900">School Quality</Label>
@@ -330,6 +379,38 @@ export default function PathBuilder({
           </Select>
         </div>
 
+        {/* Degree Level Selector - New Field */}
+        {educationType === 'college' && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Label htmlFor="degreeLevel" className="text-gray-900">Degree Level</Label>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="max-w-xs">Select your target degree level. Higher degrees take longer but may lead to better salaries</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+            <Select value={inputs.degreeLevel || 'bachelors'} onValueChange={(value) => {
+              analytics.featureEngagement('degreeLevel', value)
+              setInputs({...inputs, degreeLevel: value})
+            }}>
+              <SelectTrigger data-testid="degree-level-select">
+                <SelectValue placeholder="Select degree level" />
+              </SelectTrigger>
+              <SelectContent>
+                {degreeLevels.map((level) => (
+                  <SelectItem key={level.value} value={level.value}>
+                    {level.label} ({level.years} years)
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <Label htmlFor="scholarships" className="text-gray-900">Scholarships/Aid ($)</Label>
@@ -360,6 +441,39 @@ export default function PathBuilder({
             max={100000}
             data-testid="scholarships-input"
           />
+        </div>
+
+        {/* Loan Interest Rate Field - New Field */}
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <Label htmlFor="loanRate" className="text-gray-900">Student Loan Interest Rate (%)</Label>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <HelpCircle className="h-3 w-3 text-muted-foreground" />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="max-w-xs">Enter the interest rate for student loans. Average federal loan rate is 5-7%, private loans 4-15%</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+          <Input
+            id="loanRate"
+            type="number"
+            min="0"
+            max="30"
+            step="0.5"
+            placeholder="7"
+            value={inputs.loanInterestRate ?? 7}
+            onChange={(e) => {
+              const value = parseFloat(e.target.value) || 0
+              analytics.featureEngagement('loanInterestRate', value.toString())
+              setInputs({...inputs, loanInterestRate: value})
+            }}
+            data-testid="loan-rate-input"
+          />
+          <p className="text-sm text-gray-600 mt-1">
+            Average federal loan rate is 5-7%, private loans 4-15%
+          </p>
         </div>
 
         {errors.length > 0 && (

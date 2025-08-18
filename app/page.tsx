@@ -51,6 +51,9 @@ export default function HomePage() {
     schoolTier: '',
     livingCost: '',
     scholarships: 0,
+    loanInterestRate: 7,
+    degreeLevel: 'bachelors',
+    region: '',
   });
   const [inputs2, setInputs2] = useState<CalculatorInputs>({
     path: '',
@@ -58,6 +61,9 @@ export default function HomePage() {
     schoolTier: '',
     livingCost: '',
     scholarships: 0,
+    loanInterestRate: 7,
+    degreeLevel: 'bachelors',
+    region: '',
   });
   const [errors1, setErrors1] = useState<string[]>([]);
   const [errors2, setErrors2] = useState<string[]>([]);
@@ -350,6 +356,9 @@ export default function HomePage() {
                         schoolTier: 'standard',
                         livingCost: 'offcampus',
                         scholarships: 0,
+                        loanInterestRate: 7,
+                        degreeLevel: 'bachelors',
+                        region: '',
                       });
                       setInputs2({
                         path: comparison.path2,
@@ -357,6 +366,9 @@ export default function HomePage() {
                         schoolTier: 'standard',
                         livingCost: 'offcampus',
                         scholarships: 0,
+                        loanInterestRate: 7,
+                        degreeLevel: 'bachelors',
+                        region: '',
                       });
                       setShowComparison(true);
                       
@@ -367,6 +379,9 @@ export default function HomePage() {
                         schoolTier: 'standard',
                         livingCost: 'offcampus',
                         scholarships: 0,
+                        loanInterestRate: 7,
+                        degreeLevel: 'bachelors',
+                        region: '',
                       });
                       const result2New = calculateROI({
                         path: comparison.path2,
@@ -374,6 +389,9 @@ export default function HomePage() {
                         schoolTier: 'standard',
                         livingCost: 'offcampus',
                         scholarships: 0,
+                        loanInterestRate: 7,
+                        degreeLevel: 'bachelors',
+                        region: '',
                       });
                       
                       setResult1(result1New);
@@ -450,6 +468,9 @@ export default function HomePage() {
                           schoolTier: '',
                           livingCost: '',
                           scholarships: 0,
+                          loanInterestRate: 7,
+                          degreeLevel: 'bachelors',
+                          region: '',
                         });
                         setResult1(null);
                         setShowComparison(false);
@@ -460,6 +481,9 @@ export default function HomePage() {
                           schoolTier: '',
                           livingCost: '',
                           scholarships: 0,
+                          loanInterestRate: 7,
+                          degreeLevel: 'bachelors',
+                          region: '',
                         });
                       }}
                       className="px-4"
