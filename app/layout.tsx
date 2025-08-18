@@ -6,6 +6,7 @@ import { Footer } from '@/components/footer'
 import ErrorBoundary from '@/components/error-boundary'
 import { EnhancedErrorBoundary } from '@/components/error-tracking'
 import { ClickDebugger } from '@/components/click-debugger'
+import { VercelToolbarIntegration } from '@/components/vercel-toolbar-integration'
 import { Analytics } from '@vercel/analytics/next'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -80,6 +81,7 @@ export default function RootLayout({
         <EnhancedErrorBoundary>
           <ErrorBoundary>
             <ClickDebugger />
+            <VercelToolbarIntegration />
             <div className="min-h-screen bg-background flex flex-col">
               {children}
             </div>

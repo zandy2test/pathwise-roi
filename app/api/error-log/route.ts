@@ -12,11 +12,22 @@ export async function POST(request: NextRequest) {
       headers: {
         userAgent: request.headers.get('user-agent'),
         referer: request.headers.get('referer'),
+        'x-vercel-deployment-url': request.headers.get('x-vercel-deployment-url'),
+        'x-vercel-id': request.headers.get('x-vercel-id'),
+      },
+      vercelMeta: {
+        deploymentId: request.headers.get('x-vercel-deployment-url'),
+        functionRegion: request.headers.get('x-vercel-cache'),
+        forwardedFor: request.headers.get('x-forwarded-for'),
       },
     };
 
-    // Log to console for immediate visibility
-    console.error('🚨 Frontend Error:', JSON.stringify(logEntry, null, 2));
+    // Enhanced logging with Vercel context
+    console.group('🚨 Enhanced Frontend Error Report');
+    console.error('Error Data:', errorData);
+    console.error('Vercel Context:', logEntry.vercelMeta);
+    console.error('Full Log Entry:', JSON.stringify(logEntry, null, 2));
+    console.groupEnd();
 
     // Here you can send to external services:
     // - Sentry: Sentry.captureException()
