@@ -6,22 +6,19 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import PathBuilder from '@/components/path-builder';
 import ROITimeline from '@/components/roi-timeline';
-import { GlossaryTerm } from '@/components/glossary-term';
 import { Footer } from '@/components/footer';
 import { LoanPaymentCalculator } from '@/components/loan-payment-calculator';
 import { CareerTrajectoryChart } from '@/components/career-trajectory-chart';
 import { AIRiskIndicator } from '@/components/ai-risk-indicator';
-import { calculateROI, comparePaths } from '@/lib/calculator';
+import { calculateROI } from '@/lib/calculator';
 import { validateCalculatorInputs } from '@/lib/validation';
-import { educationPaths, viralComparisons } from '@/lib/data';
+import { educationPaths } from '@/lib/data';
 import analytics from '@/lib/analytics';
 import type { CalculatorInputs, CalculationResult } from '@/lib/types';
-import { AnimatedGradientHeading, AnimatedGradientText } from '@/components/magic/animated-gradient-text';
+import { AnimatedGradientHeading } from '@/components/magic/animated-gradient-text';
 import { CTAButton, PremiumButton, ShimmerButton } from '@/components/magic/shimmer-button';
-import { NumberTicker, ROITicker } from '@/components/magic/number-ticker';
+import { NumberTicker } from '@/components/magic/number-ticker';
 import {
-  ArrowRight,
-  Calculator,
   TrendingUp,
   Shield,
   Calendar,
@@ -35,19 +32,15 @@ import {
   X,
   Sparkles,
   BarChart3,
-  GraduationCap,
-  Briefcase,
   Zap,
   Target,
   Brain,
   LineChart,
   AlertTriangle,
-  TrendingDown,
 } from 'lucide-react';
 
 export default function HomePage() {
   const [port, setPort] = useState<string>('....');
-  const [mode, setMode] = useState<'intro' | 'calculator' | 'compare'>('intro');
   const [inputs1, setInputs1] = useState<CalculatorInputs>({
     path: '',
     location: '',
@@ -72,7 +65,6 @@ export default function HomePage() {
   const [errors2, setErrors2] = useState<string[]>([]);
   const [result1, setResult1] = useState<CalculationResult | null>(null);
   const [result2, setResult2] = useState<CalculationResult | null>(null);
-  const [comparison, setComparison] = useState<ReturnType<typeof comparePaths> | null>(null);
   const [showComparison, setShowComparison] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showPremiumModal, setShowPremiumModal] = useState(false);
@@ -186,29 +178,6 @@ export default function HomePage() {
           analytics.shareAttempted('clipboard', undefined, false);
         });
     }
-  };
-
-  const handleQuickCompare = (path1: string, path2: string) => {
-    const defaultInputs = {
-      location: 'nyc',
-      schoolTier: 'average',
-      livingCost: 'oncampus',
-      scholarships: 0,
-    };
-
-    setInputs1({ ...defaultInputs, path: path1 });
-    setInputs2({ ...defaultInputs, path: path2 });
-    setShowComparison(true);
-    setMode('compare');
-
-    setTimeout(() => {
-      const result = comparePaths(
-        { ...defaultInputs, path: path1 },
-        { ...defaultInputs, path: path2 }
-      );
-      setComparison(result);
-      setResult1(result.result1);
-    }, 100);
   };
 
   return (

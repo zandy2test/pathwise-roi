@@ -9,7 +9,7 @@ interface CareerTrajectoryChartProps {
   result: CalculationResult;
 }
 
-export function CareerTrajectoryChart({ inputs, result }: CareerTrajectoryChartProps) {
+export function CareerTrajectoryChart({ inputs }: CareerTrajectoryChartProps) {
   const path = educationPaths[inputs.path];
   if (!path) return null;
 
@@ -39,18 +39,6 @@ export function CareerTrajectoryChart({ inputs, result }: CareerTrajectoryChartP
     educationSalaries[year] > noDegreeSalaries[year]
   ) || -1;
 
-  // Calculate cumulative earnings
-  const educationCumulative = educationSalaries.reduce((acc, salary, i) => {
-    const annualCost = path.totalCost / (path.duration / 12); // Convert to annual cost
-    acc.push((acc[i - 1] || 0) + salary - (i < path.duration / 12 ? annualCost : 0));
-    return acc;
-  }, [] as number[]);
-
-  const noDegreeCumulative = noDegreeSalaries.reduce((acc, salary, i) => {
-    acc.push((acc[i - 1] || 0) + salary);
-    return acc;
-  }, [] as number[]);
-
   // Find max values for scaling
   const maxSalary = Math.max(...educationSalaries, ...noDegreeSalaries);
   const salaryScale = 200 / maxSalary;
@@ -68,7 +56,7 @@ export function CareerTrajectoryChart({ inputs, result }: CareerTrajectoryChartP
         <div className="bg-white rounded-lg p-4">
           <svg width="100%" height="250" viewBox="0 0 400 250" className="overflow-visible">
             {/* Grid lines */}
-            {[0, 50000, 100000, 150000].map((salary, i) => (
+            {[0, 50000, 100000, 150000].map((salary) => (
               <g key={salary}>
                 <line
                   x1="40"

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link"
-import { Calculator, Heart } from "lucide-react"
+import { Heart } from "lucide-react"
 
 interface FooterProps {
   onPremiumClick?: () => void
@@ -68,7 +68,7 @@ export function Footer({ onPremiumClick }: FooterProps = {}) {
         <div className="mt-8 pt-6 border-t border-gray-200">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-600">
-              © {currentYear} PathwiseROI. All rights reserved. | v1.3.0 (Phase 1)
+              © {currentYear} PathwiseROI. All rights reserved. | v1.3.0
             </p>
             <p className="text-sm text-gray-600 flex items-center gap-1">
               Made with <Heart className="h-3 w-3 text-red-500 fill-red-500" /> for students everywhere

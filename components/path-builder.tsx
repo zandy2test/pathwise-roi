@@ -103,7 +103,7 @@ export default function PathBuilder({
         })
       }
     }
-  }, [educationType, field, program])
+  }, [educationType, field, program, inputs, setInputs])
 
   const handleEducationTypeChange = (value: string) => {
     // Track analytics
