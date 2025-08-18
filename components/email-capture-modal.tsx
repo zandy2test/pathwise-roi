@@ -91,7 +91,7 @@ export function EmailCaptureModal({ showModal, setShowModal }: EmailCaptureModal
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
           onClick={(e) => e.stopPropagation()}
         >
-          <Card className="max-w-lg w-full bg-white shadow-2xl">
+          <Card className="max-w-2xl w-full bg-white shadow-2xl">
             <CardHeader className="relative bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg">
               <Button
                 variant="ghost"
@@ -132,80 +132,124 @@ export function EmailCaptureModal({ showModal, setShowModal }: EmailCaptureModal
             <CardContent className="p-6">
               {!isSubmitted ? (
                 <>
-                  {/* Key Benefits - Concise */}
-                  <div className="grid grid-cols-2 gap-3 mb-6">
-                    <div className="bg-blue-50 rounded-lg p-3 text-center">
-                      <div className="text-2xl mb-1">🧠</div>
-                      <div className="font-semibold text-sm text-gray-900">AI Career Analysis</div>
-                      <div className="text-xs text-gray-600">Predict optimal path</div>
+                  {/* Two Column Layout */}
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {/* Left Column - Benefits */}
+                    <div className="space-y-4">
+                      <h3 className="font-bold text-gray-900 text-lg mb-3">Premium Features</h3>
+                      
+                      {/* Key Benefits - More Detailed */}
+                      <div className="space-y-3">
+                        <div className="flex items-start gap-3">
+                          <div className="text-2xl">🧠</div>
+                          <div>
+                            <div className="font-semibold text-sm text-gray-900">AI Career Analysis</div>
+                            <div className="text-xs text-gray-600">Machine learning predicts your optimal career path based on industry trends</div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start gap-3">
+                          <div className="text-2xl">💰</div>
+                          <div>
+                            <div className="font-semibold text-sm text-gray-900">$50K+ Hidden Scholarships</div>
+                            <div className="text-xs text-gray-600">Access our database of 10,000+ lesser-known grants and scholarships</div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start gap-3">
+                          <div className="text-2xl">📊</div>
+                          <div>
+                            <div className="font-semibold text-sm text-gray-900">20-Year Financial Projections</div>
+                            <div className="text-xs text-gray-600">See your complete wealth trajectory including retirement impact</div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start gap-3">
+                          <div className="text-2xl">🎯</div>
+                          <div>
+                            <div className="font-semibold text-sm text-gray-900">Real Industry Data</div>
+                            <div className="text-xs text-gray-600">Compare against actual salaries from 50,000+ professionals</div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start gap-3">
+                          <div className="text-2xl">🚀</div>
+                          <div>
+                            <div className="font-semibold text-sm text-gray-900">Alternative Path Finder</div>
+                            <div className="text-xs text-gray-600">Discover bootcamps, certifications, and trade schools that match your goals</div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="bg-purple-50 rounded-lg p-3 text-center">
-                      <div className="text-2xl mb-1">💰</div>
-                      <div className="font-semibold text-sm text-gray-900">$50K+ Scholarships</div>
-                      <div className="text-xs text-gray-600">Hidden opportunities</div>
-                    </div>
-                    <div className="bg-green-50 rounded-lg p-3 text-center">
-                      <div className="text-2xl mb-1">📊</div>
-                      <div className="font-semibold text-sm text-gray-900">20-Year Projections</div>
-                      <div className="text-xs text-gray-600">Complete timeline</div>
-                    </div>
-                    <div className="bg-yellow-50 rounded-lg p-3 text-center">
-                      <div className="text-2xl mb-1">🎯</div>
-                      <div className="font-semibold text-sm text-gray-900">Industry Insights</div>
-                      <div className="text-xs text-gray-600">Real salary data</div>
+
+                    {/* Right Column - Form and Deal */}
+                    <div className="space-y-4">
+                      {/* Early Access Deal */}
+                      <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg p-4">
+                        <div className="text-center">
+                          <div className="font-bold text-lg mb-2">🔥 Early Access Special</div>
+                          <div className="text-2xl font-black">$4.99/mo</div>
+                          <div className="text-sm opacity-90 line-through">Regular: $19.99/mo</div>
+                          <div className="text-sm font-bold mt-2">Save 75% Forever</div>
+                          <div className="text-xs mt-2 opacity-75">Limited to first 1,000 members</div>
+                        </div>
+                      </div>
+
+                      {/* What You Get */}
+                      <div className="bg-blue-50 rounded-lg p-3">
+                        <h4 className="font-semibold text-sm text-gray-900 mb-2">What You'll Get:</h4>
+                        <ul className="text-xs text-gray-700 space-y-1">
+                          <li>✅ Instant access to all premium features</li>
+                          <li>✅ Weekly personalized career insights</li>
+                          <li>✅ Priority support from education experts</li>
+                          <li>✅ Early access to new features</li>
+                          <li>✅ Exclusive ROI optimization guides</li>
+                        </ul>
+                      </div>
+
+                      {/* Email form */}
+                      <form onSubmit={handleSubmit} className="space-y-3">
+                        <div>
+                          <Input
+                            type="email"
+                            placeholder="Enter your email address"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="w-full"
+                            required
+                          />
+                          {error && (
+                            <p className="text-sm text-red-600 mt-1 flex items-center gap-1">
+                              <AlertCircle className="h-4 w-4" />
+                              {error}
+                            </p>
+                          )}
+                        </div>
+                        
+                        <Button
+                          type="submit"
+                          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3"
+                          disabled={isSubmitting}
+                        >
+                          {isSubmitting ? (
+                            <div className="flex items-center gap-2">
+                              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                              Joining Waitlist...
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-2">
+                              <Mail className="h-4 w-4" />
+                              Join Early Access Waitlist
+                            </div>
+                          )}
+                        </Button>
+                      </form>
+
+                      <p className="text-xs text-gray-500 text-center">
+                        No spam, ever. Unsubscribe anytime.
+                      </p>
                     </div>
                   </div>
-
-                  {/* Early Access Deal */}
-                  <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg p-4 mb-6">
-                    <div className="text-center">
-                      <div className="font-bold text-lg mb-2">🔥 Early Access: $4.99/mo</div>
-                      <div className="text-sm opacity-90">Regular Price: $19.99/mo (Save 75%)</div>
-                      <div className="text-xs mt-2 opacity-75">Limited to first 1,000 members</div>
-                    </div>
-                  </div>
-
-                  {/* Email form */}
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                      <Input
-                        type="email"
-                        placeholder="Enter your email address"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="w-full"
-                        required
-                      />
-                      {error && (
-                        <p className="text-sm text-red-600 mt-1 flex items-center gap-1">
-                          <AlertCircle className="h-4 w-4" />
-                          {error}
-                        </p>
-                      )}
-                    </div>
-                    
-                    <Button
-                      type="submit"
-                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? (
-                        <div className="flex items-center gap-2">
-                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          Joining Waitlist...
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-2">
-                          <Mail className="h-4 w-4" />
-                          Join Early Access Waitlist
-                        </div>
-                      )}
-                    </Button>
-                  </form>
-
-                  <p className="text-xs text-gray-500 text-center mt-3">
-                    No spam, ever. Unsubscribe anytime. We respect your privacy.
-                  </p>
                 </>
               ) : (
                 <div className="text-center py-6">

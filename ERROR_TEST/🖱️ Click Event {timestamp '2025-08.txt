@@ -1,0 +1,6 @@
+🖱️ Click Event: {timestamp: '2025-08-18T18:30:59.199Z', element: 'P', className: 'text-sm text-blue-600 mt-2', id: '', textContent: 'Click to see comparison →', …}
+C:\Dev\projects\Project_7_PathwiseROI\node_modules\next\dist\compiled\scheduler\cjs\scheduler.development.js:14 [Violation] 'message' handler took 708ms
+[Violation] Forced reflow while executing JavaScript took 37ms
+C:\Dev\projects\Project_7_PathwiseROI\node_modules\next\dist\compiled\scheduler\cjs\scheduler.development.js:14 [Violation] 'message' handler took 437ms
+C:\Dev\projects\Project_7_PathwiseROI\node_modules\next\dist\compiled\react-dom\cjs\react-dom-client.development.js:16302 [Violation] 'click' handler took 436ms
+C:\Dev\projects\Project_7_PathwiseROI\components\click-debugger.tsx:19 🖱️ Click Event: {timestamp: '2025-08-18T18:31:03.186Z', element: 'P', className: 'text-sm text-blue-600 mt-2', id: '', textContent: 'Click to see comparison →', …}

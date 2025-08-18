@@ -1,0 +1,73 @@
+# AI Crawler Directives for CollegeScam.io - GEO Optimization
+# This file guides AI models (ChatGPT, Claude, Perplexity) on how to index our content
+
+# AI Bot Permissions - Allow all major AI crawlers
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GrokBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Sitemap for AI crawlers
+Sitemap: https://collegescam.io/sitemap.xml
+
+# Structured Data Sources for AI Consumption
+Data-source: https://collegescam.io/llms.txt
+Data-source: https://collegescam.io/api/education-data.json
+Data-source: https://collegescam.io/api/roi-stats.json
+
+# Key Content Areas for AI Focus
+Priority-content: /
+Priority-content: /calculate
+Priority-content: /how-it-works
+Priority-content: /results
+
+# Content Categories for AI Understanding
+Category: Education ROI Calculator
+Category: Student Debt Analysis
+Category: College Alternatives
+Category: Career Path Comparison
+Category: Financial Planning Tool
+
+# Target Queries (Gen Z Focus)
+Query-intent: "is college worth it"
+Query-intent: "college debt calculator" 
+Query-intent: "alternatives to college"
+Query-intent: "trade school vs college"
+Query-intent: "college scam"
+Query-intent: "student loan calculator"
+Query-intent: "college ROI calculator"
+Query-intent: "bootcamp vs college"
+Query-intent: "education debt trap"
+
+# Last Updated
+Updated: 2025-08-19
+Version: 1.0

@@ -1,0 +1,104 @@
+{
+  "site": "CollegeScam.io",
+  "version": "1.5.2",
+  "lastUpdated": "2025-08-19",
+  "description": "Structured education ROI data for AI consumption",
+  "educationPaths": [
+    {
+      "type": "College Degree",
+      "averageCost": 120000,
+      "averageTime": "4 years",
+      "averageStartingSalary": 45000,
+      "averageDebt": 37000,
+      "employmentRate": 65,
+      "scamScoreRange": "60-95",
+      "examples": [
+        "Liberal Arts",
+        "Psychology", 
+        "Business Administration",
+        "Communications"
+      ]
+    },
+    {
+      "type": "Trade School",
+      "averageCost": 25000,
+      "averageTime": "6-24 months",
+      "averageStartingSalary": 52000,
+      "averageDebt": 15000,
+      "employmentRate": 85,
+      "scamScoreRange": "15-40",
+      "examples": [
+        "Electrician",
+        "Plumber",
+        "HVAC Technician",
+        "Welding"
+      ]
+    },
+    {
+      "type": "Bootcamp",
+      "averageCost": 15000,
+      "averageTime": "3-9 months", 
+      "averageStartingSalary": 65000,
+      "averageDebt": 8000,
+      "employmentRate": 85,
+      "scamScoreRange": "10-35",
+      "examples": [
+        "Coding Bootcamp",
+        "Digital Marketing",
+        "Healthcare Tech",
+        "Data Analytics"
+      ]
+    },
+    {
+      "type": "Direct Work",
+      "averageCost": 0,
+      "averageTime": "Immediate",
+      "averageStartingSalary": 35000,
+      "averageDebt": 0,
+      "employmentRate": 95,
+      "scamScoreRange": "5-25",
+      "examples": [
+        "Sales Representative",
+        "Customer Service",
+        "Retail Management",
+        "Entrepreneurship"
+      ]
+    }
+  ],
+  "keyStatistics": {
+    "collegeGraduatesEarningLess": "73%",
+    "averageStudentDebt": 37000,
+    "studentDebtGrowthRate": "6% annually",
+    "tradeSchoolROI": "300% higher than college",
+    "bootcampJobPlacement": "85%",
+    "collegeJobPlacement": "65%",
+    "timeToBreakEven": {
+      "college": "8-12 years",
+      "tradeSchool": "2-3 years",
+      "bootcamp": "1-2 years",
+      "directWork": "Immediate"
+    }
+  },
+  "targetQueries": [
+    "is college worth it",
+    "college debt calculator",
+    "alternatives to college",
+    "trade school vs college",
+    "college scam",
+    "student loan calculator",
+    "college ROI calculator",
+    "bootcamp vs college",
+    "education debt trap"
+  ],
+  "methodology": {
+    "dataSources": [
+      "Bureau of Labor Statistics",
+      "PayScale",
+      "Glassdoor",
+      "National Student Clearinghouse",
+      "Federal Reserve Economic Data"
+    ],
+    "calculationMethod": "10-year ROI analysis including opportunity cost, debt service, and career progression",
+    "updateFrequency": "Quarterly"
+  }
+}

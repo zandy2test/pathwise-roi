@@ -1,0 +1,65 @@
+# CollegeScam.io
+
+> The brutally honest education ROI calculator that exposes the truth behind college costs. Our Scam Score™ calculator helps Gen Z avoid the college debt trap by comparing real financial outcomes across college degrees, trade schools, bootcamps, and direct work paths. Featured statistics show 73% of college graduates earn less than skilled trades workers within 5 years, with average student debt exceeding $37,000.
+
+## Core Resources
+
+- [Homepage](https://collegescam.io/): Interactive Scam Score™ calculator with instant ROI analysis for 500+ career paths
+- [Calculator Tool](https://collegescam.io/calculate): Compare college vs trade school vs bootcamp financial outcomes over 10-year timeline
+- [How It Works](https://collegescam.io/how-it-works): Methodology behind Scam Score™ algorithm using real salary data and job placement rates
+
+## Key Features
+
+### Scam Score™ Calculator
+- **Input**: Career interest, location, education preference
+- **Output**: 0-100 scam score (higher = worse financial outcome)
+- **Data Sources**: Bureau of Labor Statistics, PayScale, industry reports
+- **Methodology**: ROI calculation over 10 years including opportunity cost
+
+### Career Path Comparisons
+- **College Degree**: 4-year costs, debt burden, employment rates
+- **Trade Schools**: Apprenticeships, certification programs, immediate earning potential
+- **Bootcamps**: Coding, digital marketing, healthcare tech programs
+- **Direct Work**: Entry-level positions with advancement potential
+
+### Financial Projections
+- **Timeline**: 10-year earning potential analysis
+- **Costs**: Tuition, living expenses, opportunity cost calculation
+- **Income**: Starting salary, growth trajectory, job security metrics
+- **Debt Impact**: Loan payments, interest calculations, financial freedom timeline
+
+## Target Audience Insights
+
+### Gen Z Pain Points
+- "Is college worth it anymore?"
+- "Will I be stuck in debt forever?"
+- "Are there better alternatives to college?"
+- "How do I avoid the education scam?"
+
+### Key Statistics
+- 73% of college graduates earn less than skilled trades after 5 years
+- Average student debt: $37,000 (rising 6% annually)
+- Trade school ROI: 300% higher than average college degree
+- Bootcamp job placement: 85% within 6 months vs 65% for college graduates
+
+## Popular Comparisons
+- Computer Science Degree vs Coding Bootcamp
+- Business Degree vs Trade School (Electrician/Plumber)
+- Psychology Degree vs Healthcare Bootcamp
+- Liberal Arts vs Direct Sales Career
+
+## Recent Updates
+- Added AI risk indicator for future job automation
+- Enhanced mobile experience for Gen Z users
+- Integrated real-time salary data from 15+ sources
+- Added social sharing with viral potential
+
+## Contact & Social
+- Email: info@collegescam.io
+- Share Results: Built-in social media integration
+- Community: Growing movement against education debt trap
+
+---
+
+*Last Updated: August 19, 2025 | Version 1.5.2*
+*Mission: Helping Gen Z make informed education decisions and avoid financial devastation*

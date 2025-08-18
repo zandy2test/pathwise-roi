@@ -1,5 +1,44 @@
 # https://www.robotstxt.org/robotstxt.html
-User-agent: *
+# AI-Optimized robots.txt for CollegeScam.io - GEO Compliant
+
+# Allow all AI crawlers for maximum visibility
+User-agent: GPTBot
 Allow: /
 
-Sitemap: https://pathwiseroi.com/sitemap.xml
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GrokBot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# Default for all other crawlers
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/debug-session/
+Disallow: /api/error-log/
+
+# Sitemaps
+Sitemap: https://collegescam.io/sitemap.xml
+Sitemap: https://collegescam.io/llms.txt
+
+# Crawl delay to prevent server overload
+Crawl-delay: 1

@@ -112,7 +112,7 @@ export default function PathBuilder({
     else if (inputs.program && !program) {
       setProgram(inputs.program)
     }
-  }, [inputs.path, inputs.educationType, inputs.field, inputs.program])
+  }, [inputs.path, educationType, field, program])
 
   // Update the path when selections change
   useEffect(() => {
@@ -128,7 +128,7 @@ export default function PathBuilder({
         })
       }
     }
-  }, [educationType, field, program])
+  }, [educationType, field, program, inputs, setInputs])
 
   const handleEducationTypeChange = (value: string) => {
     // Track analytics

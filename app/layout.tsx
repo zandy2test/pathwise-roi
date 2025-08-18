@@ -5,7 +5,6 @@ import './globals.css'
 import { Footer } from '@/components/footer'
 import ErrorBoundary from '@/components/error-boundary'
 import { EnhancedErrorBoundary } from '@/components/error-tracking'
-import { ClickDebugger } from '@/components/click-debugger'
 import { VercelToolbarIntegration } from '@/components/vercel-toolbar-integration'
 import { Analytics } from '@vercel/analytics/next'
 
@@ -14,11 +13,11 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'CollegeScam.io - Expose the Truth Behind Education Costs',
   description: 'Uncover the real cost of college with our Scam Score™ calculator. Compare college degrees, trade schools, bootcamps, and work paths to avoid the education debt trap.',
-  keywords: 'college scam, education debt, student loans, ROI calculator, college truth, trade school, bootcamp, education investment, career paths, scam score',
+  keywords: 'college scam, education debt, student loans, ROI calculator, college truth, trade school, bootcamp, education investment, career paths, scam score, is college worth it, college alternatives, trade school vs college',
   authors: [{ name: 'CollegeScam.io' }],
   openGraph: {
     title: 'CollegeScam.io - Expose the Truth Behind Education Costs',
-    description: 'Is college worth it? Find out with our Scam Score™ calculator. Compare college vs trade school vs bootcamp paths and avoid the debt trap.',
+    description: 'Is college worth it? Find out with our Scam Score™ calculator. Compare college vs trade school vs bootcamp paths and avoid the debt trap. 73% of college grads earn less than trades workers.',
     url: 'https://collegescam.io',
     siteName: 'CollegeScam.io',
     type: 'website',
@@ -35,7 +34,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'CollegeScam.io - Expose the Truth Behind Education Costs',
-    description: 'Is college worth it? Find out with our Scam Score™ calculator. Avoid the debt trap.',
+    description: 'Is college worth it? Find out with our Scam Score™ calculator. Avoid the debt trap. 73% of college grads earn less than trades workers.',
     images: ['https://collegescam.io/og-image.png'],
   },
   robots: {
@@ -48,6 +47,9 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
+  },
+  alternates: {
+    canonical: 'https://collegescam.io',
   },
 }
 
@@ -80,7 +82,6 @@ export default function RootLayout({
       <body className={inter.className}>
         <EnhancedErrorBoundary>
           <ErrorBoundary>
-            <ClickDebugger />
             <VercelToolbarIntegration />
             <div className="min-h-screen bg-background flex flex-col">
               {children}

@@ -158,14 +158,14 @@ export default function HowItWorksPage() {
               <h2 className="text-2xl font-bold mb-4 text-gray-900">
                 The Student Debt Crisis Calculator That Colleges Don't Want You to See
               </h2>
-              <p className="text-gray-700 mb-4">
+              <p className="text-gray-900 mb-4">
                 With student debt exceeding $1.7 trillion and the average graduate owing $37,000+, 
                 making the wrong education choice can destroy your financial future. CollegeScam.io's 
                 revolutionary ROI calculator exposes the true cost of education by comparing degrees, 
                 bootcamps, certifications, and trade schools using real salary data, actual job availability, 
                 and honest debt projections.
               </p>
-              <p className="text-gray-700">
+              <p className="text-gray-900">
                 Unlike college brochures filled with fantasy statistics, our calculator reveals which 
                 education paths are genuine investments and which are overpriced debt traps. Whether 
                 you're considering a $200,000 MBA, a $15,000 coding bootcamp, or a $5,000 trade 
@@ -181,13 +181,13 @@ export default function HowItWorksPage() {
                 </div>
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-2">1. Choose Your Education Path</h3>
-                <p className="text-gray-600 mb-3">
+                <h3 className="text-lg font-semibold mb-2 text-gray-900">1. Choose Your Education Path</h3>
+                <p className="text-gray-900 mb-3">
                   Select from our comprehensive database of 20+ education paths, including overpriced degrees, practical bootcamps, legitimate certifications, and sensible trade schools. Each path includes real data on actual costs, duration, and realistic earning potential.
                 </p>
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-sm mb-2 text-gray-700">Popular Comparisons:</h4>
-                  <ul className="text-sm text-gray-600 space-y-1">
+                  <h4 className="font-semibold text-sm mb-2 text-gray-900">Popular Comparisons:</h4>
+                  <ul className="text-sm text-gray-900 space-y-1">
                     <li>• Computer Science BS ($120K) vs Coding Bootcamp ($15K)</li>
                     <li>• MBA ($180K) vs PMP Certification ($3K)</li>
                     <li>• Liberal Arts BA ($160K) vs Trade School ($20K)</li>
@@ -205,13 +205,13 @@ export default function HowItWorksPage() {
                 </div>
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-2">2. Enter Your Financial Reality</h3>
-                <p className="text-gray-600 mb-3">
+                <h3 className="text-lg font-semibold mb-2 text-gray-900">2. Enter Your Financial Reality</h3>
+                <p className="text-gray-900 mb-3">
                   Input the harsh truth of your financial situation including inflated tuition costs, meager scholarships (if you're lucky), crushing living costs, and any current income. Our calculator reveals the real numbers colleges don't want you to see.
                 </p>
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-sm mb-2 text-gray-700">Costs We Calculate:</h4>
-                  <ul className="text-sm text-gray-600 space-y-1">
+                  <h4 className="font-semibold text-sm mb-2 text-gray-900">Costs We Calculate:</h4>
+                  <ul className="text-sm text-gray-900 space-y-1">
                     <li>• Total tuition and fees (including annual increases)</li>
                     <li>• Living expenses (rent, food, transportation)</li>
                     <li>• Loan interest accumulation (6-8% average)</li>
@@ -230,19 +230,19 @@ export default function HowItWorksPage() {
                 </div>
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-2">3. Calculate Your Scam Score™</h3>
-                <p className="text-gray-600 mb-3">
+                <h3 className="text-lg font-semibold mb-2 text-gray-900">3. Calculate Your Scam Score™</h3>
+                <p className="text-gray-900 mb-3">
                   Our truth-revealing algorithm exposes the real cost of education:
                 </p>
-                <ul className="list-disc pl-6 mt-2 text-gray-600 mb-3">
+                <ul className="list-disc pl-6 mt-2 text-gray-900 mb-3">
                   <li>Total debt burden (tuition + living + interest - token scholarships)</li>
                   <li>Lost earnings while sitting in classrooms</li>
                   <li>Actual 10-year earnings (not the fantasy numbers colleges advertise)</li>
                   <li>Real job availability and market saturation</li>
                 </ul>
                 <div className="bg-purple-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-sm mb-2 text-purple-700">Scam Score Breakdown:</h4>
-                  <ul className="text-sm text-purple-600 space-y-1">
+                  <h4 className="font-semibold text-sm mb-2 text-purple-800">Scam Score Breakdown:</h4>
+                  <ul className="text-sm text-purple-800 space-y-1">
                     <li>🟢 0-20: Solid investment with positive ROI</li>
                     <li>🟡 21-50: Questionable value, proceed with caution</li>
                     <li>🟠 51-80: Likely debt trap, consider alternatives</li>
@@ -260,13 +260,13 @@ export default function HowItWorksPage() {
                 </div>
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-2">4. Compare the Scams</h3>
-                <p className="text-gray-600 mb-3">
+                <h3 className="text-lg font-semibold mb-2 text-gray-900">4. Compare the Scams</h3>
+                <p className="text-gray-900 mb-3">
                   Use our comparison tool to see which education path scams you less. Compare overpriced degrees against practical alternatives. See which option actually makes financial sense. Our viral comparisons expose the most shocking education rip-offs.
                 </p>
                 <div className="bg-yellow-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-sm mb-2 text-yellow-700">Shocking Discoveries:</h4>
-                  <ul className="text-sm text-yellow-700 space-y-1">
+                  <h4 className="font-semibold text-sm mb-2 text-yellow-800">Shocking Discoveries:</h4>
+                  <ul className="text-sm text-yellow-800 space-y-1">
                     <li>• Electricians out-earn most liberal arts grads by age 30</li>
                     <li>• Coding bootcamp grads match CS degree salaries in 5 years</li>
                     <li>• Trade school ROI beats 70% of bachelor's degrees</li>
@@ -284,22 +284,22 @@ export default function HowItWorksPage() {
                 </div>
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-2">5. See the Red Flags</h3>
-                <p className="text-gray-600 mb-3">
+                <h3 className="text-lg font-semibold mb-2 text-gray-900">5. See the Red Flags</h3>
+                <p className="text-gray-900 mb-3">
                   Every education path gets a brutal honesty score revealing:
                 </p>
-                <ul className="list-disc pl-6 mt-2 text-gray-600 mb-3">
+                <ul className="list-disc pl-6 mt-2 text-gray-900 mb-3">
                   <li>How saturated your field really is</li>
                   <li>Jobs being eliminated by AI and automation</li>
                   <li>Geographic limitations nobody mentions</li>
                   <li>Worthless credentials and degree inflation</li>
                 </ul>
                 <div className="bg-red-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-sm mb-2 text-red-700">
+                  <h4 className="font-semibold text-sm mb-2 text-red-800">
                     <AlertTriangle className="inline w-4 h-4 mr-1" />
                     Biggest Red Flags:
                   </h4>
-                  <ul className="text-sm text-red-600 space-y-1">
+                  <ul className="text-sm text-red-800 space-y-1">
                     <li>• "Flexible" degrees with no clear career path</li>
                     <li>• Fields requiring unpaid internships to get hired</li>
                     <li>• Careers where a masters is the new bachelors</li>
@@ -317,16 +317,16 @@ export default function HowItWorksPage() {
                 </div>
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-2">6. Avoid the Trap</h3>
-                <p className="text-gray-800 mb-3">
+                <h3 className="text-lg font-semibold mb-2 text-gray-900">6. Avoid the Trap</h3>
+                <p className="text-gray-900 mb-3">
                   Armed with the truth about education costs, scam scores, and real alternatives, you can avoid the debt trap. Share these eye-opening results with friends and family before they fall for the same expensive mistakes.
                 </p>
                 <div className="bg-indigo-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-sm mb-2 text-indigo-700">
+                  <h4 className="font-semibold text-sm mb-2 text-indigo-800">
                     <Zap className="inline w-4 h-4 mr-1" />
                     Smart Alternatives:
                   </h4>
-                  <ul className="text-sm text-indigo-600 space-y-1">
+                  <ul className="text-sm text-indigo-800 space-y-1">
                     <li>• Community college + transfer (save 50%+)</li>
                     <li>• Industry certifications ($1-5K)</li>
                     <li>• Apprenticeships (get paid to learn)</li>
@@ -342,28 +342,28 @@ export default function HowItWorksPage() {
               <h3 className="text-xl font-semibold mb-4 text-gray-900">Truth Metrics We Expose</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <h4 className="font-semibold text-gray-700">Scam Score™</h4>
-                  <p className="text-sm text-gray-600">How badly you're being ripped off (0-100 scale)</p>
+                  <h4 className="font-semibold text-gray-900">Scam Score™</h4>
+                  <p className="text-sm text-gray-900">How badly you're being ripped off (0-100 scale)</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-700">Debt Prison Time</h4>
-                  <p className="text-sm text-gray-600">Years enslaved to student loans (average: 21 years)</p>
+                  <h4 className="font-semibold text-gray-900">Debt Prison Time</h4>
+                  <p className="text-sm text-gray-800">Years enslaved to student loans (average: 21 years)</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-700">Real 10-Year Outcome</h4>
-                  <p className="text-sm text-gray-600">Actual earnings minus crushing debt</p>
+                  <h4 className="font-semibold text-gray-900">Real 10-Year Outcome</h4>
+                  <p className="text-sm text-gray-800">Actual earnings minus crushing debt</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-700">Break-Even Point</h4>
-                  <p className="text-sm text-gray-600">When you'll actually start profiting (if ever)</p>
+                  <h4 className="font-semibold text-gray-900">Break-Even Point</h4>
+                  <p className="text-sm text-gray-800">When you'll actually start profiting (if ever)</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-700">Opportunity Cost</h4>
-                  <p className="text-sm text-gray-600">Money lost by not working + investing</p>
+                  <h4 className="font-semibold text-gray-900">Opportunity Cost</h4>
+                  <p className="text-sm text-gray-800">Money lost by not working + investing</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-700">AI Displacement Risk</h4>
-                  <p className="text-sm text-gray-600">Chance your job won't exist in 10 years</p>
+                  <h4 className="font-semibold text-gray-900">AI Displacement Risk</h4>
+                  <p className="text-sm text-gray-800">Chance your job won't exist in 10 years</p>
                 </div>
               </div>
             </div>
@@ -373,13 +373,13 @@ export default function HowItWorksPage() {
               <h3 className="text-xl font-semibold mb-4 text-gray-900">
                 Why Traditional College ROI Calculators Are Lying to You
               </h3>
-              <p className="text-gray-700 mb-4">
+              <p className="text-gray-900 mb-4">
                 Most college ROI calculators are marketing tools designed to justify outrageous tuition. 
                 They use inflated salary projections, ignore opportunity costs, hide true loan interest, 
                 and pretend everyone graduates on time with a job waiting.
               </p>
-              <h4 className="font-semibold text-gray-800 mb-2">What They Hide:</h4>
-              <ul className="space-y-2 text-gray-600 mb-4">
+              <h4 className="font-semibold text-gray-900 mb-2">What They Hide:</h4>
+              <ul className="space-y-2 text-gray-900 mb-4">
                 <li className="flex items-start">
                   <span className="text-red-600 mr-2">✗</span>
                   <span><strong>Dropout rates:</strong> 40% don't finish, but still owe the debt</span>
@@ -401,8 +401,8 @@ export default function HowItWorksPage() {
                   <span><strong>Interest capitalization:</strong> Your $100K loan becomes $180K+ to repay</span>
                 </li>
               </ul>
-              <h4 className="font-semibold text-gray-800 mb-2">What We Show:</h4>
-              <ul className="space-y-2 text-gray-600">
+              <h4 className="font-semibold text-gray-900 mb-2">What We Show:</h4>
+              <ul className="space-y-2 text-gray-900">
                 <li className="flex items-start">
                   <span className="text-green-600 mr-2">✓</span>
                   <span>Real median salaries by location and experience</span>
@@ -429,10 +429,10 @@ export default function HowItWorksPage() {
             {/* Premium Features */}
             <div className="mt-8 p-6 bg-gradient-to-r from-red-50 to-orange-50 rounded-lg">
               <h3 className="text-xl font-semibold mb-4 text-gray-900">🚀 Premium Truth Reveals</h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-900 mb-4">
                 Expose even more education scams with CollegeScam.io Premium:
               </p>
-              <ul className="space-y-2 text-gray-600">
+              <ul className="space-y-2 text-gray-900">
                 <li className="flex items-start">
                   <span className="text-red-600 mr-2">✓</span>
                   20-year debt slavery projections with compound interest
@@ -477,7 +477,7 @@ export default function HowItWorksPage() {
                       className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
                       onClick={() => toggleFaq(index)}
                     >
-                      <span className="font-semibold text-gray-900">{faq.question}</span>
+                      <span className="font-bold text-gray-900">{faq.question}</span>
                       <ChevronLeft 
                         className={`h-5 w-5 text-gray-500 transform transition-transform ${
                           openFaq === index ? '-rotate-90' : ''
@@ -486,7 +486,7 @@ export default function HowItWorksPage() {
                     </button>
                     {openFaq === index && (
                       <div className="px-6 pb-4">
-                        <p className="text-gray-800">{faq.answer}</p>
+                        <p className="text-gray-900">{faq.answer}</p>
                       </div>
                     )}
                   </div>
@@ -502,30 +502,30 @@ export default function HowItWorksPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <div className="text-3xl font-bold text-blue-600">$1.75T</div>
-                  <p className="text-sm text-gray-600">Total U.S. student debt</p>
+                  <p className="text-sm text-gray-800">Total U.S. student debt</p>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-blue-600">43.4M</div>
-                  <p className="text-sm text-gray-600">Americans with student loans</p>
+                  <p className="text-sm text-gray-800">Americans with student loans</p>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-blue-600">$37,574</div>
-                  <p className="text-sm text-gray-600">Average debt per borrower</p>
+                  <p className="text-sm text-gray-800">Average debt per borrower</p>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-blue-600">21 years</div>
-                  <p className="text-sm text-gray-600">Average repayment time</p>
+                  <p className="text-sm text-gray-800">Average repayment time</p>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-blue-600">1,200%</div>
-                  <p className="text-sm text-gray-600">Tuition increase since 1980</p>
+                  <p className="text-sm text-gray-800">Tuition increase since 1980</p>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-blue-600">41%</div>
-                  <p className="text-sm text-gray-600">Grads in jobs not requiring degrees</p>
+                  <p className="text-sm text-gray-800">Grads in jobs not requiring degrees</p>
                 </div>
               </div>
-              <p className="text-sm text-gray-500 mt-4">
+              <p className="text-sm text-gray-700 mt-4">
                 Sources: Federal Reserve, Department of Education, Bureau of Labor Statistics (2024)
               </p>
             </div>
@@ -537,7 +537,7 @@ export default function HowItWorksPage() {
                   Calculate Your Scam Score Now
                 </Button>
               </Link>
-              <p className="text-sm text-gray-500 mt-4">
+              <p className="text-sm text-gray-600 mt-4">
                 Takes less than 2 minutes • No email required • 100% free
               </p>
             </div>
@@ -546,25 +546,25 @@ export default function HowItWorksPage() {
 
         {/* Bottom SEO Content */}
         <div className="mt-8 prose prose-gray max-w-none">
-          <h2 className="text-2xl font-bold mb-4">
+          <h2 className="text-2xl font-bold mb-4 text-gray-900">
             Make Smarter Education Decisions with Data, Not Marketing
           </h2>
-          <p className="text-gray-600 mb-4">
+          <p className="text-gray-800 mb-4">
             The education system has become a profit machine that preys on young people's dreams. 
             Universities spend millions on marketing to convince you that their overpriced degrees 
             are "investments in your future" while hiding the brutal reality of student debt, 
             underemployment, and careers that don't require the degree you're paying for.
           </p>
-          <p className="text-gray-600 mb-4">
+          <p className="text-gray-800 mb-4">
             CollegeScam.io strips away the marketing veneer to show you exactly what you're buying. 
             Our calculator doesn't just compare tuition costs – it reveals the complete financial 
             picture including opportunity costs, realistic salaries, job market saturation, geographic 
             limitations, and the years you'll spend paying off loans instead of building wealth.
           </p>
-          <h3 className="text-xl font-semibold mb-3">
+          <h3 className="text-xl font-semibold mb-3 text-gray-900">
             Who Should Use This Calculator?
           </h3>
-          <ul className="list-disc pl-6 text-gray-600 space-y-2 mb-4">
+          <ul className="list-disc pl-6 text-gray-800 space-y-2 mb-4">
             <li><strong>High school students:</strong> Before you sign your financial future away</li>
             <li><strong>Parents:</strong> See if you're really helping or hurting your kids</li>
             <li><strong>College students:</strong> Decide if continuing is worth it</li>
@@ -572,7 +572,7 @@ export default function HowItWorksPage() {
             <li><strong>Recent grads:</strong> Understand your financial reality</li>
             <li><strong>Anyone considering education:</strong> Make data-driven decisions</li>
           </ul>
-          <p className="text-gray-600 mb-4">
+          <p className="text-gray-800 mb-4">
             Don't let colleges gaslight you into life-destroying debt. Use our calculator to see 
             the truth, compare your options, and make the smartest financial decision of your life. 
             Your future self will thank you.

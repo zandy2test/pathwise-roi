@@ -1,0 +1,118 @@
+const fs = require('fs');
+const puppeteer = require('puppeteer'); // v23.0.0 or later
+
+(async () => {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    const timeout = 5000;
+    page.setDefaultTimeout(timeout);
+
+    const lhApi = await import('lighthouse'); // v10.0.0 or later
+    const flags = {
+        screenEmulation: {
+            disabled: true
+        }
+    }
+    const config = lhApi.desktopConfig;
+    const lhFlow = await lhApi.startFlow(page, {name: 'Recording 8/19/2025 at 4:25:53 AM', config, flags});
+    {
+        const targetPage = page;
+        await targetPage.setViewport({
+            width: 1150,
+            height: 1371
+        })
+    }
+    await lhFlow.startNavigation();
+    {
+        const targetPage = page;
+        await targetPage.goto('http://localhost:3000/');
+    }
+    await lhFlow.endNavigation();
+    await lhFlow.startTimespan();
+    {
+        const targetPage = page;
+        await puppeteer.Locator.race([
+            targetPage.locator('section:nth-of-type(2) div:nth-of-type(2) p.text-sm'),
+            targetPage.locator('::-p-xpath(/html/body/div/div/section[2]/div/div/div/div[2]/div/div/p[2])'),
+            targetPage.locator(':scope >>> section:nth-of-type(2) div:nth-of-type(2) p.text-sm')
+        ])
+            .setTimeout(timeout)
+            .click({
+              offset: {
+                x: 82.2711181640625,
+                y: 11.69525146484375,
+              },
+            });
+    }
+    {
+        const targetPage = page;
+        await puppeteer.Locator.race([
+            targetPage.locator('section:nth-of-type(2) div:nth-of-type(5) p.text-sm'),
+            targetPage.locator('::-p-xpath(/html/body/div/div/section[2]/div/div/div/div[5]/div/div/p[2])'),
+            targetPage.locator(':scope >>> section:nth-of-type(2) div:nth-of-type(5) p.text-sm')
+        ])
+            .setTimeout(timeout)
+            .click({
+              offset: {
+                x: 90.2711181640625,
+                y: 6.54248046875,
+              },
+            });
+    }
+    {
+        const targetPage = page;
+        await puppeteer.Locator.race([
+            targetPage.locator('::-p-aria(Oops! Something went wrong)'),
+            targetPage.locator('h3'),
+            targetPage.locator('::-p-xpath(/html/body/div/div/div[1]/h3)'),
+            targetPage.locator(':scope >>> h3'),
+            targetPage.locator('::-p-text(Oops! Something)')
+        ])
+            .setTimeout(timeout)
+            .click({
+              offset: {
+                x: 183.3726806640625,
+                y: 28.1666259765625,
+              },
+            });
+    }
+    {
+        const targetPage = page;
+        await puppeteer.Locator.race([
+            targetPage.locator('div.flex > p'),
+            targetPage.locator('::-p-xpath(/html/body/div/div/div[1]/p)'),
+            targetPage.locator(':scope >>> div.flex > p')
+        ])
+            .setTimeout(timeout)
+            .click({
+              offset: {
+                x: 173.3726806640625,
+                y: 15.1689453125,
+              },
+            });
+    }
+    {
+        const targetPage = page;
+        await puppeteer.Locator.race([
+            targetPage.locator('body > div'),
+            targetPage.locator('::-p-xpath(/html/body/div)'),
+            targetPage.locator(':scope >>> body > div')
+        ])
+            .setTimeout(timeout)
+            .click({
+              offset: {
+                x: 281,
+                y: 743,
+              },
+            });
+    }
+    await lhFlow.endTimespan();
+    const lhFlowReport = await lhFlow.generateReport();
+    fs.writeFileSync(__dirname + '/flow.report.html', lhFlowReport)
+
+    await browser.close();
+
+})().catch(err => {
+    console.error(err);
+    process.exit(1);
+});
