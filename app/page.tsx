@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, startTransition } from 'react';
+import { useState, useEffect, startTransition, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -38,6 +38,8 @@ import {
 
 export default function HomePage() {
   const [port, setPort] = useState<string>('....');
+  const [isCalculating, setIsCalculating] = useState(false);
+  const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [inputs1, setInputs1] = useState<CalculatorInputs>({
     path: '',
     location: '',
@@ -323,65 +325,77 @@ export default function HomePage() {
                   transition={{ delay: index * 0.1 }}
                 >
                   <Card
-                    className="cursor-pointer hover:shadow-xl transition-all hover:scale-105 bg-white border-2 border-gray-200 hover:border-blue-400"
+                    className={`cursor-pointer hover:shadow-xl transition-all hover:scale-105 bg-white border-2 border-gray-200 hover:border-blue-400 ${isCalculating ? 'opacity-50 pointer-events-none' : ''}`}
                     onClick={(event) => {
-                      // Prevent rapid clicking
-                      const target = event.currentTarget;
-                      if (target.style.pointerEvents === 'none') return;
-                      target.style.pointerEvents = 'none';
-                      setTimeout(() => target.style.pointerEvents = 'auto', 2000);
+                      // Prevent clicks during calculation
+                      if (isCalculating) return;
                       
-                      // Create inputs for both paths
-                      const newInputs1 = {
-                        path: comparison.path1,
-                        location: 'nyc',
-                        schoolTier: 'standard',
-                        livingCost: 'offcampus',
-                        scholarships: 0,
-                        loanInterestRate: 7,
-                        degreeLevel: 'bachelors',
-                        region: 'northeast',
-                      };
+                      // Clear any pending timeout
+                      if (clickTimeoutRef.current) {
+                        clearTimeout(clickTimeoutRef.current);
+                      }
                       
-                      const newInputs2 = {
-                        path: comparison.path2,
-                        location: 'nyc',
-                        schoolTier: 'standard',
-                        livingCost: 'offcampus',
-                        scholarships: 0,
-                        loanInterestRate: 7,
-                        degreeLevel: 'bachelors',
-                        region: 'northeast',
-                      };
+                      // Set calculating state to prevent rapid clicks
+                      setIsCalculating(true);
                       
-                      try {
-                        // Calculate results
-                        const result1New = calculateROI(newInputs1);
-                        const result2New = calculateROI(newInputs2);
+                      // Debounce the actual calculation
+                      clickTimeoutRef.current = setTimeout(() => {
+                        // Create inputs for both paths
+                        const newInputs1 = {
+                          path: comparison.path1,
+                          location: 'nyc',
+                          schoolTier: 'standard',
+                          livingCost: 'offcampus',
+                          scholarships: 0,
+                          loanInterestRate: 7,
+                          degreeLevel: 'bachelors',
+                          region: 'northeast',
+                        };
                         
-                        // Use startTransition to prevent concurrent update errors (React #185)
-                        startTransition(() => {
-                          setInputs1(newInputs1);
-                          setInputs2(newInputs2);
-                          setResult1(result1New);
-                          setResult2(result2New);
-                          setShowComparison(true);
-                          setErrors1([]);
-                          setErrors2([]);
-                        });
+                        const newInputs2 = {
+                          path: comparison.path2,
+                          location: 'nyc',
+                          schoolTier: 'standard',
+                          livingCost: 'offcampus',
+                          scholarships: 0,
+                          loanInterestRate: 7,
+                          degreeLevel: 'bachelors',
+                          region: 'northeast',
+                        };
                         
-                        // Scroll after a short delay
-                        requestAnimationFrame(() => {
+                        try {
+                          // Calculate results
+                          const result1New = calculateROI(newInputs1);
+                          const result2New = calculateROI(newInputs2);
+                          
+                          // Use startTransition for all state updates
+                          startTransition(() => {
+                            setInputs1(newInputs1);
+                            setInputs2(newInputs2);
+                            setResult1(result1New);
+                            setResult2(result2New);
+                            setShowComparison(true);
+                            setErrors1([]);
+                            setErrors2([]);
+                            
+                            // Reset calculating state after updates
+                            setTimeout(() => {
+                              setIsCalculating(false);
+                            }, 500);
+                          });
+                          
+                          // Scroll after state updates
                           setTimeout(() => {
                             const resultsElement = document.getElementById('results');
                             if (resultsElement) {
                               resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             }
-                          }, 100);
-                        });
-                      } catch (error) {
-                        console.error('Comparison calculation failed:', error);
-                      }
+                          }, 600);
+                        } catch (error) {
+                          console.error('Comparison calculation failed:', error);
+                          setIsCalculating(false);
+                        }
+                      }, 300); // 300ms debounce delay
                     }}
                   >
                     <CardContent className="p-4">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { TrendingUp, GraduationCap, Briefcase } from 'lucide-react';
 import { educationPaths } from '@/lib/data';
@@ -11,49 +11,65 @@ interface CareerTrajectoryChartProps {
 
 export function CareerTrajectoryChart({ inputs }: CareerTrajectoryChartProps) {
   const path = educationPaths[inputs.path];
-  if (!path) return null;
-
-  // Generate 20-year salary progression using actual data points
-  const years = Array.from({ length: 21 }, (_, i) => i);
   
-  // Education path salary progression (with degree) - using actual data
-  const educationSalaries = years.map(year => {
-    if (year < path.duration / 12) return 0; // Still in school
-    const yearsWorking = year - path.duration / 12;
+  // Memoize all calculations to prevent re-computation during rapid state changes
+  const chartData = useMemo(() => {
+    if (!path) return null;
     
-    // Use actual data points from data.json and interpolate
-    if (yearsWorking <= 1) return path.salary.year1;
-    if (yearsWorking <= 5) {
-      // Interpolate between year1 and year5
-      const progress = (yearsWorking - 1) / 4;
-      return Math.round(path.salary.year1 + (path.salary.year5 - path.salary.year1) * progress);
-    }
-    if (yearsWorking <= 10) {
-      // Interpolate between year5 and year10
-      const progress = (yearsWorking - 5) / 5;
-      return Math.round(path.salary.year5 + (path.salary.year10 - path.salary.year5) * progress);
-    }
-    // After year 10, continue growing at 2% annually
-    const yearsBeyond10 = yearsWorking - 10;
-    return Math.round(path.salary.year10 * Math.pow(1.02, yearsBeyond10));
-  });
+    // Generate 20-year salary progression using actual data points
+    const years = Array.from({ length: 21 }, (_, i) => i);
+    
+    // Education path salary progression (with degree) - using actual data
+    const educationSalaries = years.map(year => {
+      if (year < path.duration / 12) return 0; // Still in school
+      const yearsWorking = year - path.duration / 12;
+      
+      // Use actual data points from data.json and interpolate
+      if (yearsWorking <= 1) return path.salary.year1;
+      if (yearsWorking <= 5) {
+        // Interpolate between year1 and year5
+        const progress = (yearsWorking - 1) / 4;
+        return Math.round(path.salary.year1 + (path.salary.year5 - path.salary.year1) * progress);
+      }
+      if (yearsWorking <= 10) {
+        // Interpolate between year5 and year10
+        const progress = (yearsWorking - 5) / 5;
+        return Math.round(path.salary.year5 + (path.salary.year10 - path.salary.year5) * progress);
+      }
+      // After year 10, continue growing at 2% annually
+      const yearsBeyond10 = yearsWorking - 10;
+      return Math.round(path.salary.year10 * Math.pow(1.02, yearsBeyond10));
+    });
 
-  // Alternative path (no degree, immediate work)
-  const noDegreeSalaries = years.map(year => {
-    const baseSalary = 35000; // Starting salary without degree
-    // Slower growth rate: 2-3% per year
-    const growthRate = Math.max(0.015, 0.03 - year * 0.001);
-    return Math.round(baseSalary * Math.pow(1 + growthRate, year));
-  });
+    // Alternative path (no degree, immediate work)
+    const noDegreeSalaries = years.map(year => {
+      const baseSalary = 35000; // Starting salary without degree
+      // Slower growth rate: 2-3% per year
+      const growthRate = Math.max(0.015, 0.03 - year * 0.001);
+      return Math.round(baseSalary * Math.pow(1 + growthRate, year));
+    });
 
-  // Find crossover point
-  const crossoverYear = years.find(year => 
-    educationSalaries[year] > noDegreeSalaries[year]
-  ) || -1;
+    // Find crossover point
+    const crossoverYear = years.find(year => 
+      educationSalaries[year] > noDegreeSalaries[year]
+    ) || -1;
 
-  // Find max values for scaling
-  const maxSalary = Math.max(...educationSalaries, ...noDegreeSalaries);
-  const salaryScale = 200 / maxSalary;
+    // Find max values for scaling
+    const maxSalary = Math.max(...educationSalaries, ...noDegreeSalaries);
+    const salaryScale = 200 / maxSalary;
+
+    return {
+      years,
+      educationSalaries,
+      noDegreeSalaries,
+      crossoverYear,
+      salaryScale
+    };
+  }, [path]);
+
+  if (!path || !chartData) return null;
+  
+  const { years, educationSalaries, noDegreeSalaries, crossoverYear, salaryScale } = chartData;
 
   return (
     <Card className="bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200">

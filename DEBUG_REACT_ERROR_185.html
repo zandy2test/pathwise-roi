@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Error #185 Debug Guide</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #0a0a0a;
+            color: #e0e0e0;
+        }
+        h1 { color: #ff4444; }
+        h2 { color: #00ffaa; margin-top: 30px; }
+        .step {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .critical {
+            background: #2a0000;
+            border: 2px solid #ff4444;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        code {
+            background: #222;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #00ffaa;
+        }
+        .highlight {
+            background: #ffff00;
+            color: #000;
+            padding: 2px 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔴 React Error #185 Debug Protocol</h1>
+    
+    <div class="critical">
+        <h2>🎯 IMMEDIATE ACTION REQUIRED</h2>
+        <p><strong>Please follow these steps EXACTLY to capture the full error:</strong></p>
+    </div>
+
+    <h2>📍 Step 1: Open Local Development Site</h2>
+    <div class="step">
+        <p>1. Open your browser (Chrome/Edge preferred)</p>
+        <p>2. Navigate to: <code>http://localhost:3001</code></p>
+        <p>3. Open Developer Console (F12)</p>
+        <p>4. Click on the <strong>Console</strong> tab</p>
+    </div>
+
+    <h2>🔄 Step 2: Reproduce the Error</h2>
+    <div class="step">
+        <p>1. On the homepage, scroll to the <strong>"Compare Education Paths"</strong> section</p>
+        <p>2. Click on any comparison card button (e.g., "Software Developer")</p>
+        <p>3. <span class="highlight">IMMEDIATELY</span> (within 1 second) click another comparison card button</p>
+        <p>4. The error should appear in the console</p>
+    </div>
+
+    <h2>📸 Step 3: Capture Full Error Details</h2>
+    <div class="step">
+        <p><strong>In the Developer Console, you should see a DETAILED error message that includes:</strong></p>
+        <ul>
+            <li>The exact component name causing the issue</li>
+            <li>The specific line of code</li>
+            <li>The state update that's happening during render</li>
+        </ul>
+        <p><strong>Please copy the ENTIRE error message</strong> (it will be much more detailed than the production error)</p>
+    </div>
+
+    <h2>🔍 Step 4: Additional Debugging (Optional)</h2>
+    <div class="step">
+        <p>If the error doesn't appear immediately:</p>
+        <ol>
+            <li>Try clicking between comparison cards more rapidly</li>
+            <li>Try clicking the same card twice quickly</li>
+            <li>Check if hovering over tooltips before clicking triggers it</li>
+        </ol>
+    </div>
+
+    <h2>📋 Step 5: Share the Error</h2>
+    <div class="step">
+        <p><strong>Please paste the COMPLETE error message from the development console here.</strong></p>
+        <p>The development error will show us:</p>
+        <ul>
+            <li>✅ The exact component name</li>
+            <li>✅ The exact line number</li>
+            <li>✅ The state variable being updated</li>
+            <li>✅ The full component stack trace</li>
+        </ul>
+    </div>
+
+    <div class="critical">
+        <h2>⚠️ IMPORTANT NOTE</h2>
+        <p>The development mode error will be MUCH more detailed than the production error. It will tell us EXACTLY what component and state update is causing the issue, eliminating all guesswork.</p>
+    </div>
+
+    <h2>🛠️ Alternative: React DevTools</h2>
+    <div class="step">
+        <p>If you have React DevTools extension installed:</p>
+        <ol>
+            <li>Open React DevTools (in Developer Tools)</li>
+            <li>Go to the <strong>Profiler</strong> tab</li>
+            <li>Click "Start Profiling"</li>
+            <li>Reproduce the error</li>
+            <li>Stop profiling and check for any warnings/errors</li>
+        </ol>
+    </div>
+
+</body>
+</html>

@@ -1,13 +1,22 @@
 # Project Context: CollegeScam.io (formerly PathwiseROI)
 
-## Current Status: v1.4.3 - LIVE IN PRODUCTION ✅ (100% Complete)
+## Current Status: v1.5.0 - React Error #185 FIXED & Performance Enhanced ✅ (100% Complete)
+
+### 🔧 LATEST FIXES (Jan 19, 2025 - 12:45 AM)
+
+- **Fixed:** React error #185 - "Cannot update a component while rendering a different component"
+- **Root Cause:** Radix UI tooltip ref composition causing infinite render loops
+- **Solution:** Isolated each tooltip with its own TooltipProvider in PathBuilder and ROITimeline
+- **Enhanced:** Improved comparison card debouncing from instant to 300ms delay
+- **Enhanced:** Added memoization to CareerTrajectoryChart for better performance
+- **Tests:** All 76 tests passing
+- **Pushed:** Successfully deployed to GitHub
 
 ### 🚀 LIVE DEPLOYMENT (Jan 18, 2025 - 10:55 PM)
 
 - **Live Site:** https://collegescam.io & https://www.collegescam.io
 - **Admin Panel:** https://collegescam.io/admin/waitlist?secret=Zakkzakk12345!!!!!
 - **Status:** Both domains operational, SSL active
-- **Tests:** 76/76 passing
 - **Deployment:** Vercel production environment
 
 ### Email Capture & Analytics Complete (Jan 18, 2025 - 10:30 PM)
@@ -44,6 +53,16 @@
 - Better handling of input clearing and reset functionality
 
 ## Recent Changes
+
+### v1.5.0 (Jan 19, 2025)
+
+- Fixed React error #185: "Cannot update a component while rendering a different component"
+- Isolated tooltip providers in PathBuilder and ROITimeline components
+- Prevented cascading re-renders when comparison cards trigger updates
+- Added delayDuration=0 to ROITimeline tooltip for better responsiveness
+- Enhanced comparison cards with 300ms debounce delay to prevent rapid click issues
+- Added useMemo to CareerTrajectoryChart for performance optimization
+- All 76 tests passing with no regressions
 
 ### v1.4.3 (Jan 18, 2025)
 
@@ -168,4 +187,4 @@ For issues or questions, use the /reportbug command in the chat.
 
 ---
 
-Last Updated: January 18, 2025 - 10:35 PM (v1.4.3 - READY FOR PRODUCTION DEPLOYMENT)
+Last Updated: January 19, 2025 - 12:45 AM (v1.5.0 - React Error #185 FIXED & Performance Enhanced - READY FOR PRODUCTION)
