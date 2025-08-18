@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { X, Crown, Mail, Check, Sparkles, AlertCircle, TrendingUp } from 'lucide-react';
+import { X, Crown, Mail, Check, AlertCircle } from 'lucide-react';
 
 interface EmailCaptureModalProps {
   showModal: boolean;
