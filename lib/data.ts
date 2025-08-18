@@ -1,96 +1,107 @@
-import dataJson from './data.json'
-import hierarchicalData from './data-hierarchical.json'
-import type { EducationPath, SchoolTier, LivingCost, ViralComparison } from './types'
-
-export const educationPaths = dataJson.educationPaths as Record<string, EducationPath>
-export const locationMultipliers = dataJson.locationMultipliers
-export const schoolTiers = dataJson.schoolTiers as Record<string, SchoolTier>
-export const livingCosts = dataJson.livingCosts as Record<string, LivingCost>
-export const viralComparisons = dataJson.viralComparisons as ViralComparison[]
-
-// Hierarchical data exports
-export const educationTypes = hierarchicalData.educationTypes
-export const pathMappings = hierarchicalData.pathMappings
-
-export function getEducationPath(pathKey: string): EducationPath | undefined {
-  return educationPaths[pathKey]
+export interface EducationPath {
+  id: string
+  name: string
+  type: string
+  averageCost: number
+  duration: number // in years
+  averageStartingSalary: number
+  salaryGrowthRate: number
 }
 
-export function getLocationMultiplier(location: string): number {
-  return (locationMultipliers as Record<string, number>)[location] || 1.0
-}
+export const educationTypes = [
+  { id: "college", name: "College/University" },
+  { id: "trade", name: "Trade School" },
+  { id: "bootcamp", name: "Coding Bootcamp" },
+  { id: "certification", name: "Professional Certification" },
+  { id: "graduate", name: "Graduate School" },
+]
 
-export function getSchoolTier(tier: string): SchoolTier {
-  return schoolTiers[tier] || schoolTiers.standard
-}
-
-export function getLivingCost(costType: string): LivingCost {
-  return livingCosts[costType] || livingCosts.home
-}
-
-// Hierarchical data functions
-export function getEducationTypeOptions() {
-  return Object.entries(educationTypes).map(([key, type]) => ({
-    value: key,
-    label: type.name
-  }))
-}
-
-export function getFieldOptions(educationType: string) {
-  const type = educationTypes[educationType as keyof typeof educationTypes]
-  if (!type) return []
-  
-  return Object.entries(type.fields).map(([key, field]) => ({
-    value: key,
-    label: field.name
-  }))
-}
-
-export function getProgramOptions(educationType: string, field: string) {
-  const type = educationTypes[educationType as keyof typeof educationTypes]
-  if (!type) return []
-  
-  const fieldData = type.fields[field as keyof typeof type.fields]
-  if (!fieldData) return []
-  
-  // Determine the property name (degrees, programs, etc.)
-  const programsKey = 'degrees' in fieldData ? 'degrees' : 'programs'
-  const programs = fieldData[programsKey as keyof typeof fieldData] as Record<string, { name: string; [key: string]: unknown }>
-  
-  if (!programs) return []
-  
-  return Object.entries(programs).map(([key, program]) => ({
-    value: key,
-    label: program.name
-  }))
-}
-
-export function getEducationPathFromHierarchy(educationType: string, field: string, program: string): EducationPath | undefined {
-  const type = educationTypes[educationType as keyof typeof educationTypes]
-  if (!type) return undefined
-  
-  const fieldData = type.fields[field as keyof typeof type.fields]
-  if (!fieldData) return undefined
-  
-  // Determine the property name (degrees, programs, etc.)
-  const programsKey = 'degrees' in fieldData ? 'degrees' : 'programs'
-  const programs = fieldData[programsKey as keyof typeof fieldData] as Record<string, EducationPath>
-  
-  if (!programs) return undefined
-  
-  return programs[program]
-}
-
-export function getPathFromMapping(path: string) {
-  return pathMappings[path as keyof typeof pathMappings]
-}
-
-export function buildPathKey(educationType: string, field: string, program: string): string | undefined {
-  // Find the key that matches this combination
-  for (const [key, mapping] of Object.entries(pathMappings)) {
-    if (mapping.type === educationType && mapping.field === field && mapping.program === program) {
-      return key
-    }
-  }
-  return undefined
+export const educationPaths: Record<string, EducationPath[]> = {
+  college: [
+    {
+      id: "cs",
+      name: "Computer Science",
+      type: "college",
+      averageCost: 120000,
+      duration: 4,
+      averageStartingSalary: 85000,
+      salaryGrowthRate: 0.06,
+    },
+    {
+      id: "business",
+      name: "Business Administration",
+      type: "college",
+      averageCost: 100000,
+      duration: 4,
+      averageStartingSalary: 65000,
+      salaryGrowthRate: 0.04,
+    },
+    {
+      id: "engineering",
+      name: "Engineering",
+      type: "college",
+      averageCost: 130000,
+      duration: 4,
+      averageStartingSalary: 75000,
+      salaryGrowthRate: 0.05,
+    },
+  ],
+  trade: [
+    {
+      id: "electrician",
+      name: "Electrician",
+      type: "trade",
+      averageCost: 25000,
+      duration: 2,
+      averageStartingSalary: 55000,
+      salaryGrowthRate: 0.03,
+    },
+    {
+      id: "plumber",
+      name: "Plumber",
+      type: "trade",
+      averageCost: 20000,
+      duration: 1.5,
+      averageStartingSalary: 50000,
+      salaryGrowthRate: 0.035,
+    },
+    {
+      id: "hvac",
+      name: "HVAC Technician",
+      type: "trade",
+      averageCost: 22000,
+      duration: 1.5,
+      averageStartingSalary: 48000,
+      salaryGrowthRate: 0.04,
+    },
+  ],
+  bootcamp: [
+    {
+      id: "web-dev",
+      name: "Web Development",
+      type: "bootcamp",
+      averageCost: 15000,
+      duration: 0.5,
+      averageStartingSalary: 70000,
+      salaryGrowthRate: 0.08,
+    },
+    {
+      id: "data-science",
+      name: "Data Science",
+      type: "bootcamp",
+      averageCost: 18000,
+      duration: 0.75,
+      averageStartingSalary: 80000,
+      salaryGrowthRate: 0.07,
+    },
+    {
+      id: "ux-design",
+      name: "UX/UI Design",
+      type: "bootcamp",
+      averageCost: 12000,
+      duration: 0.5,
+      averageStartingSalary: 65000,
+      salaryGrowthRate: 0.06,
+    },
+  ],
 }
