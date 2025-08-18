@@ -143,10 +143,10 @@ export function AIRiskIndicator({ inputs }: AIRiskIndicatorProps) {
             <div className="flex items-start gap-2">
               <AlertTriangle className={`h-4 w-4 text-${risk.color}-600 mt-0.5`} />
               <div>
-                <p className={`text-sm font-medium text-${risk.color}-900 mb-1`}>
+                <p className="text-sm font-medium text-gray-900 mb-1">
                   ⚠️ High Automation Risk Detected
                 </p>
-                <p className={`text-xs text-${risk.color}-800 leading-relaxed`}>
+                <p className="text-xs text-gray-800 leading-relaxed">
                   {aiRiskScore >= 70 
                     ? 'This field faces EXTREME disruption risk. AI is rapidly replacing human workers in these roles. Consider pivoting to AI-complementary skills immediately or risk career obsolescence.'
                     : 'Significant portions of this field may be automated within the next decade. Start developing skills that complement AI rather than compete with it.'}

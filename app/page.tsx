@@ -328,31 +328,32 @@ export default function HomePage() {
                   <Card
                     className="cursor-pointer hover:shadow-xl transition-all hover:scale-105 bg-white border-2 border-gray-200 hover:border-blue-400"
                     onClick={() => {
-                      // Clear any existing inputs first
-                      setInputs1({
-                        path: '',
-                        location: '',
-                        schoolTier: '',
-                        livingCost: '',
-                        scholarships: 0,
-                        loanInterestRate: 7,
-                        degreeLevel: 'bachelors',
-                        region: '',
-                      });
-                      setInputs2({
-                        path: '',
-                        location: '',
-                        schoolTier: '',
-                        livingCost: '',
-                        scholarships: 0,
-                        loanInterestRate: 7,
-                        degreeLevel: 'bachelors',
-                        region: '',
-                      });
+                      // Force clear everything first
                       setResult1(null);
                       setResult2(null);
+                      setShowComparison(false);
+                      setErrors1([]);
+                      setErrors2([]);
                       
-                      // Then set up new comparison
+                      // Clear inputs with education-specific fields
+                      const clearInputs = {
+                        path: '',
+                        location: '',
+                        schoolTier: '',
+                        livingCost: '',
+                        scholarships: 0,
+                        loanInterestRate: 7,
+                        degreeLevel: 'bachelors',
+                        region: '',
+                        educationType: '',
+                        field: '',
+                        program: '',
+                      };
+                      
+                      setInputs1(clearInputs);
+                      setInputs2(clearInputs);
+                      
+                      // Force a re-render to ensure PathBuilder resets
                       setTimeout(() => {
                         const newInputs1 = {
                           path: comparison.path1,
@@ -363,6 +364,9 @@ export default function HomePage() {
                           loanInterestRate: 7,
                           degreeLevel: 'bachelors',
                           region: 'northeast',
+                          educationType: '',
+                          field: '',
+                          program: '',
                         };
                         
                         const newInputs2 = {
@@ -374,6 +378,9 @@ export default function HomePage() {
                           loanInterestRate: 7,
                           degreeLevel: 'bachelors',
                           region: 'northeast',
+                          educationType: '',
+                          field: '',
+                          program: '',
                         };
                         
                         // Update inputs
@@ -395,7 +402,7 @@ export default function HomePage() {
                             resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
                           }
                         }, 100);
-                      }, 50);
+                      }, 100);
                     }}
                   >
                     <CardContent className="p-4">
@@ -454,7 +461,8 @@ export default function HomePage() {
                     <Button
                       variant="outline"
                       onClick={() => {
-                        setInputs1({
+                        // Clear all fields including education-specific ones
+                        const clearInputs = {
                           path: '',
                           location: '',
                           schoolTier: '',
@@ -463,20 +471,18 @@ export default function HomePage() {
                           loanInterestRate: 7,
                           degreeLevel: 'bachelors',
                           region: '',
-                        });
+                          educationType: '',
+                          field: '',
+                          program: '',
+                        };
+                        
+                        setInputs1(clearInputs);
+                        setInputs2(clearInputs);
                         setResult1(null);
-                        setShowComparison(false);
                         setResult2(null);
-                        setInputs2({
-                          path: '',
-                          location: '',
-                          schoolTier: '',
-                          livingCost: '',
-                          scholarships: 0,
-                          loanInterestRate: 7,
-                          degreeLevel: 'bachelors',
-                          region: '',
-                        });
+                        setShowComparison(false);
+                        setErrors1([]);
+                        setErrors2([]);
                       }}
                       className="px-4"
                     >
