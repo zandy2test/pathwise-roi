@@ -27,7 +27,7 @@ export function NumberTicker({
   const motionValue = useMotionValue(direction === 'down' ? value : 0);
   const springValue = useSpring(motionValue, {
     damping: 60,
-    stiffness: 100,
+    stiffness: 200,
   });
   const isInView = useInView(ref, { once: true, margin: '0px' });
 
@@ -82,7 +82,7 @@ export function ROITicker({
   const motionValue = useMotionValue(0);
   const springValue = useSpring(motionValue, {
     damping: 50,
-    stiffness: 90,
+    stiffness: 180,
   });
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 

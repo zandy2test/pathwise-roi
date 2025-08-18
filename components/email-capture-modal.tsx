@@ -133,36 +133,103 @@ export function EmailCaptureModal({ showModal, setShowModal }: EmailCaptureModal
               {!isSubmitted ? (
                 <>
                   {/* Social proof */}
-                  <div className="bg-blue-50 rounded-lg p-4 mb-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Users className="h-5 w-5 text-blue-600" />
-                      <span className="font-semibold text-blue-900">Join The Waitlist</span>
+                  <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-5 mb-6 border border-blue-200">
+                    <div className="flex items-center gap-2 mb-4">
+                      <Crown className="h-6 w-6 text-yellow-600" />
+                      <span className="font-bold text-gray-900 text-lg">Premium Features Unlocked</span>
                     </div>
-                    <ul className="space-y-2 text-sm text-blue-800">
-                      <li className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-600" />
-                        Be first to access advanced scam detection
+                    <ul className="space-y-3 text-sm">
+                      <li className="flex items-start gap-3">
+                        <Check className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <span className="font-semibold text-gray-900">AI-Powered Career Oracle:</span>
+                          <span className="text-gray-700"> Machine learning analyzes 50M+ salary data points to predict your exact earning trajectory across 47 industries</span>
+                        </div>
                       </li>
-                      <li className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-600" />
-                        Get exclusive pre-launch pricing (50% off)
+                      <li className="flex items-start gap-3">
+                        <Check className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <span className="font-semibold text-gray-900">Market Disruption Alerts:</span>
+                          <span className="text-gray-700"> Real-time notifications when AI or automation threatens your chosen field, with alternative path recommendations</span>
+                        </div>
                       </li>
-                      <li className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-600" />
-                        Free bonus: Personal education consultation
+                      <li className="flex items-start gap-3">
+                        <Check className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <span className="font-semibold text-gray-900">Exclusive Founder Access:</span>
+                          <span className="text-gray-700"> 50% early-bird discount + free 1-on-1 education strategy session (valued at $200)</span>
+                        </div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <Check className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <span className="font-semibold text-gray-900">Advanced Scam Intelligence:</span>
+                          <span className="text-gray-700"> Proprietary algorithms expose hidden costs, predict dropout rates, and calculate true employment statistics</span>
+                        </div>
                       </li>
                     </ul>
                   </div>
 
-                  {/* Premium features preview */}
-                  <div className="grid grid-cols-2 gap-3 mb-6">
-                    <div className="text-center p-3 bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg">
-                      <TrendingUp className="h-6 w-6 text-purple-600 mx-auto mb-1" />
-                      <p className="text-xs font-medium text-gray-900">20-Year Projections</p>
+                  {/* Premium features preview - Enhanced */}
+                  <div className="grid grid-cols-1 gap-4 mb-6">
+                    <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl p-4">
+                      <div className="flex items-center gap-3 mb-3">
+                        <Sparkles className="h-8 w-8 text-yellow-400" />
+                        <div>
+                          <h4 className="font-bold text-lg">Next-Level Analytics Suite</h4>
+                          <p className="text-purple-100 text-xs">Professional-grade decision tools</p>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-3 text-xs">
+                        <div className="bg-white/10 rounded-lg p-3">
+                          <div className="font-semibold mb-1">📊 20-Year Deep Projections</div>
+                          <div className="text-purple-100">Complete financial modeling with market volatility</div>
+                        </div>
+                        <div className="bg-white/10 rounded-lg p-3">
+                          <div className="font-semibold mb-1">🧠 Neural Career Mapping</div>
+                          <div className="text-purple-100">AI matches you with optimal paths based on 1000+ factors</div>
+                        </div>
+                        <div className="bg-white/10 rounded-lg p-3">
+                          <div className="font-semibold mb-1">📈 Industry Benchmark Suite</div>
+                          <div className="text-purple-100">Compare against 500,000+ real professionals</div>
+                        </div>
+                        <div className="bg-white/10 rounded-lg p-3">
+                          <div className="font-semibold mb-1">🎯 Custom Risk Analysis</div>
+                          <div className="text-purple-100">Personalized automation threat assessment</div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-center p-3 bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg">
-                      <Sparkles className="h-6 w-6 text-purple-600 mx-auto mb-1" />
-                      <p className="text-xs font-medium text-gray-900">AI Career Analysis</p>
+                    
+                    <div className="bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-xl p-4">
+                      <div className="flex items-center gap-3 mb-3">
+                        <TrendingUp className="h-8 w-8 text-yellow-400" />
+                        <div>
+                          <h4 className="font-bold text-lg">Premium Intelligence Features</h4>
+                          <p className="text-green-100 text-xs">Insider data and predictions</p>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-1 gap-2 text-xs">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                          <span className="font-medium">Salary Negotiation Calculator</span>
+                          <span className="text-green-100">with market positioning data</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                          <span className="font-medium">Hidden Cost Detector</span>
+                          <span className="text-green-100">reveals fees schools don't advertise</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                          <span className="font-medium">Alternative Path Recommender</span>
+                          <span className="text-green-100">finds better options for your goals</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                          <span className="font-medium">Employment Reality Check</span>
+                          <span className="text-green-100">actual job placement rates vs marketing claims</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
 

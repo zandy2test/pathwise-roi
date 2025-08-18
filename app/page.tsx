@@ -316,11 +316,11 @@ export default function HomePage() {
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
               {[
-                { title: "Welders make more than lawyers until age 35", path1: "trades_welding", path2: "law_degree" },
-                { title: "Nurses beat MBAs by year 7", path1: "nursing_bachelor", path2: "mba_top20" },
-                { title: "Plumbers earn more than liberal arts grads forever", path1: "trades_plumbing", path2: "college_liberal_arts" },
-                { title: "Community college saves $60K, same outcome", path1: "community_transfer", path2: "college_business" },
-                { title: "Bootcamp profitable 44 months before CS degrees", path1: "bootcamp_coding", path2: "college_tech" }
+                { title: "Nursing vs Business: Nursing breaks even 2 years faster", path1: "nursing_bachelor", path2: "college_business" },
+                { title: "Engineering vs MBA: Similar outcomes, half the cost", path1: "college_engineering", path2: "mba_top20" },
+                { title: "Community college transfer saves $40K vs 4-year", path1: "community_transfer", path2: "college_business" },
+                { title: "Data bootcamp vs CS degree: 45 months faster ROI", path1: "bootcamp_data", path2: "college_tech" },
+                { title: "Electrician vs Liberal Arts: Steady income vs debt", path1: "trades_electrician", path2: "college_liberal_arts" }
               ].map((comparison, index) => (
                 <motion.div
                   key={index}
@@ -330,82 +330,62 @@ export default function HomePage() {
                 >
                   <Card
                     className="cursor-pointer hover:shadow-xl transition-all hover:scale-105 bg-white border-2 border-gray-200 hover:border-blue-400"
-                    onClick={() => {
-                      // Force clear everything first
-                      setResult1(null);
-                      setResult2(null);
-                      setShowComparison(false);
-                      setErrors1([]);
-                      setErrors2([]);
+                    onClick={(event) => {
+                      // Prevent rapid clicking
+                      const target = event.currentTarget;
+                      if (target.style.pointerEvents === 'none') return;
+                      target.style.pointerEvents = 'none';
+                      setTimeout(() => target.style.pointerEvents = 'auto', 2000);
                       
-                      // Clear inputs with education-specific fields
-                      const clearInputs = {
-                        path: '',
-                        location: '',
-                        schoolTier: '',
-                        livingCost: '',
+                      // Create inputs for both paths
+                      const newInputs1 = {
+                        path: comparison.path1,
+                        location: 'nyc',
+                        schoolTier: 'standard',
+                        livingCost: 'offcampus',
                         scholarships: 0,
                         loanInterestRate: 7,
                         degreeLevel: 'bachelors',
-                        region: '',
-                        educationType: '',
-                        field: '',
-                        program: '',
+                        region: 'northeast',
                       };
                       
-                      setInputs1(clearInputs);
-                      setInputs2(clearInputs);
+                      const newInputs2 = {
+                        path: comparison.path2,
+                        location: 'nyc',
+                        schoolTier: 'standard',
+                        livingCost: 'offcampus',
+                        scholarships: 0,
+                        loanInterestRate: 7,
+                        degreeLevel: 'bachelors',
+                        region: 'northeast',
+                      };
                       
-                      // Force a re-render to ensure PathBuilder resets
-                      setTimeout(() => {
-                        const newInputs1 = {
-                          path: comparison.path1,
-                          location: 'nyc',
-                          schoolTier: 'standard',
-                          livingCost: 'offcampus',
-                          scholarships: 0,
-                          loanInterestRate: 7,
-                          degreeLevel: 'bachelors',
-                          region: 'northeast',
-                          educationType: '',
-                          field: '',
-                          program: '',
-                        };
-                        
-                        const newInputs2 = {
-                          path: comparison.path2,
-                          location: 'nyc',
-                          schoolTier: 'standard',
-                          livingCost: 'offcampus',
-                          scholarships: 0,
-                          loanInterestRate: 7,
-                          degreeLevel: 'bachelors',
-                          region: 'northeast',
-                          educationType: '',
-                          field: '',
-                          program: '',
-                        };
-                        
-                        // Update inputs
-                        setInputs1(newInputs1);
-                        setInputs2(newInputs2);
-                        setShowComparison(true);
-                        
-                        // Calculate both results
+                      try {
+                        // Calculate results
                         const result1New = calculateROI(newInputs1);
                         const result2New = calculateROI(newInputs2);
                         
+                        // Batch all state updates
+                        setInputs1(newInputs1);
+                        setInputs2(newInputs2);
                         setResult1(result1New);
                         setResult2(result2New);
+                        setShowComparison(true);
+                        setErrors1([]);
+                        setErrors2([]);
                         
-                        // Scroll to results
-                        setTimeout(() => {
-                          const resultsElement = document.getElementById('results');
-                          if (resultsElement) {
-                            resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                          }
-                        }, 100);
-                      }, 100);
+                        // Scroll after a short delay
+                        requestAnimationFrame(() => {
+                          setTimeout(() => {
+                            const resultsElement = document.getElementById('results');
+                            if (resultsElement) {
+                              resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                          }, 100);
+                        });
+                      } catch (error) {
+                        console.error('Comparison calculation failed:', error);
+                      }
                     }}
                   >
                     <CardContent className="p-4">
