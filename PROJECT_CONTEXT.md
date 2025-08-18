@@ -1,296 +1,107 @@
-# PROJECT CONTEXT - CollegeScam.io (formerly PathwiseROI)
+# Project Context: CollegeScam.io (formerly PathwiseROI)
 
-## 🚀 CURRENT STATUS (January 18, 2025 - 4:57 PM)
+## Current Status: v1.4.3 - Bug Fixes Complete
 
-### ✅ COMPLETED: v1.4.0 Rebrand to CollegeScam.io
+- Fixed white text visibility issues on how-it-works page
+- Improved PathBuilder state management for education type selection
+- Fixed state synchronization when using comparison cards
+- Better handling of input clearing and reset functionality
 
-- **Date**: January 18, 2025
-- **Status**: REBRAND COMPLETE ✅
-- **Build**: ✅ Successful
-- **Tests**: ✅ All 76 tests passing (need update for rebrand)
-- **Branch**: main (uncommitted changes)
-- **Version**: 1.4.0
-- **Production URL**: https://pathwise-roi.vercel.app (pending domain change)
+## Recent Changes
 
-### Latest Fix (August 16, 2025):
+### v1.4.3 (Jan 18, 2025)
 
-- **Migrated Husky from v8 to v9 format** - Removed deprecated shebang lines
-- **Fixed pre-commit hook** - Now runs lint-staged and tests without errors
-- **Documented migration** - See HUSKY_V9_MIGRATION_FIX.md for details
-- **All tests passing** - 6 test suites, 76 tests total
+- Fixed text color issues on how-it-works page (headings now properly colored)
+- Improved PathBuilder component state management
+- Fixed education type selection bug that prevented dropdown from working
+- Fixed comparison cards state updates (title now updates correctly)
+- Better state synchronization between inputs and local state
 
-### Previous Completion (August 15, 2025):
+### v1.4.0 (Jan 18, 2025)
 
-### What Was Done:
+- Complete rebrand from PathwiseROI to CollegeScam.io
+- New aggressive truth-focused messaging throughout
+- Updated all page titles and metadata
+- Changed favicon and branding elements
+- Maintained all v1.3 features and fixes
 
-1. **Consolidated all functionality into single-page app** (app/page.tsx)
-2. **Fixed all identified issues**:
-   - Navigation links now point to #top
-   - Feature cards always visible (not conditional on mode)
-   - Results section ID properly placed for scrolling
-   - Added ROI Timeline charts to comparison results
-   - Cleaned up FloatingNavbar component
-3. **Enhanced ROI Timeline (10:13 PM)**:
-   - Replaced explanation card with hover tooltip icon
-   - Fixed tooltip import conflicts (renamed RechartsTooltip)
-   - Updated all text colors to gray-xxx for light theme consistency
-   - Chart tooltip now shows absolute values
-   - Help icon positioned in header for better UX
-4. **Build cache fix (10:40 PM)**:
-   - Resolved recharts vendor chunk error
-   - Cleared corrupted .next directory
-   - Successfully rebuilt and running on port 3002
-5. **All TypeScript errors resolved in test files**
-6. **Verified dev server**: Running without errors
-7. **UI Fixes Completed (11:37 PM)**:
-   - Fixed calculator label visibility (text-gray-900)
-   - Moved scholarship maximum to tooltip
-   - Removed TM symbols from Scam Score
-   - Repositioned main CTA button above statistics
-   - Redesigned hero with progressive disclosure
-   - Created separate statistics section
-   - Enhanced premium section design
-   - Improved premium modal layout
-   - Standardized color consistency
-   - Unified button styling
+### v1.3.0 Features
 
-## 📊 APPLICATION OVERVIEW
+- Phase 3 components: Loan Payment Calculator, Career Trajectory Chart, AI Risk Indicator
+- Comprehensive test coverage with 76 passing tests
+- Premium features and modal
+- Responsive design with mobile support
+- Analytics integration
+- Enhanced user experience
 
-**CollegeScam.io** (formerly PathwiseROI) is a truth-revealing education cost calculator that exposes education scams through our proprietary Scam Score™ analysis, helping users avoid debt traps.
+## Key Components
 
-### Core Features:
+### Core Calculator
 
-- **Single-page experience** with smooth transitions
-- **Scam Score™ Algorithm**: Exposes education rip-offs
-- **Path Comparison**: Compare education scams side-by-side
-- **ROI Timeline Visualization**: 10-year debt vs earnings reality
-- **Real-time Calculations**: Instant scam exposure
-- **Share Functionality**: Spread awareness with shareable results
-- **Premium Features**: Deeper scam analysis (modal only for now)
+- `app/page.tsx` - Main landing page with calculator
+- `components/path-builder.tsx` - Education path selection (FIXED IN v1.4.3)
+- `components/roi-timeline.tsx` - ROI visualization chart
+- `lib/calculator.ts` - Core calculation logic
+- `lib/data.json` - Education paths database
 
-## 🏗️ TECHNICAL ARCHITECTURE
+### Phase 3 Components
 
-### Tech Stack:
+- `components/loan-payment-calculator.tsx` - Student loan analysis
+- `components/career-trajectory-chart.tsx` - Career progression visualization
+- `components/ai-risk-indicator.tsx` - AI job displacement risk assessment
 
-- **Framework**: Next.js 15.2.4 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS + Custom Premium Components
-- **Analytics**: Google Analytics 4 (GA4)
-- **Charts**: Recharts
-- **Animation**: Framer Motion
-- **Testing**: Jest + React Testing Library
-- **Deployment**: Vercel
+### Support Pages
 
-### Single-Page Architecture:
+- `app/how-it-works/page.tsx` - Explanation page (FIXED TEXT COLOR IN v1.4.3)
+- `app/privacy/page.tsx` - Privacy policy
+- `app/terms/page.tsx` - Terms of service
 
-```
-app/page.tsx
-├── Intro Mode (Hero + Feature Cards)
-├── Calculator Mode (Single Path)
-└── Compare Mode (Dual Path Comparison)
-```
+## Tech Stack
 
-### Component Structure:
+- Next.js 15.2.4
+- React 19
+- TypeScript
+- Tailwind CSS
+- Recharts for visualizations
+- Framer Motion for animations
+- Jest & React Testing Library
 
-```
-components/
-├── ui/                        # Base UI components
-├── magic/                     # Animated components
-├── premium/                   # Glass morphism components
-├── path-builder.tsx           # Input form component (v1.3: enhanced)
-├── roi-timeline.tsx           # Chart visualization
-├── loan-payment-calculator.tsx # v1.3: New - Monthly payment breakdown
-├── career-trajectory-chart.tsx # v1.3: New - 20-year career projection
-├── ai-risk-indicator.tsx      # v1.3: New - AI disruption risk meter
-└── footer.tsx                 # Site footer (v1.3.0)
-```
+## Testing
 
-## 📈 KEY METRICS
+- 76 tests passing across 6 test suites
+- Coverage for calculator logic, validation, and all major components
+- No failing tests
 
-### Performance:
+## Deployment
 
-- **First Load JS**: 308 kB (homepage)
-- **Build Time**: ~30 seconds
-- **Test Coverage**: 76 unit tests
-- **Lighthouse Score**: TBD (needs measurement)
+- Hosted on Vercel
+- URL: https://pathwise-roi.vercel.app
+- GitHub: https://github.com/zandy2test/pathwise-roi
 
-### User Experience:
+## Known Issues
 
-- **Mobile Responsive**: ✅ Yes
-- **Accessibility**: Basic ARIA labels
-- **Browser Support**: Modern browsers
-- **PWA Ready**: No (future enhancement)
+- None currently (all reported issues fixed in v1.4.3)
 
-## 🚦 DEPLOYMENT STATUS
-
-### Production Environment:
-
-- **URL**: https://pathwise-roi.vercel.app
-- **Provider**: Vercel
-- **Branch**: main
-- **Auto-Deploy**: Yes (on push to main)
-
-### Current Deployment:
-
-- **Last Deploy**: August 18, 2025
-- **Version**: 1.3.0
-- **Status**: LIVE with all v1.3 enhancements
-
-## 🔄 RECENT CHANGES
-
-### January 18, 2025 - v1.4.0 CollegeScam.io Rebrand:
-
-**Complete Rebrand:**
-
-- Changed all branding from PathwiseROI to CollegeScam.io
-- New red/orange color scheme replacing blue theme
-- Animated gradient hero section with aggressive messaging
-- Updated all terminology to focus on exposing education scams
-- Enhanced "scare factor" messaging throughout
-- Updated footer, layout metadata, and package.json
-- Modified all content pages (how-it-works, privacy, terms)
-- Changed version to 1.4.0
-
-### August 18, 2025 - v1.3.0 Feature Enhancement:
-
-**Phase 1: Visual Improvements**
-
-- Added gradient hero section with animated background
-- Implemented popular education comparisons cards
-- Added clear/reset button to calculator
-- Enhanced overall visual appeal
-
-**Phase 2: Enhanced Calculator Inputs**
-
-- Added loan interest rate selector (3-12%)
-- Added regional cost multiplier selector
-- Added degree level selector (Associate/Bachelor's/Master's/Doctorate)
-- Updated calculations to use these new inputs
-
-**Phase 3: Enhanced Results Display**
-
-- New Loan Payment Calculator component
-- New 20-Year Career Trajectory Chart
-- New AI Risk Indicator for chosen field
-- All components integrated into main results display
-
-### August 15, 2025 - Single-Page Refactor:
-
-- Consolidated /calculate and /results into main page
-- Removed separate route pages
-- Fixed navigation and UI issues
-- Added comparison charts
-- Improved user flow
-
-### August 14, 2025 - Visual Overhaul:
-
-- Premium glass morphism design
-- Magic UI components integration
-- Scam Score™ branding
-- Light theme implementation
-
-## 🎯 NEXT STEPS
-
-### Completed:
-
-1. ✅ Test build locally
-2. ✅ Commit changes
-3. ✅ Push to GitHub
-4. ✅ Verify Vercel deployment
-5. ✅ Test production site
-
-### Short-term Enhancements:
-
-- Implement actual premium features
-- Add more education paths
-- Enhance mobile experience
-- Add testimonials section
-- Implement email capture
-
-### Long-term Goals:
-
-- Backend API for calculations
-- User accounts & saved comparisons
-- Real payment integration
-- Advanced analytics dashboard
-- Mobile app version
-
-## 📝 KNOWN ISSUES
-
-### Minor Issues (Non-blocking):
-
-- React test warnings (linearGradient casing, act() warnings) - test environment only
-- Some unused imports (non-critical warnings)
-- MCP settings format warning in Cline (separate from project)
-- Share functionality needs real social integration
-
-### Technical Debt:
-
-- Premium features are placeholder only
-- No backend API (all client-side)
-- Limited error boundaries
-- No service worker for offline
-- Test performance could be optimized (currently takes ~30s)
-
-## � DEVELOPMENT NOTES
-
-### Local Development:
+## Development Commands
 
 ```bash
-npm run dev        # Start dev server
-npm run build      # Production build
-npm test           # Run tests
-npm run lint       # Check code quality
+npm run dev      # Start development server
+npm test         # Run tests
+npm run build    # Build for production
+npm run lint     # Run linting
 ```
 
-### Git Workflow:
+## Next Steps
 
-```bash
-# Current branch: main
-git add .
-git commit -m "feat: your commit message"
-git push origin main
-# Auto-deploys to Vercel
-```
+- Monitor user feedback for any additional issues
+- Consider implementing saved calculations feature
+- Expand education path database
+- Add more detailed career progression data
 
-### Pre-commit Hooks (Husky v9):
+## Contact
 
-- Automatically runs lint-staged (prettier formatting)
-- Runs all tests before allowing commit
-- No manual intervention needed
-- Configured in `.husky/pre-commit`
-
-### Environment Variables:
-
-- `NEXT_PUBLIC_GA_MEASUREMENT_ID`: Google Analytics ID
-- No other env vars required currently
-
-## 📚 DOCUMENTATION
-
-### Key Files:
-
-- `README.md`: Setup and overview
-- `PROJECT_CONTEXT.md`: Current project status and context
-- `V1.3_DEPLOYMENT_VERIFICATION.md`: Latest deployment verification
-- `QUICKSTART.md`: Developer quick start guide
-- `TECHNICAL_DEBT.md`: Technical improvements tracker
-
-### Testing:
-
-- Unit tests: `__tests__/` directory
-- E2E tests: `e2e/` directory (Playwright)
-- Manual testing checklist: `MANUAL-TEST-SCRIPT.md`
-
-## 👥 TEAM & CONTACT
-
-- **Developer**: AI-assisted development
-- **Design**: Premium glass morphism theme
-- **Content**: Scam Score™ branding focus
-- **Analytics**: GA4 tracking implemented
+For issues or questions, use the /reportbug command in the chat.
 
 ---
 
-**Last Updated**: August 18, 2025, 4:00 PM AEST
-**Status**: DEPLOYED TO PRODUCTION ✅
-**Version**: 1.3.0 (Enhanced Calculator + Results Display)
-**Production URL**: https://pathwise-roi.vercel.app
+Last Updated: January 18, 2025 (v1.4.3)
