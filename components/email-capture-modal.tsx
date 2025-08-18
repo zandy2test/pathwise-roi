@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { X, Crown, Mail, Check, Sparkles, AlertCircle, Users, TrendingUp } from 'lucide-react';
+import { X, Crown, Mail, Check, Sparkles, AlertCircle, TrendingUp } from 'lucide-react';
 
 interface EmailCaptureModalProps {
   showModal: boolean;
@@ -165,6 +165,20 @@ export function EmailCaptureModal({ showModal, setShowModal }: EmailCaptureModal
                         <div>
                           <span className="font-semibold text-gray-900">Advanced Scam Intelligence:</span>
                           <span className="text-gray-700"> Proprietary algorithms expose hidden costs, predict dropout rates, and calculate true employment statistics</span>
+                        </div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <Check className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <span className="font-semibold text-gray-900">$10K+ Scholarship Finder:</span>
+                          <span className="text-gray-700"> AI matches you with 250+ unclaimed scholarships and grants specific to your profile</span>
+                        </div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <Check className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <span className="font-semibold text-gray-900">Hidden Gem Degree Finder:</span>
+                          <span className="text-gray-700"> Discover programs with 300%+ ROI that recruiters secretly prefer over Ivy League</span>
                         </div>
                       </li>
                     </ul>

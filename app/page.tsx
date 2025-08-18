@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import PathBuilder from '@/components/path-builder';
@@ -23,19 +23,13 @@ import { TestimonialsSection } from '@/components/testimonials-section';
 import { SocialProofSection } from '@/components/social-proof-section';
 import {
   TrendingUp,
-  Shield,
   Calendar,
-  DollarSign,
   Trophy,
-  AlertCircle,
   Plus,
   Share2,
   Check,
-  Crown,
-  X,
   Sparkles,
   BarChart3,
-  Zap,
   Target,
   Brain,
   LineChart,
@@ -316,11 +310,11 @@ export default function HomePage() {
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
               {[
-                { title: "Nursing vs Business: Nursing breaks even 2 years faster", path1: "nursing_bachelor", path2: "college_business" },
-                { title: "Engineering vs MBA: Similar outcomes, half the cost", path1: "college_engineering", path2: "mba_top20" },
-                { title: "Community college transfer saves $40K vs 4-year", path1: "community_transfer", path2: "college_business" },
-                { title: "Data bootcamp vs CS degree: 45 months faster ROI", path1: "bootcamp_data", path2: "college_tech" },
-                { title: "Electrician vs Liberal Arts: Steady income vs debt", path1: "trades_electrician", path2: "college_liberal_arts" }
+                { title: "Nursing vs Business: Healthcare provides steadier ROI", path1: "nursing_bachelor", path2: "college_business" },
+                { title: "Computer Science vs MBA: Tech skills compound faster", path1: "college_tech", path2: "mba_top20" },
+                { title: "Engineering vs Medicine: Engineers build wealth while doctors train", path1: "college_engineering", path2: "medical_school" },
+                { title: "Community College + Transfer: Smart path saves $40K", path1: "community_transfer", path2: "college_business" },
+                { title: "Data Analytics vs Marketing: Both viable, different timelines", path1: "bootcamp_data", path2: "college_business" }
               ].map((comparison, index) => (
                 <motion.div
                   key={index}
