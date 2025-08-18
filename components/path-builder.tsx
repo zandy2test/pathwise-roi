@@ -194,18 +194,18 @@ export default function PathBuilder({
   const fieldOptions = educationType ? getFieldOptions(educationType) : []
   const programOptions = educationType && field ? getProgramOptions(educationType, field) : []
   return (
-    <TooltipProvider>
-      <div className="space-y-4">
-        {title && (
-          <div>
-            <h3 className="text-lg font-semibold">{title}</h3>
-            {description && <p className="text-sm text-muted-foreground">{description}</p>}
-          </div>
-        )}
-        
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <Label htmlFor="educationType" className="text-gray-900">Education Type</Label>
+    <div className="space-y-4">
+      {title && (
+        <div>
+          <h3 className="text-lg font-semibold">{title}</h3>
+          {description && <p className="text-sm text-muted-foreground">{description}</p>}
+        </div>
+      )}
+      
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <Label htmlFor="educationType" className="text-gray-900">Education Type</Label>
+          <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <HelpCircle className="h-3 w-3 text-muted-foreground" />
@@ -214,7 +214,8 @@ export default function PathBuilder({
                 <p className="max-w-xs">Choose your type of education, from traditional college to trade schools and bootcamps</p>
               </TooltipContent>
             </Tooltip>
-          </div>
+          </TooltipProvider>
+        </div>
           <Select value={educationType} onValueChange={handleEducationTypeChange}>
             <SelectTrigger data-testid="education-type-select">
               <SelectValue placeholder="Select education type" />
@@ -229,10 +230,11 @@ export default function PathBuilder({
           </Select>
         </div>
 
-        {educationType && (
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <Label htmlFor="field" className="text-gray-900">Field of Study</Label>
+      {educationType && (
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <Label htmlFor="field" className="text-gray-900">Field of Study</Label>
+            <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <HelpCircle className="h-3 w-3 text-muted-foreground" />
@@ -241,7 +243,8 @@ export default function PathBuilder({
                   <p className="max-w-xs">Select your specific field of study or specialization</p>
                 </TooltipContent>
               </Tooltip>
-            </div>
+            </TooltipProvider>
+          </div>
             <Select value={field} onValueChange={handleFieldChange}>
               <SelectTrigger data-testid="field-select">
                 <SelectValue placeholder="Select field of study" />
@@ -257,10 +260,11 @@ export default function PathBuilder({
           </div>
         )}
 
-        {educationType && field && programOptions.length > 0 && (
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <Label htmlFor="program" className="text-gray-900">Program/Degree</Label>
+      {educationType && field && programOptions.length > 0 && (
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <Label htmlFor="program" className="text-gray-900">Program/Degree</Label>
+            <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <HelpCircle className="h-3 w-3 text-muted-foreground" />
@@ -269,7 +273,8 @@ export default function PathBuilder({
                   <p className="max-w-xs">Select the specific program or degree level</p>
                 </TooltipContent>
               </Tooltip>
-            </div>
+            </TooltipProvider>
+          </div>
             <Select value={program} onValueChange={handleProgramChange}>
               <SelectTrigger data-testid="program-select">
                 <SelectValue placeholder="Select program" />
@@ -285,9 +290,10 @@ export default function PathBuilder({
           </div>
         )}
 
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <Label htmlFor="location" className="text-gray-900">Your Location</Label>
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <Label htmlFor="location" className="text-gray-900">Your Location</Label>
+          <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <HelpCircle className="h-3 w-3 text-muted-foreground" />
@@ -296,7 +302,8 @@ export default function PathBuilder({
                 <p className="max-w-xs">Location affects both education costs and future salary potential</p>
               </TooltipContent>
             </Tooltip>
-          </div>
+          </TooltipProvider>
+        </div>
           <Select value={inputs.location} onValueChange={(value) => {
             analytics.featureEngagement('location', value)
             setInputs({...inputs, location: value})
@@ -314,11 +321,12 @@ export default function PathBuilder({
           </Select>
         </div>
 
-        {/* Regional Selector - Shows when location is "Other" */}
-        {inputs.location === 'Other' && (
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <Label htmlFor="region" className="text-gray-900">Select Region</Label>
+      {/* Regional Selector - Shows when location is "Other" */}
+      {inputs.location === 'Other' && (
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <Label htmlFor="region" className="text-gray-900">Select Region</Label>
+            <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <HelpCircle className="h-3 w-3 text-muted-foreground" />
@@ -327,7 +335,8 @@ export default function PathBuilder({
                   <p className="max-w-xs">Select your region for more accurate cost and salary estimates</p>
                 </TooltipContent>
               </Tooltip>
-            </div>
+            </TooltipProvider>
+          </div>
             <Select value={inputs.region || ''} onValueChange={(value) => {
               analytics.featureEngagement('region', value)
               setInputs({...inputs, region: value})
@@ -346,9 +355,10 @@ export default function PathBuilder({
           </div>
         )}
 
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <Label htmlFor="schoolTier" className="text-gray-900">School Quality</Label>
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <Label htmlFor="schoolTier" className="text-gray-900">School Quality</Label>
+          <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <HelpCircle className="h-3 w-3 text-muted-foreground" />
@@ -357,7 +367,8 @@ export default function PathBuilder({
                 <p className="max-w-xs">Higher-tier schools cost more but may lead to better salary outcomes</p>
               </TooltipContent>
             </Tooltip>
-          </div>
+          </TooltipProvider>
+        </div>
           <Select value={inputs.schoolTier} onValueChange={(value) => {
             analytics.featureEngagement('schoolTier', value)
             setInputs({...inputs, schoolTier: value})
@@ -375,9 +386,10 @@ export default function PathBuilder({
           </Select>
         </div>
 
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <Label htmlFor="livingCost" className="text-gray-900">Living Situation</Label>
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <Label htmlFor="livingCost" className="text-gray-900">Living Situation</Label>
+          <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <HelpCircle className="h-3 w-3 text-muted-foreground" />
@@ -386,7 +398,8 @@ export default function PathBuilder({
                 <p className="max-w-xs">Living expenses during education significantly impact total cost</p>
               </TooltipContent>
             </Tooltip>
-          </div>
+          </TooltipProvider>
+        </div>
           <Select value={inputs.livingCost} onValueChange={(value) => {
             analytics.featureEngagement('livingCost', value)
             setInputs({...inputs, livingCost: value})
@@ -404,11 +417,12 @@ export default function PathBuilder({
           </Select>
         </div>
 
-        {/* Degree Level Selector - New Field */}
-        {educationType === 'college' && (
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <Label htmlFor="degreeLevel" className="text-gray-900">Degree Level</Label>
+      {/* Degree Level Selector - New Field */}
+      {educationType === 'college' && (
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <Label htmlFor="degreeLevel" className="text-gray-900">Degree Level</Label>
+            <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <HelpCircle className="h-3 w-3 text-muted-foreground" />
@@ -417,7 +431,8 @@ export default function PathBuilder({
                   <p className="max-w-xs">Select your target degree level. Higher degrees take longer but may lead to better salaries</p>
                 </TooltipContent>
               </Tooltip>
-            </div>
+            </TooltipProvider>
+          </div>
             <Select value={inputs.degreeLevel || 'bachelors'} onValueChange={(value) => {
               analytics.featureEngagement('degreeLevel', value)
               setInputs({...inputs, degreeLevel: value})
@@ -436,9 +451,10 @@ export default function PathBuilder({
           </div>
         )}
 
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <Label htmlFor="scholarships" className="text-gray-900">Scholarships/Aid ($)</Label>
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <Label htmlFor="scholarships" className="text-gray-900">Scholarships/Aid ($)</Label>
+          <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <HelpCircle className="h-3 w-3 text-muted-foreground" />
@@ -447,7 +463,8 @@ export default function PathBuilder({
                 <p className="max-w-xs">Total financial aid, grants, and scholarships you expect to receive. Maximum: $100,000</p>
               </TooltipContent>
             </Tooltip>
-          </div>
+          </TooltipProvider>
+        </div>
           <Input
             type="number"
             placeholder="0"
@@ -468,10 +485,11 @@ export default function PathBuilder({
           />
         </div>
 
-        {/* Loan Interest Rate Field - New Field */}
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <Label htmlFor="loanRate" className="text-gray-900">Student Loan Interest Rate (%)</Label>
+      {/* Loan Interest Rate Field - New Field */}
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <Label htmlFor="loanRate" className="text-gray-900">Student Loan Interest Rate (%)</Label>
+          <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <HelpCircle className="h-3 w-3 text-muted-foreground" />
@@ -480,7 +498,8 @@ export default function PathBuilder({
                 <p className="max-w-xs">Enter the interest rate for student loans. Average federal loan rate is 5-7%, private loans 4-15%</p>
               </TooltipContent>
             </Tooltip>
-          </div>
+          </TooltipProvider>
+        </div>
           <Input
             id="loanRate"
             type="number"
@@ -510,17 +529,16 @@ export default function PathBuilder({
           </p>
         </div>
 
-        {errors.length > 0 && (
-          <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
-            {errors.map((error, index) => (
-              <div key={index} className="flex items-center gap-2 text-sm text-destructive">
-                <AlertCircle className="h-4 w-4" />
-                {error}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </TooltipProvider>
+      {errors.length > 0 && (
+        <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
+          {errors.map((error, index) => (
+            <div key={index} className="flex items-center gap-2 text-sm text-destructive">
+              <AlertCircle className="h-4 w-4" />
+              {error}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   )
 }

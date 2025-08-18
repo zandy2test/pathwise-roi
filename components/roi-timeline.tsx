@@ -151,7 +151,7 @@ export default function ROITimeline({ result, pathName }: ROITimelineProps) {
               Your journey from debt to profit over 10 years
             </CardDescription>
           </div>
-          <TooltipProvider>
+          <TooltipProvider delayDuration={0}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <HelpCircle className="h-5 w-5 text-gray-400 hover:text-gray-600 cursor-help" />
