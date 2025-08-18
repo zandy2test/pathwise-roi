@@ -18,21 +18,21 @@ export default function HowItWorksPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-3xl">How PathwiseROI Works</CardTitle>
-            <CardDescription>Understanding your education investment in 6 simple steps</CardDescription>
+            <CardTitle className="text-3xl">How CollegeScam.io Works</CardTitle>
+            <CardDescription>Expose the truth about education costs in 6 simple steps</CardDescription>
           </CardHeader>
           <CardContent className="space-y-8">
             {/* Step 1 */}
             <div className="flex gap-4">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                  <Calculator className="w-6 h-6 text-blue-600" />
+                <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                  <Calculator className="w-6 h-6 text-red-600" />
                 </div>
               </div>
               <div>
                 <h3 className="text-lg font-semibold mb-2">1. Choose Your Education Path</h3>
                 <p className="text-gray-600">
-                  Select from our comprehensive database of 20+ education paths, including traditional degrees, bootcamps, certifications, and trade schools. Each path includes industry-validated data on costs, duration, and earning potential.
+                  Select from our comprehensive database of 20+ education paths, including overpriced degrees, practical bootcamps, legitimate certifications, and sensible trade schools. Each path includes real data on actual costs, duration, and realistic earning potential.
                 </p>
               </div>
             </div>
@@ -45,9 +45,9 @@ export default function HowItWorksPage() {
                 </div>
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-2">2. Enter Your Financial Details</h3>
+                <h3 className="text-lg font-semibold mb-2">2. Enter Your Financial Reality</h3>
                 <p className="text-gray-600">
-                  Input your specific financial situation including tuition costs, available scholarships (up to $100,000), expected living costs, and any current income. Our calculator uses your exact numbers to provide personalized results.
+                  Input the harsh truth of your financial situation including inflated tuition costs, meager scholarships (if you're lucky), crushing living costs, and any current income. Our calculator reveals the real numbers colleges don't want you to see.
                 </p>
               </div>
             </div>
@@ -60,15 +60,15 @@ export default function HowItWorksPage() {
                 </div>
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-2">3. Advanced ROI Calculation</h3>
+                <h3 className="text-lg font-semibold mb-2">3. Calculate Your Scam Score™</h3>
                 <p className="text-gray-600">
-                  Our proprietary algorithm calculates your return on investment using multiple factors:
+                  Our truth-revealing algorithm exposes the real cost of education:
                 </p>
                 <ul className="list-disc pl-6 mt-2 text-gray-600">
-                  <li>Total investment cost (tuition + living expenses - scholarships)</li>
-                  <li>Opportunity cost of lost income during education</li>
-                  <li>Projected 10-year earnings based on real market data</li>
-                  <li>Industry growth rates and job market stability</li>
+                  <li>Total debt burden (tuition + living + interest - token scholarships)</li>
+                  <li>Lost earnings while sitting in classrooms</li>
+                  <li>Actual 10-year earnings (not the fantasy numbers colleges advertise)</li>
+                  <li>Real job availability and market saturation</li>
                 </ul>
               </div>
             </div>
@@ -81,9 +81,9 @@ export default function HowItWorksPage() {
                 </div>
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-2">4. Compare Multiple Paths</h3>
+                <h3 className="text-lg font-semibold mb-2">4. Compare the Scams</h3>
                 <p className="text-gray-600">
-                  Use our comparison tool to evaluate up to two education paths side-by-side. See which option provides better ROI, faster break-even time, and higher long-term earnings. Our viral comparisons feature lets you explore popular path combinations with one click.
+                  Use our comparison tool to see which education path scams you less. Compare overpriced degrees against practical alternatives. See which option actually makes financial sense. Our viral comparisons expose the most shocking education rip-offs.
                 </p>
               </div>
             </div>
@@ -96,15 +96,15 @@ export default function HowItWorksPage() {
                 </div>
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-2">5. Understand Your Risk</h3>
+                <h3 className="text-lg font-semibold mb-2">5. See the Red Flags</h3>
                 <p className="text-gray-600">
-                  Every education path comes with a Risk Warning score that factors in:
+                  Every education path gets a brutal honesty score revealing:
                 </p>
                 <ul className="list-disc pl-6 mt-2 text-gray-600">
-                  <li>Job market volatility in your chosen field</li>
-                  <li>Industry automation trends</li>
-                  <li>Geographic employment variations</li>
-                  <li>Credential recognition and transferability</li>
+                  <li>How saturated your field really is</li>
+                  <li>Jobs being eliminated by AI and automation</li>
+                  <li>Geographic limitations nobody mentions</li>
+                  <li>Worthless credentials and degree inflation</li>
                 </ul>
               </div>
             </div>
@@ -117,62 +117,62 @@ export default function HowItWorksPage() {
                 </div>
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-2">6. Make an Informed Decision</h3>
+                <h3 className="text-lg font-semibold mb-2">6. Avoid the Trap</h3>
                 <p className="text-gray-600">
-                  Armed with comprehensive ROI data, risk assessments, and comparison insights, you can make a confident decision about your education investment. Share your results with advisors, family, or mentors using our built-in sharing feature.
+                  Armed with the truth about education costs, scam scores, and real alternatives, you can avoid the debt trap. Share these eye-opening results with friends and family before they fall for the same expensive mistakes.
                 </p>
               </div>
             </div>
 
             {/* Key Metrics Section */}
             <div className="mt-12 p-6 bg-gray-50 rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">Key Metrics We Calculate</h3>
+              <h3 className="text-xl font-semibold mb-4">Truth Metrics We Expose</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <h4 className="font-semibold text-gray-700">ROI Percentage</h4>
-                  <p className="text-sm text-gray-600">Your return relative to total investment</p>
+                  <h4 className="font-semibold text-gray-700">Scam Score™</h4>
+                  <p className="text-sm text-gray-600">How badly you're being ripped off</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-700">Break-Even Time</h4>
-                  <p className="text-sm text-gray-600">Years to recover your education investment</p>
+                  <h4 className="font-semibold text-gray-700">Debt Prison Time</h4>
+                  <p className="text-sm text-gray-600">Years enslaved to student loans</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-700">10-Year Net Earnings</h4>
-                  <p className="text-sm text-gray-600">Total earnings minus total costs</p>
+                  <h4 className="font-semibold text-gray-700">Real 10-Year Outcome</h4>
+                  <p className="text-sm text-gray-600">Actual earnings minus crushing debt</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-700">Risk Warning Score</h4>
-                  <p className="text-sm text-gray-600">Market stability and future outlook</p>
+                  <h4 className="font-semibold text-gray-700">Red Flag Alert</h4>
+                  <p className="text-sm text-gray-600">Warning signs colleges hide from you</p>
                 </div>
               </div>
             </div>
 
             {/* Premium Features */}
-            <div className="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">🚀 Premium Features</h3>
+            <div className="mt-8 p-6 bg-gradient-to-r from-red-50 to-orange-50 rounded-lg">
+              <h3 className="text-xl font-semibold mb-4">� Premium Truth Reveals</h3>
               <p className="text-gray-600 mb-4">
-                Unlock advanced analysis with PathwiseROI Premium:
+                Expose even more education scams with CollegeScam.io Premium:
               </p>
               <ul className="space-y-2 text-gray-600">
                 <li className="flex items-start">
-                  <span className="text-green-600 mr-2">✓</span>
-                  Extended 20-year financial projections
+                  <span className="text-red-600 mr-2">✓</span>
+                  20-year debt slavery projections
                 </li>
                 <li className="flex items-start">
-                  <span className="text-green-600 mr-2">✓</span>
-                  Location-specific salary adjustments
+                  <span className="text-red-600 mr-2">✓</span>
+                  Real salary data by location (spoiler: it's lower)
                 </li>
                 <li className="flex items-start">
-                  <span className="text-green-600 mr-2">✓</span>
-                  Debt repayment optimization strategies
+                  <span className="text-red-600 mr-2">✓</span>
+                  Debt escape strategies that actually work
                 </li>
                 <li className="flex items-start">
-                  <span className="text-green-600 mr-2">✓</span>
-                  Career progression modeling
+                  <span className="text-red-600 mr-2">✓</span>
+                  Realistic career progression (not fantasy)
                 </li>
                 <li className="flex items-start">
-                  <span className="text-green-600 mr-2">✓</span>
-                  Unlimited saved calculations and comparisons
+                  <span className="text-red-600 mr-2">✓</span>
+                  Save and share unlimited scam exposures
                 </li>
               </ul>
             </div>
@@ -180,8 +180,8 @@ export default function HowItWorksPage() {
             {/* CTA */}
             <div className="text-center pt-8">
               <Link href="/">
-                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600">
-                  Start Calculating Your ROI
+                <Button size="lg" className="bg-gradient-to-r from-red-600 to-orange-600">
+                  Calculate Your Scam Score Now
                 </Button>
               </Link>
             </div>

@@ -22,18 +22,18 @@ export default function TermsPage() {
           <CardContent className="prose prose-gray max-w-none">
             <h2 className="text-xl font-semibold mt-6 mb-3">1. Acceptance of Terms</h2>
             <p className="mb-4">
-              By accessing and using PathwiseROI ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our Service.
+              By accessing and using CollegeScam.io ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our Service.
             </p>
 
             <h2 className="text-xl font-semibold mt-6 mb-3">2. Description of Service</h2>
             <p className="mb-4">
-              PathwiseROI provides an educational ROI calculator that helps users make informed decisions about their education investments. The Service includes:
+              CollegeScam.io provides a Scam Score™ calculator that exposes the truth about education costs and helps users avoid debt traps. The Service includes:
             </p>
             <ul className="list-disc pl-6 mb-4">
-              <li>ROI calculations for various education paths</li>
-              <li>Comparison tools for different educational options</li>
-              <li>Educational resources and insights</li>
-              <li>Premium features for advanced analysis</li>
+              <li>Scam Score™ calculations for various education paths</li>
+              <li>Comparison tools to expose education rip-offs</li>
+              <li>Truth-revealing resources and insights</li>
+              <li>Premium features for deeper scam analysis</li>
             </ul>
 
             <h2 className="text-xl font-semibold mt-6 mb-3">3. User Responsibilities</h2>
@@ -48,7 +48,7 @@ export default function TermsPage() {
 
             <h2 className="text-xl font-semibold mt-6 mb-3">4. Disclaimer of Educational Advice</h2>
             <p className="mb-4 font-semibold">
-              IMPORTANT: PathwiseROI provides calculations and information for educational planning purposes only. We do not provide:
+              IMPORTANT: CollegeScam.io provides calculations and information for educational awareness purposes only. We do not provide:
             </p>
             <ul className="list-disc pl-6 mb-4">
               <li>Financial advice or recommendations</li>
@@ -62,7 +62,7 @@ export default function TermsPage() {
 
             <h2 className="text-xl font-semibold mt-6 mb-3">5. Intellectual Property</h2>
             <p className="mb-4">
-              All content, features, and functionality of the Service are owned by PathwiseROI and are protected by international copyright, trademark, and other intellectual property laws. You may not:
+              All content, features, and functionality of the Service, including our proprietary Scam Score™ algorithm, are owned by CollegeScam.io and are protected by international copyright, trademark, and other intellectual property laws. You may not:
             </p>
             <ul className="list-disc pl-6 mb-4">
               <li>Copy or modify any part of the Service</li>
@@ -83,7 +83,7 @@ export default function TermsPage() {
 
             <h2 className="text-xl font-semibold mt-6 mb-3">7. Limitation of Liability</h2>
             <p className="mb-4">
-              TO THE MAXIMUM EXTENT PERMITTED BY LAW, PATHWISEROI SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES RESULTING FROM YOUR USE OF THE SERVICE.
+              TO THE MAXIMUM EXTENT PERMITTED BY LAW, COLLEGESCAM.IO SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES RESULTING FROM YOUR USE OF THE SERVICE.
             </p>
             <p className="mb-4">
               Our total liability for any claim arising from these Terms or your use of the Service shall not exceed the amount you paid to us in the 12 months preceding the claim.
@@ -91,7 +91,7 @@ export default function TermsPage() {
 
             <h2 className="text-xl font-semibold mt-6 mb-3">8. Indemnification</h2>
             <p className="mb-4">
-              You agree to indemnify and hold harmless PathwiseROI, its officers, directors, employees, and agents from any claims, damages, or expenses arising from your use of the Service or violation of these Terms.
+              You agree to indemnify and hold harmless CollegeScam.io, its officers, directors, employees, and agents from any claims, damages, or expenses arising from your use of the Service or violation of these Terms.
             </p>
 
             <h2 className="text-xl font-semibold mt-6 mb-3">9. Termination</h2>
@@ -107,7 +107,7 @@ export default function TermsPage() {
 
             <h2 className="text-xl font-semibold mt-6 mb-3">10. Governing Law</h2>
             <p className="mb-4">
-              These Terms shall be governed by and construed in accordance with the laws of the State of California, without regard to its conflict of law provisions. Any disputes shall be resolved in the courts of San Francisco County, California.
+              These Terms shall be governed by and construed in accordance with the laws of [Your State], without regard to its conflict of law provisions. Any disputes shall be resolved in the courts of [Your County], [Your State].
             </p>
 
             <h2 className="text-xl font-semibold mt-6 mb-3">11. Changes to Terms</h2>
@@ -120,9 +120,9 @@ export default function TermsPage() {
               For questions about these Terms of Service, please contact us at:
             </p>
             <ul className="list-none mb-4">
-              <li>Email: legal@pathwiseroi.com</li>
-              <li>Phone: 1-800-PATH-ROI</li>
-              <li>Address: 123 Education Way, San Francisco, CA 94105</li>
+              <li>Email: legal@collegescam.io</li>
+              <li>Phone: 1-800-NO-SCAMS</li>
+              <li>Address: [Company Address]</li>
             </ul>
           </CardContent>
         </Card>

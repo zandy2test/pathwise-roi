@@ -272,3 +272,21 @@
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--color-accent-primary) / 0.5);
 }
+
+/* CollegeScam.io Gradient Animations */
+@keyframes gradient-shift {
+  0%, 100% { 
+    opacity: 1; 
+  }
+  50% { 
+    opacity: 0.8; 
+  }
+}
+
+.animate-gradient-shift {
+  animation: gradient-shift 8s ease-in-out infinite;
+}
+
+.animate-gradient-shift-reverse {
+  animation: gradient-shift 8s ease-in-out infinite reverse;
+}

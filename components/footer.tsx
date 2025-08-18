@@ -17,8 +17,8 @@ export function Footer({ onPremiumClick }: FooterProps = {}) {
           {/* Brand Section */}
           <div className="text-center md:text-left">
             <Link href="/" className="flex items-center justify-center md:justify-start gap-2 mb-3">
-              <span className="font-bold text-xl text-gray-900">PathwiseROI</span>
-              <span className="text-blue-600 font-medium">| Scam Score™</span>
+              <span className="font-bold text-xl text-gray-900">CollegeScam.io</span>
+              <span className="text-red-600 font-medium">| Scam Score™</span>
             </Link>
             <p className="text-sm text-gray-600">
               Make smarter education decisions with data-driven insights
@@ -29,21 +29,21 @@ export function Footer({ onPremiumClick }: FooterProps = {}) {
           <div className="text-center">
             <h3 className="font-semibold mb-3">Quick Links</h3>
             <div className="space-y-2">
-              <Link href="/" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
+              <Link href="/" className="block text-sm text-gray-600 hover:text-red-600 transition-colors">
                 ROI Calculator
               </Link>
-              <Link href="/how-it-works" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
+              <Link href="/how-it-works" className="block text-sm text-gray-600 hover:text-red-600 transition-colors">
                 How It Works
               </Link>
               {onPremiumClick ? (
                 <button 
                   onClick={onPremiumClick}
-                  className="text-sm text-gray-600 hover:text-blue-600 transition-colors"
+                  className="text-sm text-gray-600 hover:text-red-600 transition-colors"
                 >
                   Premium Features
                 </button>
               ) : (
-                <Link href="#premium" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                <Link href="#premium" className="block text-sm text-gray-600 hover:text-red-600 transition-colors">
                   Premium Features
                 </Link>
               )}
@@ -54,10 +54,10 @@ export function Footer({ onPremiumClick }: FooterProps = {}) {
           <div className="text-center md:text-right">
             <h3 className="font-semibold mb-3">Legal</h3>
             <div className="space-y-2">
-              <Link href="/privacy" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
+              <Link href="/privacy" className="block text-sm text-gray-600 hover:text-red-600 transition-colors">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
+              <Link href="/terms" className="block text-sm text-gray-600 hover:text-red-600 transition-colors">
                 Terms of Service
               </Link>
             </div>
@@ -68,7 +68,7 @@ export function Footer({ onPremiumClick }: FooterProps = {}) {
         <div className="mt-8 pt-6 border-t border-gray-200">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-600">
-              © {currentYear} PathwiseROI. All rights reserved. | v1.3.0
+              © {currentYear} CollegeScam.io. All rights reserved. | v1.4.0
             </p>
             <p className="text-sm text-gray-600 flex items-center gap-1">
               Made with <Heart className="h-3 w-3 text-red-500 fill-red-500" /> for students everywhere

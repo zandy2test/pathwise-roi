@@ -149,10 +149,10 @@ export default function HomePage() {
 
   const handleShare = () => {
     const shareData = {
-      title: 'PathwiseROI Calculator',
+      title: 'CollegeScam.io - Education Scam Score',
       text: result1
-        ? `My education path breaks even in ${result1.breakevenMonths} months!`
-        : 'Calculate your education ROI with PathwiseROI',
+        ? `My education has a ${result1.breakevenMonths > 120 ? 'EXTREME SCAM' : result1.breakevenMonths > 60 ? 'HIGH RISK' : result1.breakevenMonths > 36 ? 'MODERATE RISK' : 'LEGITIMATE'} score! Check yours at CollegeScam.io`
+        : 'Is your degree a scam? Find out at CollegeScam.io',
       url: window.location.href,
     };
 
@@ -184,7 +184,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-blue-50">
       {/* Version Indicator for Debugging */}
       <div className="fixed bottom-4 left-4 z-50 bg-black/90 text-white px-3 py-1 rounded-full text-xs font-mono">
-        v1.3.0 | 8/18 2:58PM | Port: {port}
+        CollegeScam.io v1.4.0 | Port: {port}
       </div>
 
       {/* Navigation Bar */}
@@ -197,9 +197,9 @@ export default function HomePage() {
               }}
               className="flex items-center gap-2 hover:opacity-80 transition-opacity"
             >
-              <AlertTriangle className="h-6 w-6 text-blue-600" />
-              <span className="text-xl font-bold text-gray-900">PathwiseROI</span>
-              <span className="text-sm text-blue-600 font-medium">Scam Score</span>
+              <AlertTriangle className="h-6 w-6 text-red-600" />
+              <span className="text-xl font-bold text-gray-900">CollegeScam</span>
+              <span className="text-sm text-red-600 font-medium">.io</span>
             </button>
             <ShimmerButton
               onClick={() => setShowPremiumModal(true)}
@@ -214,9 +214,12 @@ export default function HomePage() {
       </nav>
 
       {/* HERO SECTION - Progressive Disclosure Design */}
-      <section id="top" className="pt-32 pb-20 bg-gradient-to-br from-blue-100 via-blue-50 to-cyan-100 relative overflow-hidden">
-        {/* Background gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-200/30 via-transparent to-cyan-200/30" />
+      <section id="top" className="pt-32 pb-20 relative overflow-hidden">
+        {/* Animated gradient background */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-red-100 via-orange-50 to-yellow-100 animate-gradient-shift" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-red-50/30 to-transparent animate-gradient-shift-reverse" />
+        </div>
         {/* Red Warning Banner at Top */}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
@@ -321,57 +324,74 @@ export default function HomePage() {
                   <Card
                     className="cursor-pointer hover:shadow-xl transition-all hover:scale-105 bg-white border-2 border-gray-200 hover:border-blue-400"
                     onClick={() => {
-                      // Set up path 1 inputs
-                      const newInputs1 = {
-                        path: comparison.path1,
-                        location: 'nyc',
-                        schoolTier: 'standard',
-                        livingCost: 'offcampus',
+                      // Clear any existing inputs first
+                      setInputs1({
+                        path: '',
+                        location: '',
+                        schoolTier: '',
+                        livingCost: '',
                         scholarships: 0,
                         loanInterestRate: 7,
                         degreeLevel: 'bachelors',
                         region: '',
-                        // Parse the path to get education type details
-                        educationType: comparison.path1.split('_')[0],
-                        field: '',
-                        program: ''
-                      };
-                      
-                      // Set up path 2 inputs
-                      const newInputs2 = {
-                        path: comparison.path2,
-                        location: 'nyc',
-                        schoolTier: 'standard',
-                        livingCost: 'offcampus',
+                      });
+                      setInputs2({
+                        path: '',
+                        location: '',
+                        schoolTier: '',
+                        livingCost: '',
                         scholarships: 0,
                         loanInterestRate: 7,
                         degreeLevel: 'bachelors',
                         region: '',
-                        // Parse the path to get education type details
-                        educationType: comparison.path2.split('_')[0],
-                        field: '',
-                        program: ''
-                      };
+                      });
+                      setResult1(null);
+                      setResult2(null);
                       
-                      // Update inputs to reflect in UI
-                      setInputs1(newInputs1);
-                      setInputs2(newInputs2);
-                      setShowComparison(true);
-                      
-                      // Calculate both results
-                      const result1New = calculateROI(newInputs1);
-                      const result2New = calculateROI(newInputs2);
-                      
-                      setResult1(result1New);
-                      setResult2(result2New);
-                      
-                      // Scroll to results
+                      // Then set up new comparison
                       setTimeout(() => {
-                        const resultsElement = document.getElementById('results');
-                        if (resultsElement) {
-                          resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }
-                      }, 100);
+                        const newInputs1 = {
+                          path: comparison.path1,
+                          location: 'nyc',
+                          schoolTier: 'standard',
+                          livingCost: 'offcampus',
+                          scholarships: 0,
+                          loanInterestRate: 7,
+                          degreeLevel: 'bachelors',
+                          region: 'northeast',
+                        };
+                        
+                        const newInputs2 = {
+                          path: comparison.path2,
+                          location: 'nyc',
+                          schoolTier: 'standard',
+                          livingCost: 'offcampus',
+                          scholarships: 0,
+                          loanInterestRate: 7,
+                          degreeLevel: 'bachelors',
+                          region: 'northeast',
+                        };
+                        
+                        // Update inputs
+                        setInputs1(newInputs1);
+                        setInputs2(newInputs2);
+                        setShowComparison(true);
+                        
+                        // Calculate both results
+                        const result1New = calculateROI(newInputs1);
+                        const result2New = calculateROI(newInputs2);
+                        
+                        setResult1(result1New);
+                        setResult2(result2New);
+                        
+                        // Scroll to results
+                        setTimeout(() => {
+                          const resultsElement = document.getElementById('results');
+                          if (resultsElement) {
+                            resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                          }
+                        }, 100);
+                      }, 50);
                     }}
                   >
                     <CardContent className="p-4">
@@ -467,7 +487,11 @@ export default function HomePage() {
                 <div id="results" className="lg:col-span-2">
                 <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 shadow-xl">
                   <CardHeader>
-                    <CardTitle className="text-2xl text-gray-900">Your Scam Score Results</CardTitle>
+                    <CardTitle className="text-2xl text-gray-900">
+                      {inputs1.path && educationPaths[inputs1.path] ? 
+                        `${educationPaths[inputs1.path].name} - Scam Score Results` : 
+                        'Your Scam Score Results'}
+                    </CardTitle>
                     <div className="flex gap-2 mt-2">
                       <Button variant="outline" size="sm" onClick={handleShare} className="gap-2 bg-white text-gray-700 hover:text-gray-900">
                         {copied ? (
@@ -650,12 +674,33 @@ export default function HomePage() {
                     title=""
                     description=""
                   />
-                  <CTAButton 
-                    onClick={handleCompare} 
-                    className="w-full mt-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
-                  >
-                    Calculate Comparison
-                  </CTAButton>
+                  <div className="flex gap-2 mt-6">
+                    <CTAButton 
+                      onClick={handleCompare} 
+                      className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+                    >
+                      Calculate Comparison
+                    </CTAButton>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setInputs2({
+                          path: '',
+                          location: '',
+                          schoolTier: '',
+                          livingCost: '',
+                          scholarships: 0,
+                          loanInterestRate: 7,
+                          degreeLevel: 'bachelors',
+                          region: '',
+                        });
+                        setResult2(null);
+                      }}
+                      className="px-4"
+                    >
+                      Clear
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -664,7 +709,11 @@ export default function HomePage() {
                 <div id="comparison-results" className="lg:col-span-2">
                   <Card className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200 shadow-xl">
                     <CardHeader>
-                      <CardTitle className="text-2xl text-gray-900">Comparison Results</CardTitle>
+                      <CardTitle className="text-2xl text-gray-900">
+                        {inputs2.path && educationPaths[inputs2.path] ? 
+                          `${educationPaths[inputs2.path].name} - Comparison Results` : 
+                          'Comparison Results'}
+                      </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       {/* Winner Analysis */}
@@ -787,6 +836,21 @@ export default function HomePage() {
                       </div>
                     </CardContent>
                   </Card>
+
+                  {/* New Phase 3 Components for Comparison Path */}
+                  <div className="mt-6 space-y-6">
+                    {/* Loan Payment Calculator */}
+                    <LoanPaymentCalculator 
+                      result={result2} 
+                      loanInterestRate={inputs2.loanInterestRate || 7} 
+                    />
+                    
+                    {/* Career Trajectory Chart */}
+                    <CareerTrajectoryChart inputs={inputs2} result={result2} />
+                    
+                    {/* AI Risk Indicator */}
+                    <AIRiskIndicator inputs={inputs2} />
+                  </div>
                 </div>
               ) : (
                 <div className="lg:col-span-2">

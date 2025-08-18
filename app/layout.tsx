@@ -8,31 +8,31 @@ import { Analytics } from '@vercel/analytics/next'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'PathwiseROI - Education Investment Calculator',
-  description: 'Calculate when your education investment pays off. Compare college degrees, trade schools, bootcamps, and work paths to find your optimal education ROI.',
-  keywords: 'education ROI, college calculator, trade school, bootcamp, education investment, career paths',
-  authors: [{ name: 'PathwiseROI' }],
+  title: 'CollegeScam.io - Expose the Truth Behind Education Costs',
+  description: 'Uncover the real cost of college with our Scam Score™ calculator. Compare college degrees, trade schools, bootcamps, and work paths to avoid the education debt trap.',
+  keywords: 'college scam, education debt, student loans, ROI calculator, college truth, trade school, bootcamp, education investment, career paths, scam score',
+  authors: [{ name: 'CollegeScam.io' }],
   openGraph: {
-    title: 'PathwiseROI - Education Investment Calculator',
-    description: 'Discover when your education pays for itself. Compare college vs trade school vs bootcamp paths with our free ROI calculator.',
-    url: 'https://pathwiseroi.com',
-    siteName: 'PathwiseROI',
+    title: 'CollegeScam.io - Expose the Truth Behind Education Costs',
+    description: 'Is college worth it? Find out with our Scam Score™ calculator. Compare college vs trade school vs bootcamp paths and avoid the debt trap.',
+    url: 'https://collegescam.io',
+    siteName: 'CollegeScam.io',
     type: 'website',
     locale: 'en_US',
     images: [
       {
-        url: 'https://pathwiseroi.com/og-image.png',
+        url: 'https://collegescam.io/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'PathwiseROI - Education Investment Calculator',
+        alt: 'CollegeScam.io - Expose the Truth Behind Education Costs',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'PathwiseROI - Education Investment Calculator',
-    description: 'Discover when your education pays for itself. Free ROI calculator.',
-    images: ['https://pathwiseroi.com/og-image.png'],
+    title: 'CollegeScam.io - Expose the Truth Behind Education Costs',
+    description: 'Is college worth it? Find out with our Scam Score™ calculator. Avoid the debt trap.',
+    images: ['https://collegescam.io/og-image.png'],
   },
   robots: {
     index: true,
