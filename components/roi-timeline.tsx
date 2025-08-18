@@ -1,239 +1,282 @@
-"use client"
+'use client'
 
-import { useMemo } from "react"
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, ReferenceLine } from "recharts"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import type { YearlyProjection } from "@/lib/types"
-import { TrendingUp, TrendingDown } from "lucide-react"
+import { useMemo } from 'react'
+import {
+  Line,
+  LineChart,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip as RechartsTooltip,
+  ResponsiveContainer,
+  ReferenceLine
+} from 'recharts'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Info, HelpCircle } from 'lucide-react'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+import type { CalculationResult } from '@/lib/types'
 
 interface ROITimelineProps {
-  projections: YearlyProjection[]
-  breakEvenTime: number
+  result: CalculationResult
+  pathName: string
 }
 
-interface ChartDataPoint {
-  year: number
+interface DataPoint {
+  month: number
+  year: string
   netWorth: number
-  cumulativeEarnings: number
-  cumulativeCosts: number
-  salary: number
-  isDebtPeriod: boolean
+  isBreakeven?: boolean
 }
 
-export function ROITimeline({ projections, breakEvenTime }: ROITimelineProps) {
-  const chartData = useMemo(() => {
-    return projections.map(
-      (projection): ChartDataPoint => ({
-        year: projection.year,
-        netWorth: projection.netWorth,
-        cumulativeEarnings: projection.cumulativeEarnings,
-        cumulativeCosts: projection.cumulativeCosts,
-        salary: projection.salary,
-        isDebtPeriod: projection.netWorth < 0,
-      }),
+interface TooltipProps {
+  active?: boolean
+  payload?: Array<{
+    value: number
+    [key: string]: unknown
+  }>
+  label?: number
+}
+
+const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
+  if (active && payload && payload.length) {
+    // Find the netWorth value from the Line component
+    const netWorthPayload = payload.find(p => p.dataKey === 'netWorth')
+    const value = netWorthPayload ? netWorthPayload.value as number : payload[0].value as number
+    
+    const month = label as number
+    const years = Math.floor(month / 12)
+    const months = month % 12
+    
+    // Only consider values very close to 0 as "breaking even" (within $100)
+    const isBreakingEven = Math.abs(value) < 100
+    
+    return (
+      <div className="bg-white p-3 border rounded-lg shadow-lg">
+        <p className="font-semibold text-sm text-gray-900">
+          {years > 0 ? `Year ${years}${months > 0 ? `, Month ${months}` : ''}` : `Month ${month}`}
+        </p>
+        {isBreakingEven ? (
+          <p className="font-bold text-blue-600">Breaking Even!</p>
+        ) : value > 0 ? (
+          <>
+            <p className="font-bold text-green-600">
+              Net Gain: +${value.toLocaleString()}
+            </p>
+            <p className="text-xs text-green-600">Profit!</p>
+          </>
+        ) : (
+          <>
+            <p className="font-bold text-red-600">
+              Debt: -${Math.abs(value).toLocaleString()}
+            </p>
+            <p className="text-xs text-gray-600">Still in debt</p>
+          </>
+        )}
+      </div>
     )
-  }, [projections])
-
-  const formatCurrency = (value: number) => {
-    if (Math.abs(value) >= 1000000) {
-      return `$${(value / 1000000).toFixed(1)}M`
-    }
-    if (Math.abs(value) >= 1000) {
-      return `$${(value / 1000).toFixed(0)}K`
-    }
-    return `$${value.toLocaleString()}`
   }
+  return null
+}
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-      const data = payload[0].payload as ChartDataPoint
-      return (
-        <div className="bg-card border border-border rounded-lg p-3 shadow-lg max-w-xs">
-          <div className="font-['Montserrat'] font-bold text-sm mb-2">Year {label}</div>
-          <div className="space-y-1 text-xs font-['Open_Sans']">
-            <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">Net Worth:</span>
-              <span className={`font-semibold ${data.netWorth >= 0 ? "text-accent" : "text-destructive"}`}>
-                {formatCurrency(data.netWorth)}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">Earnings:</span>
-              <span className="font-semibold">{formatCurrency(data.cumulativeEarnings)}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">Costs:</span>
-              <span className="font-semibold">{formatCurrency(data.cumulativeCosts)}</span>
-            </div>
-            {data.salary > 0 && (
-              <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Salary:</span>
-                <span className="font-semibold text-primary">{formatCurrency(data.salary)}</span>
-              </div>
-            )}
-          </div>
-        </div>
-      )
+export default function ROITimeline({ result, pathName }: ROITimelineProps) {
+  const data = useMemo(() => {
+    const points: DataPoint[] = []
+    const monthlyNetGain = result.monthlySalary * 0.6 // After taxes and expenses
+    const totalDebt = -result.totalCost
+    
+    // Generate data points for 10 years (120 months)
+    for (let month = 0; month <= 120; month += 3) { // Every 3 months for smoother chart
+      let netWorth: number
+      
+      if (month === 0) {
+        netWorth = totalDebt
+      } else {
+        netWorth = totalDebt + (monthlyNetGain * month)
+      }
+      
+      const yearLabel = month === 0 ? 'Start' : 
+                       month === 12 ? '1 yr' :
+                       month === 24 ? '2 yrs' :
+                       month === 36 ? '3 yrs' :
+                       month === 48 ? '4 yrs' :
+                       month === 60 ? '5 yrs' :
+                       month === 72 ? '6 yrs' :
+                       month === 84 ? '7 yrs' :
+                       month === 96 ? '8 yrs' :
+                       month === 108 ? '9 yrs' :
+                       month === 120 ? '10 yrs' : ''
+      
+      points.push({
+        month,
+        year: yearLabel,
+        netWorth: Math.round(netWorth),
+        isBreakeven: month === result.breakevenMonths
+      })
     }
-    return null
-  }
+    
+    // Add exact breakeven point if not already included
+    if (result.breakevenMonths <= 120 && !points.some(p => p.month === result.breakevenMonths)) {
+      const breakevenNetWorth = totalDebt + (monthlyNetGain * result.breakevenMonths)
+      points.push({
+        month: result.breakevenMonths,
+        year: '',
+        netWorth: Math.round(breakevenNetWorth),
+        isBreakeven: true
+      })
+      points.sort((a, b) => a.month - b.month)
+    }
+    
+    return points
+  }, [result])
 
-  const minValue = Math.min(...chartData.map((d) => d.netWorth))
-  const maxValue = Math.max(...chartData.map((d) => d.netWorth))
-  const padding = Math.abs(maxValue - minValue) * 0.1
+  const maxValue = Math.max(...data.map(d => d.netWorth))
+  const minValue = Math.min(...data.map(d => d.netWorth))
+  const yAxisDomain = [
+    Math.floor(minValue * 1.1 / 10000) * 10000,
+    Math.ceil(maxValue * 1.1 / 10000) * 10000
+  ]
 
   return (
-    <Card className="w-full">
-      <CardHeader className="pb-4">
-        <div className="space-y-4">
+    <Card>
+      <CardHeader>
+        <div className="flex items-center justify-between">
           <div>
-            <CardTitle className="font-['Montserrat'] font-bold text-lg md:text-xl">ROI Timeline</CardTitle>
-            <CardDescription className="font-['Open_Sans'] text-sm">
-              Your financial journey over the next 10 years
+            <CardTitle className="text-gray-100">ROI Timeline</CardTitle>
+            <CardDescription className="text-gray-300">
+              Your journey from debt to profit over 10 years
             </CardDescription>
           </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <Badge variant="secondary" className="px-3 py-2 w-fit">
-              <TrendingUp className="w-4 h-4 mr-2" />
-              <span className="font-['Open_Sans'] text-sm">Break-even at year {breakEvenTime.toFixed(1)}</span>
-            </Badge>
-
-            <div className="flex flex-wrap items-center gap-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 rounded-full bg-destructive"></div>
-                <span className="text-xs font-['Open_Sans'] text-muted-foreground">Debt Period</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 rounded-full bg-accent"></div>
-                <span className="text-xs font-['Open_Sans'] text-muted-foreground">Profit Period</span>
-              </div>
-            </div>
-          </div>
+          <Tooltip delayDuration={0}>
+            <TooltipTrigger asChild>
+              <HelpCircle className="h-5 w-5 text-gray-400 hover:text-gray-600 cursor-help" />
+            </TooltipTrigger>
+            <TooltipContent className="max-w-sm bg-gray-800 border-gray-700">
+              <p className="font-medium text-white mb-2">Understanding Your Breakeven Point</p>
+              <p className="text-sm text-gray-100">
+                The breakeven point shows when your cumulative earnings after graduation 
+                equal your total education investment including opportunity costs 
+                (the money you could have earned if working instead of studying).
+              </p>
+              <p className="text-sm text-gray-100 mt-2">
+                That's why it's not at $0 - it factors in both what you paid AND 
+                what you didn't earn while in school.
+              </p>
+            </TooltipContent>
+          </Tooltip>
         </div>
       </CardHeader>
-      <CardContent>
-        <div className="h-64 sm:h-80 w-full overflow-hidden">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart
-              data={chartData}
-              margin={{
-                top: 10,
-                right: 10,
-                left: 10,
-                bottom: 10,
+      <CardContent className="pt-6">
+        
+        <ResponsiveContainer width="100%" height={400}>
+          <LineChart 
+            data={data}
+            margin={{ top: 10, right: 30, left: 10, bottom: 40 }}
+          >
+            <defs>
+              <linearGradient id="colorPositive" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="#10b981" stopOpacity={0.1}/>
+              </linearGradient>
+              <linearGradient id="colorNegative" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="#ef4444" stopOpacity={0.1}/>
+              </linearGradient>
+            </defs>
+            
+            <CartesianGrid strokeDasharray="3 3" className="stroke-muted-foreground/20" />
+            
+            <XAxis 
+              dataKey="month"
+              domain={[0, 120]}
+              ticks={[0, 12, 24, 36, 48, 60, 72, 84, 96, 108, 120]}
+              tick={{ fontSize: 12 }}
+              tickFormatter={(value) => {
+                const point = data.find(d => d.month === value)
+                return point?.year || ''
               }}
-            >
-              <defs>
-                <linearGradient id="debtGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="hsl(var(--destructive))" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="hsl(var(--destructive))" stopOpacity={0.1} />
-                </linearGradient>
-                <linearGradient id="profitGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="hsl(var(--accent))" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="hsl(var(--accent))" stopOpacity={0.1} />
-                </linearGradient>
-              </defs>
-
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-
-              <XAxis
-                dataKey="year"
-                stroke="hsl(var(--muted-foreground))"
-                fontSize={10}
-                tickLine={false}
-                axisLine={false}
-                tick={{ fontFamily: "Open Sans" }}
-                interval={0}
-              />
-
-              <YAxis
-                stroke="hsl(var(--muted-foreground))"
-                fontSize={10}
-                tickLine={false}
-                axisLine={false}
-                tickFormatter={formatCurrency}
-                domain={[minValue - padding, maxValue + padding]}
-                tick={{ fontFamily: "Open Sans" }}
-                width={60}
-              />
-
-              <Tooltip content={<CustomTooltip />} />
-
-              <ReferenceLine y={0} stroke="hsl(var(--border))" strokeDasharray="2 2" strokeWidth={2} />
-
-              {/* Debt period area (below zero) */}
-              <Area
-                type="monotone"
-                dataKey="netWorth"
-                stroke="hsl(var(--destructive))"
-                strokeWidth={2}
-                fill="url(#debtGradient)"
-                fillOpacity={1}
-                connectNulls={false}
-                dot={false}
-                activeDot={{
-                  r: 4,
-                  stroke: "hsl(var(--destructive))",
-                  strokeWidth: 2,
-                  fill: "hsl(var(--background))",
+              label={{ 
+                value: 'Time', 
+                position: 'insideBottom', 
+                offset: -30,
+                style: { fontSize: 14, fill: '#666' }
+              }}
+            />
+            
+            <YAxis 
+              domain={yAxisDomain}
+              tick={{ fontSize: 12 }}
+              tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+              label={{ 
+                value: 'Net Worth', 
+                angle: -90, 
+                position: 'insideLeft',
+                style: { fontSize: 14, fill: '#666' }
+              }}
+            />
+            
+            <RechartsTooltip content={<CustomTooltip />} />
+            
+            {/* Reference line at 0 (breakeven) */}
+            <ReferenceLine 
+              y={0} 
+              stroke="#666" 
+              strokeDasharray="5 5"
+              label={{ 
+                value: "Breakeven Line", 
+                position: "left",
+                style: { fontSize: 12, fill: '#666' }
+              }}
+            />
+            
+            {/* Breakeven point marker */}
+            {result.breakevenMonths <= 120 && (
+              <ReferenceLine 
+                x={result.breakevenMonths} 
+                stroke="#10b981" 
+                strokeDasharray="3 3"
+                label={{ 
+                  value: `Breakeven: ${result.breakevenMonths} months`, 
+                  position: "top",
+                  offset: 10, // Add offset to prevent cutoff
+                  style: { fontSize: 12, fill: '#10b981', fontWeight: 'bold' }
                 }}
               />
-
-              {/* Profit period area (above zero) */}
-              <Area
-                type="monotone"
-                dataKey={(entry: ChartDataPoint) => (entry.netWorth >= 0 ? entry.netWorth : 0)}
-                stroke="hsl(var(--accent))"
-                strokeWidth={2}
-                fill="url(#profitGradient)"
-                fillOpacity={1}
-                connectNulls={false}
-                dot={false}
-                activeDot={{
-                  r: 4,
-                  stroke: "hsl(var(--accent))",
-                  strokeWidth: 2,
-                  fill: "hsl(var(--background))",
-                }}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div className="text-center p-3 rounded-lg bg-muted/50">
-            <div className="flex items-center justify-center mb-2">
-              <TrendingDown className="w-4 h-4 text-destructive mr-2" />
-              <span className="font-['Open_Sans'] font-medium text-xs sm:text-sm">Debt Phase</span>
-            </div>
-            <div className="text-base sm:text-lg font-black font-['Montserrat'] text-destructive">
-              {breakEvenTime.toFixed(1)} years
-            </div>
-            <div className="text-xs text-muted-foreground font-['Open_Sans']">Investment period</div>
+            )}
+            
+            {/* Line component only - Areas temporarily removed to fix tooltip */}
+            <Line 
+              type="monotone" 
+              dataKey="netWorth" 
+              stroke="#2563eb"
+              strokeWidth={3}
+              dot={false}
+              activeDot={{ r: 6, fill: '#2563eb' }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+        
+        <div className="mt-6 grid grid-cols-3 gap-4 text-center">
+          <div>
+            <p className="text-sm text-gray-600">Initial Investment</p>
+            <p className="text-xl font-bold text-red-600">
+              -${result.totalCost.toLocaleString()}
+            </p>
           </div>
-
-          <div className="text-center p-3 rounded-lg bg-muted/50">
-            <div className="flex items-center justify-center mb-2">
-              <TrendingUp className="w-4 h-4 text-accent mr-2" />
-              <span className="font-['Open_Sans'] font-medium text-xs sm:text-sm">Growth Phase</span>
-            </div>
-            <div className="text-base sm:text-lg font-black font-['Montserrat'] text-accent">
-              {(10 - breakEvenTime).toFixed(1)} years
-            </div>
-            <div className="text-xs text-muted-foreground font-['Open_Sans']">Wealth building</div>
+          <div>
+            <p className="text-sm text-gray-600">Breakeven</p>
+            <p className="text-xl font-bold text-blue-600">
+              {result.breakevenMonths > 120 ? 'Never' : `${result.breakevenMonths} months`}
+            </p>
           </div>
-
-          <div className="text-center p-3 rounded-lg bg-muted/50">
-            <div className="flex items-center justify-center mb-2">
-              <TrendingUp className="w-4 h-4 text-primary mr-2" />
-              <span className="font-['Open_Sans'] font-medium text-xs sm:text-sm">Final Net Worth</span>
-            </div>
-            <div className="text-base sm:text-lg font-black font-['Montserrat'] text-primary">
-              {formatCurrency(chartData[chartData.length - 1]?.netWorth || 0)}
-            </div>
-            <div className="text-xs text-muted-foreground font-['Open_Sans']">After 10 years</div>
+          <div>
+            <p className="text-sm text-gray-600">10-Year Net Worth</p>
+            <p className="text-xl font-bold text-green-600">
+              ${result.netWorth10Years.toLocaleString()}
+            </p>
           </div>
         </div>
       </CardContent>

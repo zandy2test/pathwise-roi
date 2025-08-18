@@ -1,0 +1,314 @@
+{
+  "educationPaths": {
+    "college_tech": {
+      "name": "4-Year CS Degree",
+      "totalCost": 120000,
+      "duration": 48,
+      "salary": {
+        "year1": 75000,
+        "year5": 120000,
+        "year10": 150000
+      },
+      "riskText": "35% of CS grads don't get tech jobs",
+      "employmentRate": 0.65
+    },
+    "college_business": {
+      "name": "4-Year Business Degree",
+      "totalCost": 100000,
+      "duration": 48,
+      "salary": {
+        "year1": 55000,
+        "year5": 75000,
+        "year10": 95000
+      },
+      "riskText": "42% underemployed first year",
+      "employmentRate": 0.58
+    },
+    "college_liberal_arts": {
+      "name": "4-Year Liberal Arts",
+      "totalCost": 110000,
+      "duration": 48,
+      "salary": {
+        "year1": 40000,
+        "year5": 55000,
+        "year10": 70000
+      },
+      "riskText": "47% work outside their field",
+      "employmentRate": 0.53
+    },
+    "college_engineering": {
+      "name": "4-Year Engineering",
+      "totalCost": 130000,
+      "duration": 48,
+      "salary": {
+        "year1": 70000,
+        "year5": 95000,
+        "year10": 125000
+      },
+      "riskText": "Highest dropout rate at 40%",
+      "employmentRate": 0.72
+    },
+    "community_transfer": {
+      "name": "2-Year + Transfer",
+      "totalCost": 60000,
+      "duration": 48,
+      "salary": {
+        "year1": 50000,
+        "year5": 70000,
+        "year10": 90000
+      },
+      "riskText": "Only 31% successfully transfer",
+      "employmentRate": 0.31
+    },
+    "trades_welding": {
+      "name": "Welding Certificate",
+      "totalCost": 5000,
+      "duration": 6,
+      "salary": {
+        "year1": 55000,
+        "year5": 75000,
+        "year10": 90000
+      },
+      "riskText": "Physical demands increase with age",
+      "employmentRate": 0.96
+    },
+    "trades_plumbing": {
+      "name": "Plumbing Apprentice",
+      "totalCost": 2000,
+      "duration": 12,
+      "salary": {
+        "year1": 45000,
+        "year5": 70000,
+        "year10": 85000
+      },
+      "riskText": "License requirements vary by state",
+      "employmentRate": 0.94
+    },
+    "trades_electrician": {
+      "name": "Electrician Program",
+      "totalCost": 8000,
+      "duration": 24,
+      "salary": {
+        "year1": 50000,
+        "year5": 75000,
+        "year10": 95000
+      },
+      "riskText": "4-year apprenticeship required",
+      "employmentRate": 0.92
+    },
+    "bootcamp_coding": {
+      "name": "Coding Bootcamp",
+      "totalCost": 15000,
+      "duration": 3,
+      "salary": {
+        "year1": 65000,
+        "year5": 95000,
+        "year10": 120000
+      },
+      "riskText": "35% don't complete the program",
+      "employmentRate": 0.65
+    },
+    "bootcamp_data": {
+      "name": "Data Science Bootcamp",
+      "totalCost": 18000,
+      "duration": 6,
+      "salary": {
+        "year1": 70000,
+        "year5": 100000,
+        "year10": 130000
+      },
+      "riskText": "Requires strong math background",
+      "employmentRate": 0.60
+    },
+    "nursing_associate": {
+      "name": "Associate Nursing",
+      "totalCost": 40000,
+      "duration": 24,
+      "salary": {
+        "year1": 60000,
+        "year5": 75000,
+        "year10": 85000
+      },
+      "riskText": "Must pass NCLEX exam",
+      "employmentRate": 0.91
+    },
+    "nursing_bachelor": {
+      "name": "BSN Nursing",
+      "totalCost": 80000,
+      "duration": 48,
+      "salary": {
+        "year1": 65000,
+        "year5": 80000,
+        "year10": 95000
+      },
+      "riskText": "High burnout rate in first 2 years",
+      "employmentRate": 0.93
+    },
+    "work_retail": {
+      "name": "Retail Management Track",
+      "totalCost": 0,
+      "duration": 0,
+      "salary": {
+        "year1": 28000,
+        "year5": 45000,
+        "year10": 55000
+      },
+      "riskText": "Limited advancement without degree",
+      "employmentRate": 1.0
+    },
+    "work_sales": {
+      "name": "Sales (No Degree)",
+      "totalCost": 0,
+      "duration": 0,
+      "salary": {
+        "year1": 35000,
+        "year5": 65000,
+        "year10": 85000
+      },
+      "riskText": "Income highly variable",
+      "employmentRate": 1.0
+    },
+    "mba_top20": {
+      "name": "Top-20 MBA",
+      "totalCost": 200000,
+      "duration": 24,
+      "salary": {
+        "year1": 140000,
+        "year5": 180000,
+        "year10": 250000
+      },
+      "riskText": "67-month payback period",
+      "employmentRate": 0.87
+    },
+    "law_degree": {
+      "name": "Law School (JD)",
+      "totalCost": 180000,
+      "duration": 36,
+      "salary": {
+        "year1": 65000,
+        "year5": 95000,
+        "year10": 140000
+      },
+      "riskText": "Only 60% pass bar exam first try",
+      "employmentRate": 0.60
+    },
+    "medical_school": {
+      "name": "Medical School",
+      "totalCost": 300000,
+      "duration": 96,
+      "salary": {
+        "year1": 60000,
+        "year5": 250000,
+        "year10": 350000
+      },
+      "riskText": "8+ years before full salary",
+      "employmentRate": 0.95
+    },
+    "teaching_degree": {
+      "name": "Teaching Degree",
+      "totalCost": 60000,
+      "duration": 48,
+      "salary": {
+        "year1": 40000,
+        "year5": 50000,
+        "year10": 60000
+      },
+      "riskText": "50% leave within 5 years",
+      "employmentRate": 0.92
+    },
+    "military_enlisted": {
+      "name": "Military Enlisted",
+      "totalCost": -5000,
+      "duration": 0,
+      "salary": {
+        "year1": 35000,
+        "year5": 55000,
+        "year10": 70000
+      },
+      "riskText": "4-year commitment minimum",
+      "employmentRate": 1.0
+    },
+    "real_estate_license": {
+      "name": "Real Estate License",
+      "totalCost": 2000,
+      "duration": 1,
+      "salary": {
+        "year1": 30000,
+        "year5": 75000,
+        "year10": 100000
+      },
+      "riskText": "87% fail in first year",
+      "employmentRate": 0.13
+    }
+  },
+  "locationMultipliers": {
+    "nyc": 1.35,
+    "sf": 1.40,
+    "la": 1.20,
+    "chicago": 1.10,
+    "houston": 1.05,
+    "phoenix": 1.00,
+    "philadelphia": 1.08,
+    "atlanta": 1.03,
+    "denver": 1.12,
+    "seattle": 1.25
+  },
+  "schoolTiers": {
+    "premium": {
+      "costMultiplier": 1.5,
+      "salaryBonus": 1.2,
+      "name": "Top-Tier School"
+    },
+    "standard": {
+      "costMultiplier": 1.0,
+      "salaryBonus": 1.0,
+      "name": "State School"
+    },
+    "budget": {
+      "costMultiplier": 0.7,
+      "salaryBonus": 0.9,
+      "name": "Community/Online"
+    }
+  },
+  "livingCosts": {
+    "home": {
+      "monthly": 500,
+      "name": "Living at Home"
+    },
+    "campus": {
+      "monthly": 1200,
+      "name": "On Campus"
+    },
+    "offcampus": {
+      "monthly": 1500,
+      "name": "Off Campus"
+    }
+  },
+  "viralComparisons": [
+    {
+      "title": "Welders make more than lawyers until age 35",
+      "path1": "trades_welding",
+      "path2": "law_degree"
+    },
+    {
+      "title": "Nurses beat MBAs by year 7",
+      "path1": "nursing_bachelor",
+      "path2": "mba_top20"
+    },
+    {
+      "title": "Plumbers earn more than liberal arts grads forever",
+      "path1": "trades_plumbing",
+      "path2": "college_liberal_arts"
+    },
+    {
+      "title": "Community college transfer saves $60K, same outcome",
+      "path1": "community_transfer",
+      "path2": "college_business"
+    },
+    {
+      "title": "Bootcamp grads profitable 44 months before CS degrees",
+      "path1": "bootcamp_coding",
+      "path2": "college_tech"
+    }
+  ]
+}

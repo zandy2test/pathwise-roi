@@ -1,0 +1,85 @@
+Website Crash Analysis & Fix Plan: collegescam.io
+1. Executive Summary 📝
+The application crashes when a user, who is likely not authenticated, clicks the "Compare with Another Path" button after getting an initial "Scam Score."
+
+The root cause is a 401 Unauthorized error from a POST request to your tRPC API endpoint (/api/trpc/collection.create). The React frontend does not handle this API error gracefully, causing it to crash and display a generic error boundary screen.
+
+2. Diagnosis 🩺
+I've broken down the sequence of events leading to the crash:
+
+User Action: The user fills out the "Calculate Your Scam Score" form and gets a result.
+
+Trigger: The user clicks the "Compare with Another Path" button.
+
+API Request: This action triggers a POST request to https://www.collegescam.io/api/trpc/collection.create?batch=1.
+
+API Response: The server responds with a 401 Unauthorized status code. This means the server is refusing to complete the request because the user lacks valid authentication credentials.
+
+Frontend Crash: The frontend code that made the API call does not have logic to handle a 401 error. It likely expected a successful response with data. When it receives an error instead, it tries to render a component with missing or invalid data, leading to a React rendering error (Minified React error #310). This unhandled error is caught by a top-level error boundary, which then displays the "Oops! Something went wrong" page.
+
+3. Recommended Fixes 🛠️
+The fix requires changes on the frontend to improve user experience and error handling. The backend is likely behaving as intended by protecting the endpoint.
+
+High Priority: Frontend Fixes
+The primary goal is to prevent the application from crashing and to provide a clear user experience.
+
+Step 1: Implement Graceful API Error Handling
+Your code that calls the collection.create tRPC mutation needs to properly handle potential errors. Instead of letting the error crash the app, you should catch it.
+
+Example (using React Query/tRPC):
+
+JavaScript
+
+// This is a conceptual example of how you might be calling your mutation.
+const createComparison = trpc.collection.create.useMutation({
+  // On success, do something...
+  onSuccess: (data) => {
+    console.log("Comparison created!", data);
+    // Proceed with showing the comparison UI
+  },
+  // 👇 THIS IS THE CRITICAL PART TO ADD 👇
+  onError: (error) => {
+    // Check if the error is a 401 Unauthorized error
+    if (error.data?.httpStatus === 401) {
+      // Trigger a login modal or redirect to the login page
+      console.error("User is not authenticated. Prompting for login.");
+      // Example: showLoginModal(true);
+      // Or display a toast notification
+      // toast.error("Please sign in to compare results.");
+    } else {
+      // Handle other types of server/network errors
+      console.error("An unexpected error occurred:", error);
+      // toast.error("Something went wrong. Please try again.");
+    }
+  },
+});
+
+// When the button is clicked, you call the mutation
+const handleCompareClick = () => {
+  createComparison.mutate({ /* payload here */ });
+};
+Step 2: Improve the User Experience (UX)
+Crashing is a bad user experience. Based on the fact that the endpoint requires authentication, you have two main options:
+
+"Public" vs. "Private" Features (Recommended):
+
+For Logged-Out Users: Disable the "Compare with Another Path" button. You can add a tooltip that says, "Sign up to save and compare results!" This encourages user registration and clearly communicates the feature's requirements.
+
+For Logged-In Users: Keep the button enabled as it currently is.
+
+Prompt Login on Click:
+
+Keep the button enabled for all users.
+
+When a logged-out user clicks it, instead of trying to make the API call, open a Login/Sign Up modal.
+
+After the user successfully signs in, you can either automatically trigger the comparison action or let them click the button again.
+
+Low Priority: Backend Review
+The backend is likely working correctly by design, but it's worth a quick review.
+
+Confirm Intent: Double-check with your backend team that the /api/trpc/collection.create endpoint is intended to be a protected route. If it is, no changes are needed. If it's supposed to be public, then the authentication middleware needs to be removed from that specific endpoint.
+
+Consistent API Responses: Ensure that all protected endpoints consistently return a 401 Unauthorized status code when an unauthenticated request is made.
+
+By implementing robust error handling and a clearer UX on the frontend, you'll not only fix this crash but also create a more intuitive and resilient application.

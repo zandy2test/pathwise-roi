@@ -1,31 +1,94 @@
 import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
+import { Inter } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
+import { Footer } from '@/components/footer'
+import ErrorBoundary from '@/components/error-boundary'
+import { EnhancedErrorBoundary } from '@/components/error-tracking'
+import { ClickDebugger } from '@/components/click-debugger'
+import { VercelToolbarIntegration } from '@/components/vercel-toolbar-integration'
+import { Analytics } from '@vercel/analytics/next'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
+  title: 'CollegeScam.io - Expose the Truth Behind Education Costs',
+  description: 'Uncover the real cost of college with our Scam Score™ calculator. Compare college degrees, trade schools, bootcamps, and work paths to avoid the education debt trap.',
+  keywords: 'college scam, education debt, student loans, ROI calculator, college truth, trade school, bootcamp, education investment, career paths, scam score',
+  authors: [{ name: 'CollegeScam.io' }],
+  openGraph: {
+    title: 'CollegeScam.io - Expose the Truth Behind Education Costs',
+    description: 'Is college worth it? Find out with our Scam Score™ calculator. Compare college vs trade school vs bootcamp paths and avoid the debt trap.',
+    url: 'https://collegescam.io',
+    siteName: 'CollegeScam.io',
+    type: 'website',
+    locale: 'en_US',
+    images: [
+      {
+        url: 'https://collegescam.io/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'CollegeScam.io - Expose the Truth Behind Education Costs',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CollegeScam.io - Expose the Truth Behind Education Costs',
+    description: 'Is college worth it? Find out with our Scam Score™ calculator. Avoid the debt trap.',
+    images: ['https://collegescam.io/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
     <html lang="en">
       <head>
-        <style>{`
-html {
-  font-family: ${GeistSans.style.fontFamily};
-  --font-sans: ${GeistSans.variable};
-  --font-mono: ${GeistMono.variable};
-}
-        `}</style>
+        {/* Google Analytics */}
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=G-NSSK9CWEXN`}
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-NSSK9CWEXN');
+            `,
+          }}
+        />
       </head>
-      <body>{children}</body>
+      <body className={inter.className}>
+        <EnhancedErrorBoundary>
+          <ErrorBoundary>
+            <ClickDebugger />
+            <VercelToolbarIntegration />
+            <div className="min-h-screen bg-background flex flex-col">
+              {children}
+            </div>
+          </ErrorBoundary>
+        </EnhancedErrorBoundary>
+        <Analytics />
+      </body>
     </html>
   )
 }

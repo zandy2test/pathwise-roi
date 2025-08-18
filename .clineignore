@@ -1,0 +1,65 @@
+# Reduce context window usage by ignoring these patterns
+
+# Dependencies and build outputs
+node_modules/
+.next/
+dist/
+build/
+out/
+coverage/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Archive and legacy folders
+docs/archive/
+legacy-tests/
+temp-*/
+archive/
+old/
+backup/
+
+# Large data files
+*.sql
+*.csv
+*.xlsx
+*.zip
+*.tar
+*.gz
+
+# Media files (unless specifically needed)
+*.mp4
+*.mov
+*.avi
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+
+# Lock files (reference but don't read fully)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment and secrets
+.env
+.env.local
+.env.production
+
+# Git and IDE
+.git/
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Test coverage and reports
+coverage/
+test-results/
+playwright-report/
