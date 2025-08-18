@@ -21,6 +21,7 @@ import { NumberTicker } from '@/components/magic/number-ticker';
 import { EmailCaptureModal } from '@/components/email-capture-modal';
 import { TestimonialsSection } from '@/components/testimonials-section';
 import { SocialProofSection } from '@/components/social-proof-section';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import {
   TrendingUp,
   Calendar,
@@ -180,7 +181,8 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-blue-50">
+    <TooltipProvider>
+      <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-blue-50">
       {/* Version Indicator for Debugging */}
       <div className="fixed bottom-4 left-4 z-50 bg-black/90 text-white px-3 py-1 rounded-full text-xs font-mono">
         CollegeScam.io v1.5.0 | Port: {port}
@@ -1042,8 +1044,9 @@ export default function HomePage() {
         setShowModal={setShowPremiumModal} 
       />
 
-      {/* Footer */}
-      <Footer onPremiumClick={() => setShowPremiumModal(true)} />
-    </div>
+        {/* Footer */}
+        <Footer onPremiumClick={() => setShowPremiumModal(true)} />
+      </div>
+    </TooltipProvider>
   );
 }

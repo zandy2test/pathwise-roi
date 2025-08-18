@@ -24,6 +24,7 @@ import {
   Siren
 } from 'lucide-react'
 import analytics from '@/lib/analytics'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
 export default function CalculatePage() {
   const router = useRouter()
@@ -120,8 +121,9 @@ export default function CalculatePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-blue-50">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <TooltipProvider>
+      <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-blue-50">
+        <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -360,8 +362,9 @@ export default function CalculatePage() {
             * Results based on real data. Your mileage may vary. 
             Student loan companies hate this calculator.
           </p>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
-    </div>
+    </TooltipProvider>
   )
 }

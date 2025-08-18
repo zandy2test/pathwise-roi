@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import ROITimeline from '@/components/roi-timeline'
 import { CalculationResult } from '@/lib/types'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
 interface MockProps {
   children?: React.ReactNode
@@ -67,7 +68,11 @@ describe('ROITimeline Component', () => {
 
   describe('Rendering', () => {
     it('should render with all main elements', () => {
-      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+      render(
+        <TooltipProvider>
+          <ROITimeline result={defaultResult} pathName="Computer Science BS" />
+        </TooltipProvider>
+      )
 
       expect(screen.getByText('ROI Timeline')).toBeInTheDocument()
       expect(screen.getByText('Your journey from debt to profit over 10 years')).toBeInTheDocument()
@@ -76,7 +81,11 @@ describe('ROITimeline Component', () => {
     })
 
     it('should display the breakeven explanation tooltip icon', () => {
-      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+      render(
+        <TooltipProvider>
+          <ROITimeline result={defaultResult} pathName="Computer Science BS" />
+        </TooltipProvider>
+      )
 
       // Check for the help icon instead of the explanation card
       const helpIcon = document.querySelector('.lucide-circle-help')
@@ -85,7 +94,11 @@ describe('ROITimeline Component', () => {
     })
 
     it('should display summary statistics', () => {
-      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+      render(
+        <TooltipProvider>
+          <ROITimeline result={defaultResult} pathName="Computer Science BS" />
+        </TooltipProvider>
+      )
 
       expect(screen.getByText('Initial Investment')).toBeInTheDocument()
       expect(screen.getByText('-$100,000')).toBeInTheDocument()
@@ -100,7 +113,11 @@ describe('ROITimeline Component', () => {
 
   describe('Data Processing', () => {
     it('should generate correct data points for the chart', () => {
-      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+      render(
+        <TooltipProvider>
+          <ROITimeline result={defaultResult} pathName="Computer Science BS" />
+        </TooltipProvider>
+      )
 
       const chart = screen.getByTestId('line-chart')
       const dataPoints = JSON.parse(chart.getAttribute('data-points') || '[]')
@@ -120,7 +137,11 @@ describe('ROITimeline Component', () => {
     })
 
     it('should calculate net worth correctly over time', () => {
-      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+      render(
+        <TooltipProvider>
+          <ROITimeline result={defaultResult} pathName="Computer Science BS" />
+        </TooltipProvider>
+      )
 
       const chart = screen.getByTestId('line-chart')
       const dataPoints = JSON.parse(chart.getAttribute('data-points') || '[]')
@@ -144,7 +165,11 @@ describe('ROITimeline Component', () => {
         monthlySalary: 1000 // Very low salary
       }
 
-      render(<ROITimeline result={neverBreakevenResult} pathName="Low Paying Path" />)
+      render(
+        <TooltipProvider>
+          <ROITimeline result={neverBreakevenResult} pathName="Low Paying Path" />
+        </TooltipProvider>
+      )
 
       expect(screen.getByText('Never')).toBeInTheDocument()
     })
@@ -152,7 +177,11 @@ describe('ROITimeline Component', () => {
 
   describe('Chart Components', () => {
     it('should render all required chart components', () => {
-      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+      render(
+        <TooltipProvider>
+          <ROITimeline result={defaultResult} pathName="Computer Science BS" />
+        </TooltipProvider>
+      )
 
       // Check axes
       expect(screen.getByTestId('x-axis')).toBeInTheDocument()
@@ -171,7 +200,11 @@ describe('ROITimeline Component', () => {
     })
 
     it('should render reference lines', () => {
-      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+      render(
+        <TooltipProvider>
+          <ROITimeline result={defaultResult} pathName="Computer Science BS" />
+        </TooltipProvider>
+      )
 
       const referenceLines = screen.getAllByTestId('reference-line')
       
@@ -195,7 +228,11 @@ describe('ROITimeline Component', () => {
         breakevenMonths: 150 // Beyond chart range
       }
 
-      render(<ROITimeline result={lateBreakevenResult} pathName="Late Breakeven Path" />)
+      render(
+        <TooltipProvider>
+          <ROITimeline result={lateBreakevenResult} pathName="Late Breakeven Path" />
+        </TooltipProvider>
+      )
 
       const referenceLines = screen.getAllByTestId('reference-line')
       const breakevenPoint = referenceLines.find(line => line.getAttribute('data-x') === '150')
@@ -211,7 +248,11 @@ describe('ROITimeline Component', () => {
         breakevenMonths: 999
       }
 
-      render(<ROITimeline result={zeroSalaryResult} pathName="No Income Path" />)
+      render(
+        <TooltipProvider>
+          <ROITimeline result={zeroSalaryResult} pathName="No Income Path" />
+        </TooltipProvider>
+      )
 
       const chart = screen.getByTestId('line-chart')
       const dataPoints = JSON.parse(chart.getAttribute('data-points') || '[]')
@@ -229,7 +270,11 @@ describe('ROITimeline Component', () => {
         netWorth10Years: 1340000
       }
 
-      render(<ROITimeline result={highSalaryResult} pathName="High Income Path" />)
+      render(
+        <TooltipProvider>
+          <ROITimeline result={highSalaryResult} pathName="High Income Path" />
+        </TooltipProvider>
+      )
 
       expect(screen.getByText('12 months')).toBeInTheDocument()
       expect(screen.getByText('$1,340,000')).toBeInTheDocument()
@@ -252,7 +297,11 @@ describe('ROITimeline Component', () => {
         roi: -71
       }
 
-      render(<ROITimeline result={negativeROIResult} pathName="Negative ROI Path" />)
+      render(
+        <TooltipProvider>
+          <ROITimeline result={negativeROIResult} pathName="Negative ROI Path" />
+        </TooltipProvider>
+      )
 
       expect(screen.getByText('-$500,000')).toBeInTheDocument()
       expect(screen.getByText('Never')).toBeInTheDocument() // Breakeven beyond 120 months
@@ -267,7 +316,11 @@ describe('ROITimeline Component', () => {
         breakevenMonths: 120 // Exactly at 10 years
       }
 
-      render(<ROITimeline result={boundaryResult} pathName="Boundary Path" />)
+      render(
+        <TooltipProvider>
+          <ROITimeline result={boundaryResult} pathName="Boundary Path" />
+        </TooltipProvider>
+      )
 
       expect(screen.getByText('120 months')).toBeInTheDocument()
 
@@ -279,7 +332,11 @@ describe('ROITimeline Component', () => {
 
   describe('Year Labels', () => {
     it('should display correct year labels on x-axis', () => {
-      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+      render(
+        <TooltipProvider>
+          <ROITimeline result={defaultResult} pathName="Computer Science BS" />
+        </TooltipProvider>
+      )
 
       const chart = screen.getByTestId('line-chart')
       const dataPoints = JSON.parse(chart.getAttribute('data-points') || '[]')
@@ -297,7 +354,11 @@ describe('ROITimeline Component', () => {
 
   describe('Responsive Design', () => {
     it('should use ResponsiveContainer for chart sizing', () => {
-      render(<ROITimeline result={defaultResult} pathName="Computer Science BS" />)
+      render(
+        <TooltipProvider>
+          <ROITimeline result={defaultResult} pathName="Computer Science BS" />
+        </TooltipProvider>
+      )
 
       const container = screen.getByTestId('responsive-container')
       expect(container).toBeInTheDocument()

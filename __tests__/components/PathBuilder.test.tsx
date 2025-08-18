@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import userEvent from '@testing-library/user-event';
 import PathBuilder from '@/components/path-builder';
 import { CalculatorInputs } from '@/lib/types';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 // Mock the data functions
 jest.mock('@/lib/data', () => ({
@@ -93,7 +93,11 @@ describe('PathBuilder Component', () => {
 
   describe('Rendering', () => {
     it('should render with default props', () => {
-      render(<PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />);
+      render(
+        <TooltipProvider>
+          <PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />
+        </TooltipProvider>
+      );
 
       expect(screen.getByText('Education Path')).toBeInTheDocument();
       expect(screen.getByText('Select your education and personal details')).toBeInTheDocument();
@@ -111,12 +115,14 @@ describe('PathBuilder Component', () => {
 
     it('should render with custom title and description', () => {
       render(
-        <PathBuilder
-          inputs={defaultInputs}
-          setInputs={mockSetInputs}
-          title="Custom Title"
-          description="Custom Description"
-        />
+        <TooltipProvider>
+          <PathBuilder
+            inputs={defaultInputs}
+            setInputs={mockSetInputs}
+            title="Custom Title"
+            description="Custom Description"
+          />
+        </TooltipProvider>
       );
 
       expect(screen.getByText('Custom Title')).toBeInTheDocument();
@@ -125,7 +131,11 @@ describe('PathBuilder Component', () => {
 
     it('should display errors when provided', () => {
       const errors = ['Error 1', 'Error 2'];
-      render(<PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} errors={errors} />);
+      render(
+        <TooltipProvider>
+          <PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} errors={errors} />
+        </TooltipProvider>
+      );
 
       expect(screen.getByText('Error 1')).toBeInTheDocument();
       expect(screen.getByText('Error 2')).toBeInTheDocument();
@@ -134,7 +144,11 @@ describe('PathBuilder Component', () => {
 
   describe('Education Type Selection', () => {
     it('should show education type options when clicked', () => {
-      render(<PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />);
+      render(
+        <TooltipProvider>
+          <PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />
+        </TooltipProvider>
+      );
 
       const educationTypeSelect = screen.getByText('Select education type');
       fireEvent.click(educationTypeSelect);
@@ -145,7 +159,11 @@ describe('PathBuilder Component', () => {
     });
 
     it('should update inputs when education type is selected', async () => {
-      render(<PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />);
+      render(
+        <TooltipProvider>
+          <PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />
+        </TooltipProvider>
+      );
 
       const educationTypeSelect = screen.getByText('Select education type');
       fireEvent.click(educationTypeSelect);
@@ -173,7 +191,11 @@ describe('PathBuilder Component', () => {
         educationType: 'traditional',
       };
 
-      render(<PathBuilder inputs={inputsWithType} setInputs={mockSetInputs} />);
+      render(
+        <TooltipProvider>
+          <PathBuilder inputs={inputsWithType} setInputs={mockSetInputs} />
+        </TooltipProvider>
+      );
 
       // Check label exists (not directly associated with select in Radix UI)
       expect(screen.getByText('Field of Study')).toBeInTheDocument();
@@ -192,7 +214,11 @@ describe('PathBuilder Component', () => {
         field: 'computer_science',
       };
 
-      render(<PathBuilder inputs={inputsWithTypeAndField} setInputs={mockSetInputs} />);
+      render(
+        <TooltipProvider>
+          <PathBuilder inputs={inputsWithTypeAndField} setInputs={mockSetInputs} />
+        </TooltipProvider>
+      );
 
       // Check label exists (not directly associated with select in Radix UI)
       expect(screen.getByText('Program/Degree')).toBeInTheDocument();
@@ -212,8 +238,10 @@ describe('PathBuilder Component', () => {
         program: 'bachelors',
       };
 
-      const { rerender } = render(
-        <PathBuilder inputs={inputsWithSelections} setInputs={mockSetInputs} />
+      render(
+        <TooltipProvider>
+          <PathBuilder inputs={inputsWithSelections} setInputs={mockSetInputs} />
+        </TooltipProvider>
       );
 
       // Change education type - click on the select trigger which shows current value
@@ -239,7 +267,11 @@ describe('PathBuilder Component', () => {
 
   describe('Location Selection', () => {
     it('should display formatted location names', () => {
-      render(<PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />);
+      render(
+        <TooltipProvider>
+          <PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />
+        </TooltipProvider>
+      );
 
       const locationSelect = screen.getByText('Select location');
       fireEvent.click(locationSelect);
@@ -250,7 +282,11 @@ describe('PathBuilder Component', () => {
     });
 
     it('should update location when selected', async () => {
-      render(<PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />);
+      render(
+        <TooltipProvider>
+          <PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />
+        </TooltipProvider>
+      );
 
       const locationSelect = screen.getByText('Select location');
       fireEvent.click(locationSelect);
@@ -270,7 +306,11 @@ describe('PathBuilder Component', () => {
 
   describe('School Tier Selection', () => {
     it('should display school tier options', () => {
-      render(<PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />);
+      render(
+        <TooltipProvider>
+          <PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />
+        </TooltipProvider>
+      );
 
       const schoolTierSelect = screen.getByText('Select school tier');
       fireEvent.click(schoolTierSelect);
@@ -283,7 +323,11 @@ describe('PathBuilder Component', () => {
 
   describe('Living Cost Selection', () => {
     it('should display living cost options', () => {
-      render(<PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />);
+      render(
+        <TooltipProvider>
+          <PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />
+        </TooltipProvider>
+      );
 
       const livingCostSelect = screen.getByText('Select living situation');
       fireEvent.click(livingCostSelect);
@@ -296,7 +340,11 @@ describe('PathBuilder Component', () => {
 
   describe('Scholarships Input', () => {
     it('should accept numeric input for scholarships', () => {
-      render(<PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />);
+      render(
+        <TooltipProvider>
+          <PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />
+        </TooltipProvider>
+      );
 
       const scholarshipInput = screen.getByPlaceholderText('0');
 
@@ -313,7 +361,9 @@ describe('PathBuilder Component', () => {
 
     it('should display maximum scholarship amount hint in tooltip', () => {
       render(
-        <PathBuilder inputs={{ ...defaultInputs, scholarships: 0 }} setInputs={mockSetInputs} />
+        <TooltipProvider>
+          <PathBuilder inputs={{ ...defaultInputs, scholarships: 0 }} setInputs={mockSetInputs} />
+        </TooltipProvider>
       );
 
       // The maximum scholarship amount is in the tooltip content
@@ -324,7 +374,11 @@ describe('PathBuilder Component', () => {
 
   describe('Path Building', () => {
     it('should build path key when all selections are made', async () => {
-      const { rerender } = render(<PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />);
+      const { rerender } = render(
+        <TooltipProvider>
+          <PathBuilder inputs={defaultInputs} setInputs={mockSetInputs} />
+        </TooltipProvider>
+      );
 
       // Select education type
       const educationTypeSelect = screen.getByText('Select education type');
@@ -333,7 +387,11 @@ describe('PathBuilder Component', () => {
 
       // Update props to reflect the change
       const updatedInputs1 = { ...defaultInputs, educationType: 'traditional' };
-      rerender(<PathBuilder inputs={updatedInputs1} setInputs={mockSetInputs} />);
+      rerender(
+        <TooltipProvider>
+          <PathBuilder inputs={updatedInputs1} setInputs={mockSetInputs} />
+        </TooltipProvider>
+      );
 
       // Select field
       const fieldSelect = screen.getByText('Select field of study');
@@ -342,7 +400,11 @@ describe('PathBuilder Component', () => {
 
       // Update props to reflect the change
       const updatedInputs2 = { ...updatedInputs1, field: 'computer_science' };
-      rerender(<PathBuilder inputs={updatedInputs2} setInputs={mockSetInputs} />);
+      rerender(
+        <TooltipProvider>
+          <PathBuilder inputs={updatedInputs2} setInputs={mockSetInputs} />
+        </TooltipProvider>
+      );
 
       // Select program
       const programSelect = screen.getByText('Select program');
@@ -370,7 +432,11 @@ describe('PathBuilder Component', () => {
         program: 'bachelors',
       };
 
-      render(<PathBuilder inputs={inputsWithPath} setInputs={mockSetInputs} />);
+      render(
+        <TooltipProvider>
+          <PathBuilder inputs={inputsWithPath} setInputs={mockSetInputs} />
+        </TooltipProvider>
+      );
 
       // Check that labels exist (not associated with selects in Radix UI)
       expect(screen.getByText('Education Type')).toBeInTheDocument();

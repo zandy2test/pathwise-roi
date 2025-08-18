@@ -16,7 +16,6 @@ import { Info, HelpCircle } from 'lucide-react'
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import type { CalculationResult } from '@/lib/types'
@@ -151,25 +150,23 @@ export default function ROITimeline({ result, pathName }: ROITimelineProps) {
               Your journey from debt to profit over 10 years
             </CardDescription>
           </div>
-          <TooltipProvider delayDuration={0}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <HelpCircle className="h-5 w-5 text-gray-400 hover:text-gray-600 cursor-help" />
-              </TooltipTrigger>
-              <TooltipContent className="max-w-sm bg-gray-800 border-gray-700">
-                <p className="font-medium text-white mb-2">Understanding Your Breakeven Point</p>
-                <p className="text-sm text-gray-100">
-                  The breakeven point shows when your cumulative earnings after graduation 
-                  equal your total education investment including opportunity costs 
-                  (the money you could have earned if working instead of studying).
-                </p>
-                <p className="text-sm text-gray-100 mt-2">
-                  That's why it's not at $0 - it factors in both what you paid AND 
-                  what you didn't earn while in school.
-                </p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <Tooltip delayDuration={0}>
+            <TooltipTrigger asChild>
+              <HelpCircle className="h-5 w-5 text-gray-400 hover:text-gray-600 cursor-help" />
+            </TooltipTrigger>
+            <TooltipContent className="max-w-sm bg-gray-800 border-gray-700">
+              <p className="font-medium text-white mb-2">Understanding Your Breakeven Point</p>
+              <p className="text-sm text-gray-100">
+                The breakeven point shows when your cumulative earnings after graduation 
+                equal your total education investment including opportunity costs 
+                (the money you could have earned if working instead of studying).
+              </p>
+              <p className="text-sm text-gray-100 mt-2">
+                That's why it's not at $0 - it factors in both what you paid AND 
+                what you didn't earn while in school.
+              </p>
+            </TooltipContent>
+          </Tooltip>
         </div>
       </CardHeader>
       <CardContent className="pt-6">
