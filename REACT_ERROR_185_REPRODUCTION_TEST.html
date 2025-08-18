@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Error #185 Crash Test - CollegeScam.io</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      .test-section {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .crash-trigger {
+        background-color: #ff4444;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 10px 0;
+      }
+      .success-indicator {
+        background-color: #44ff44;
+        color: black;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 10px 0;
+      }
+      .test-button {
+        background-color: #007bff;
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px;
+        font-size: 16px;
+      }
+      .test-button:hover {
+        background-color: #0056b3;
+      }
+      .danger-button {
+        background-color: #dc3545;
+      }
+      .danger-button:hover {
+        background-color: #c82333;
+      }
+      .instructions {
+        background-color: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 10px 0;
+      }
+      .console-log {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 10px 0;
+        font-family: monospace;
+        white-space: pre-wrap;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+      .iframe-container {
+        border: 2px solid #dee2e6;
+        border-radius: 5px;
+        margin: 10px 0;
+      }
+      iframe {
+        width: 100%;
+        height: 600px;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🚨 React Error #185 Infinite Loop Test</h1>
+
+    <div class="test-section">
+      <h2>📋 Test Overview</h2>
+      <p>
+        <strong>Purpose:</strong> Verify if React Error #185 infinite loop in PathBuilder has been
+        fixed
+      </p>
+      <p>
+        <strong>Error:</strong> "Minified React error #185; visit https://react.dev/errors/185 for
+        the full message"
+      </p>
+      <p>
+        <strong>Cause:</strong> Circular dependencies in useEffect hooks causing infinite re-renders
+      </p>
+    </div>
+
+    <div class="test-section">
+      <h2>⚠️ How to Trigger React Error #185</h2>
+      <div class="instructions">
+        <strong>Manual Test Instructions:</strong>
+        <ol>
+                <li>Click "Load Homepage" below</li>
+                <li>Scroll down to "📊 Eye-Opening Comparisons" section</li>
+                <li>Rapidly click the "Click to see comparison →" text elements:</li>
+                <ul>
+                    <li>Click "Nursing vs Business: Healthcare offers faster payback" comparison card</li>
+                    <li>Immediately click "Computer Science vs Marketing: Tech pays off 2 years sooner" comparison card</li>
+                    <li>Immediately click "Engineering vs Liberal Arts: STEM has 3x faster ROI" comparison card</li>
+                </ul>
+                <li>Repeat this rapid clicking sequence 5-10 times without waiting</li>
+                <li>Focus on clicking the blue "Click to see comparison →" text rapidly</li>
+          <li>Watch console for React Error #185</li>
+        </ol>
+      </div>
+
+      <div class="crash-trigger">
+        <strong>🔥 CRASH TRIGGER:</strong> The error occurs when rapid comparison card clicks create
+        circular useEffect dependencies: <br />• Comparison click → setInputs({path: newPath}) → PathBuilder Effect 1 → local state update → Effect 2 → setInputs() → Effect 1 → INFINITE LOOP
+      </div>
+    </div>
+
+    <div class="test-section">
+      <h2>🧪 Automated Crash Test</h2>
+      <p>This test simulates rapid user interactions that previously caused React Error #185:</p>
+
+      <button class="test-button danger-button" onclick="loadHomepageAndTest()">
+        🚨 Load Homepage & Run Crash Test
+      </button>
+
+      <button class="test-button" onclick="clearConsole()">Clear Console Log</button>
+    </div>
+
+    <div class="test-section">
+      <h2>📺 Live Homepage Test</h2>
+      <div class="iframe-container">
+        <iframe id="calculator-frame" src="about:blank"></iframe>
+      </div>
+    </div>
+
+    <div class="test-section">
+      <h2>📊 Console Output</h2>
+      <div class="console-log" id="console-output">Waiting for test to run...</div>
+    </div>
+
+    <div class="test-section">
+      <h2>✅ Expected Results</h2>
+      <div class="success-indicator">
+        <strong>IF FIXED:</strong> No React Error #185, smooth dropdown interactions, analytics
+        events fire normally
+      </div>
+      <div class="crash-trigger">
+        <strong>IF BROKEN:</strong> "Minified React error #185" appears in console, app becomes
+        unresponsive
+      </div>
+    </div>
+
+    <script>
+      let testResults = [];
+      let errorCount = 0;
+
+      // Capture all console messages
+      const originalConsoleLog = console.log;
+      const originalConsoleError = console.error;
+      const originalConsoleWarn = console.warn;
+
+      console.log = function (...args) {
+        logToOutput('LOG: ' + args.join(' '));
+        originalConsoleLog.apply(console, arguments);
+      };
+
+      console.error = function (...args) {
+        const message = args.join(' ');
+        logToOutput('❌ ERROR: ' + message);
+        if (message.includes('185') || message.includes('infinite') || message.includes('loop')) {
+          errorCount++;
+          logToOutput('🚨 REACT ERROR #185 DETECTED! 🚨');
+        }
+        originalConsoleError.apply(console, arguments);
+      };
+
+      console.warn = function (...args) {
+        logToOutput('⚠️ WARN: ' + args.join(' '));
+        originalConsoleWarn.apply(console, arguments);
+      };
+
+      function logToOutput(message) {
+        const output = document.getElementById('console-output');
+        const timestamp = new Date().toLocaleTimeString();
+        output.textContent += `[${timestamp}] ${message}\n`;
+        output.scrollTop = output.scrollHeight;
+      }
+
+      function clearConsole() {
+        document.getElementById('console-output').textContent = 'Console cleared...\n';
+        errorCount = 0;
+        testResults = [];
+      }
+
+      function loadHomepageAndTest() {
+        logToOutput('🚀 Loading homepage for React Error #185 test...');
+
+        const iframe = document.getElementById('calculator-frame');
+        iframe.src = 'http://localhost:3000/';
+
+        iframe.onload = function () {
+          logToOutput('✅ Homepage loaded, starting automated crash test in 3 seconds...');
+
+          setTimeout(() => {
+            runAutomatedCrashTest();
+          }, 3000);
+        };
+
+        iframe.onerror = function () {
+          logToOutput(
+            '❌ Failed to load homepage. Make sure dev server is running on localhost:3000'
+          );
+        };
+      }
+
+      function runAutomatedCrashTest() {
+        logToOutput('🔥 STARTING REACT ERROR #185 CRASH TEST');
+        logToOutput(
+          'This test rapidly clicks comparison cards to trigger circular useEffect dependencies...'
+        );
+
+        const iframe = document.getElementById('calculator-frame');
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+
+        if (!doc) {
+          logToOutput('❌ Cannot access iframe content - test failed');
+          return;
+        }
+
+        let testStep = 0;
+        const maxSteps = 15;
+
+        const rapidClickTest = () => {
+          testStep++;
+          logToOutput(`Step ${testStep}/${maxSteps}: Rapid comparison card clicking...`);
+
+          try {
+            // Find comparison cards with "Click to see comparison →" text
+            const comparisonElements = Array.from(doc.querySelectorAll('p')).filter(el => 
+              el.textContent && el.textContent.includes('Click to see comparison')
+            );
+            
+            logToOutput(`Found ${comparisonElements.length} comparison elements`);
+
+            if (comparisonElements.length > 0) {
+              // Rapidly click different comparison cards
+              const randomElement = comparisonElements[Math.floor(Math.random() * comparisonElements.length)];
+              const cardElement = randomElement.closest('div[class*="cursor-pointer"], div[class*="Card"]') || randomElement.parentElement;
+              
+              if (cardElement) {
+                logToOutput(`Clicking comparison card containing: "${randomElement.textContent}"`);
+                cardElement.click();
+              } else {
+                // Click the comparison text directly
+                logToOutput(`Clicking comparison text directly: "${randomElement.textContent}"`);
+                randomElement.click();
+              }
+            } else {
+              // Fallback: try to find any clickable cards
+              const cards = doc.querySelectorAll('div[class*="cursor-pointer"], [role="button"]');
+              if (cards.length > 0) {
+                const randomCard = cards[Math.floor(Math.random() * cards.length)];
+                logToOutput(`Found fallback clickable element, clicking...`);
+                randomCard.click();
+              } else {
+                logToOutput(`⚠️ No comparison elements found in step ${testStep}`);
+              }
+            }
+            
+          } catch (error) {
+            logToOutput(`❌ Test error at step ${testStep}: ${error.message}`);
+          }
+
+          if (testStep < maxSteps && errorCount === 0) {
+            // Continue rapid testing with shorter intervals to trigger the crash
+            setTimeout(rapidClickTest, 100 + Math.random() * 100);
+          } else {
+            // Test complete
+            setTimeout(() => {
+              logToOutput('🏁 CRASH TEST COMPLETED');
+
+              if (errorCount > 0) {
+                logToOutput(`💥 CRASH DETECTED: ${errorCount} React Error #185 occurrences`);
+                logToOutput('❌ FIX FAILED - The infinite loop issue is NOT resolved');
+              } else {
+                logToOutput('✅ NO CRASHES DETECTED');
+                logToOutput('🎉 SUCCESS - React Error #185 appears to be FIXED!');
+              }
+
+              logToOutput(`📈 Total test steps: ${testStep}`);
+              logToOutput(`🚨 Error count: ${errorCount}`);
+            }, 2000);
+          }
+        };
+
+        // Start the rapid clicking test
+        rapidClickTest();
+      }
+
+      // Initial setup
+      logToOutput('🔧 React Error #185 Test Suite Initialized');
+      logToOutput('Ready to test PathBuilder infinite loop fix...');
+      logToOutput('Make sure dev server is running: npm run dev');
+    </script>
+  </body>
+</html>

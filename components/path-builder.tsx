@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useReducer, useRef } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -23,6 +23,88 @@ import {
   TooltipProvider
 } from '@/components/ui/tooltip'
 import analytics from '@/lib/analytics'
+
+// Path state management with useReducer to prevent circular dependencies
+interface PathState {
+  educationType: string
+  field: string
+  program: string
+  path: string
+}
+
+type PathAction =
+  | { type: 'EXTERNAL_PATH_CHANGE'; payload: { path: string } }
+  | { type: 'USER_EDUCATION_CHANGE'; payload: { educationType: string } }
+  | { type: 'USER_FIELD_CHANGE'; payload: { field: string } }
+  | { type: 'USER_PROGRAM_CHANGE'; payload: { program: string } }
+  | { type: 'CLEAR_SELECTIONS' }
+  | { type: 'SYNC_FROM_INPUTS'; payload: { educationType?: string; field?: string; program?: string } }
+
+function pathReducer(state: PathState, action: PathAction): PathState {
+  switch (action.type) {
+    case 'EXTERNAL_PATH_CHANGE': {
+      // Handle external path changes (from comparison cards)
+      const mapping = getPathFromMapping(action.payload.path)
+      if (mapping) {
+        return {
+          educationType: mapping.type,
+          field: mapping.field,
+          program: mapping.program,
+          path: action.payload.path
+        }
+      }
+      return state
+    }
+    
+    case 'USER_EDUCATION_CHANGE': {
+      return {
+        educationType: action.payload.educationType,
+        field: '', // Reset field when education type changes
+        program: '', // Reset program when education type changes
+        path: '' // Clear path until all selections are made
+      }
+    }
+    
+    case 'USER_FIELD_CHANGE': {
+      return {
+        ...state,
+        field: action.payload.field,
+        program: '', // Reset program when field changes
+        path: '' // Clear path until all selections are made
+      }
+    }
+    
+    case 'USER_PROGRAM_CHANGE': {
+      const pathKey = buildPathKey(state.educationType, state.field, action.payload.program)
+      return {
+        ...state,
+        program: action.payload.program,
+        path: pathKey || ''
+      }
+    }
+    
+    case 'CLEAR_SELECTIONS': {
+      return {
+        educationType: '',
+        field: '',
+        program: '',
+        path: ''
+      }
+    }
+    
+    case 'SYNC_FROM_INPUTS': {
+      return {
+        ...state,
+        educationType: action.payload.educationType || state.educationType,
+        field: action.payload.field || state.field,
+        program: action.payload.program || state.program
+      }
+    }
+    
+    default:
+      return state
+  }
+}
 
 // Region options for "Other" location
 const regions = [
@@ -73,144 +155,128 @@ export default function PathBuilder({
   title = "Education Path",
   description = "Select your education and personal details"
 }: PathBuilderProps) {
-  const [educationType, setEducationType] = useState<string>(inputs.educationType || '')
-  const [field, setField] = useState<string>(inputs.field || '')
-  const [program, setProgram] = useState<string>(inputs.program || '')
+  // Initialize reducer with current inputs
+  const initialPathState: PathState = {
+    educationType: inputs.educationType || '',
+    field: inputs.field || '',
+    program: inputs.program || '',
+    path: inputs.path || ''
+  }
+  
+  const [pathState, dispatch] = useReducer(pathReducer, initialPathState)
+  const lastInputsRef = useRef(inputs)
+  const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Effect 1: Handle external inputs (from comparison cards) - sync TO local state
+  // Single effect to handle external input changes - prevents circular dependencies
   useEffect(() => {
-    // When path is set directly (e.g., from comparison cards)
-    if (inputs.path) {
-      const mapping = getPathFromMapping(inputs.path)
-      if (mapping) {
-        // Only update if values are different to avoid unnecessary updates
-        if (mapping.type !== educationType || mapping.field !== field || mapping.program !== program) {
-          setEducationType(mapping.type)
-          setField(mapping.field)
-          setProgram(mapping.program)
-        }
-      }
+    // Prevent unnecessary updates by checking if inputs actually changed
+    const inputsChanged = lastInputsRef.current !== inputs
+    if (!inputsChanged) return
+    
+    lastInputsRef.current = inputs
+    
+    // Clear any pending debounced updates
+    if (debounceTimeoutRef.current) {
+      clearTimeout(debounceTimeoutRef.current)
     }
-    // When inputs are cleared (path is empty)
-    else if (!inputs.path && !inputs.educationType && !inputs.field && !inputs.program) {
-      // Only clear if currently has values
-      if (educationType || field || program) {
-        setEducationType('')
-        setField('')
-        setProgram('')
+    
+    // Debounce rapid external changes to prevent cascade effects
+    debounceTimeoutRef.current = setTimeout(() => {
+      // Handle direct path changes (from comparison cards)
+      if (inputs.path && inputs.path !== pathState.path) {
+        dispatch({ type: 'EXTERNAL_PATH_CHANGE', payload: { path: inputs.path } })
       }
-    }
-    // Sync individual field changes from external inputs
-    else {
-      if (inputs.educationType && inputs.educationType !== educationType) {
-        setEducationType(inputs.educationType)
+      // Handle clearing all selections
+      else if (!inputs.path && !inputs.educationType && !inputs.field && !inputs.program && 
+               (pathState.educationType || pathState.field || pathState.program)) {
+        dispatch({ type: 'CLEAR_SELECTIONS' })
       }
-      if (inputs.field && inputs.field !== field) {
-        setField(inputs.field)
+      // Handle individual field synchronization
+      else if (inputs.educationType !== pathState.educationType || 
+               inputs.field !== pathState.field || 
+               inputs.program !== pathState.program) {
+        dispatch({ 
+          type: 'SYNC_FROM_INPUTS', 
+          payload: { 
+            educationType: inputs.educationType, 
+            field: inputs.field, 
+            program: inputs.program 
+          } 
+        })
       }
-      if (inputs.program && inputs.program !== program) {
-        setProgram(inputs.program)
-      }
-    }
-  }, [inputs.path, inputs.educationType, inputs.field, inputs.program])
+    }, 50) // Short debounce to batch rapid changes
+  }, [inputs.path, inputs.educationType, inputs.field, inputs.program, pathState.path, pathState.educationType, pathState.field, pathState.program])
 
-  // Effect 2: Handle local state changes (user selections) - sync TO parent inputs
+  // Effect to sync pathState back to parent inputs - atomic updates prevent loops
   useEffect(() => {
-    // Only update if local state differs from inputs to avoid unnecessary rerenders
     const needsUpdate = 
-      educationType !== inputs.educationType ||
-      field !== inputs.field ||
-      program !== inputs.program
+      pathState.educationType !== inputs.educationType ||
+      pathState.field !== inputs.field ||
+      pathState.program !== inputs.program ||
+      pathState.path !== inputs.path
 
     if (needsUpdate) {
       setInputs({
         ...inputs,
-        educationType,
-        field,
-        program
+        educationType: pathState.educationType,
+        field: pathState.field,
+        program: pathState.program,
+        path: pathState.path
       })
     }
-  }, [educationType, field, program]) // Remove inputs and setInputs to prevent circular dependency
+  }, [pathState.educationType, pathState.field, pathState.program, pathState.path])
 
-  // Effect 3: Update path when selections change (combine with field sync to prevent conflicts)
+  // Cleanup timeout on unmount
   useEffect(() => {
-    if (educationType && field && program) {
-      const pathKey = buildPathKey(educationType, field, program)
-      if (pathKey && pathKey !== inputs.path) {
-        setInputs({
-          ...inputs,
-          path: pathKey,
-          educationType,
-          field,
-          program
-        })
+    return () => {
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current)
       }
     }
-  }, [educationType, field, program]) // Remove inputs and setInputs to prevent circular dependency
+  }, [])
 
   const handleEducationTypeChange = (value: string) => {
     // Track analytics
-    if (educationType) {
-      analytics.pathChanged(educationType, value, 1)
+    if (pathState.educationType) {
+      analytics.pathChanged(pathState.educationType, value, 1)
     } else {
       analytics.pathSelected(value)
     }
     
-    setEducationType(value)
-    setField('') // Reset field when education type changes
-    setProgram('') // Reset program when education type changes
-    setInputs({
-      ...inputs,
-      educationType: value,
-      field: '',
-      program: '',
-      path: '' // Clear path until all selections are made
-    })
+    dispatch({ type: 'USER_EDUCATION_CHANGE', payload: { educationType: value } })
   }
 
   const handleFieldChange = (value: string) => {
     // Track analytics
-    if (field) {
-      analytics.pathChanged(field, value, 2)
+    if (pathState.field) {
+      analytics.pathChanged(pathState.field, value, 2)
     } else {
-      analytics.pathSelected(educationType, value)
+      analytics.pathSelected(pathState.educationType, value)
     }
     
-    setField(value)
-    setProgram('') // Reset program when field changes
-    setInputs({
-      ...inputs,
-      field: value,
-      program: '',
-      path: '' // Clear path until all selections are made
-    })
+    dispatch({ type: 'USER_FIELD_CHANGE', payload: { field: value } })
   }
 
   const handleProgramChange = (value: string) => {
     // Track analytics
-    if (program) {
-      analytics.pathChanged(program, value, 3)
+    if (pathState.program) {
+      analytics.pathChanged(pathState.program, value, 3)
     } else {
-      analytics.pathSelected(educationType, field, value)
+      analytics.pathSelected(pathState.educationType, pathState.field, value)
     }
     
-    setProgram(value)
-    const pathKey = buildPathKey(educationType, field, value)
-    setInputs({
-      ...inputs,
-      program: value,
-      path: pathKey || ''
-    })
+    dispatch({ type: 'USER_PROGRAM_CHANGE', payload: { program: value } })
     
     // Track funnel completion when all selections are made
+    const pathKey = buildPathKey(pathState.educationType, pathState.field, value)
     if (pathKey) {
       analytics.funnelStep(3, 'Program Selected', true)
     }
   }
 
   const educationTypeOptions = getEducationTypeOptions()
-  const fieldOptions = educationType ? getFieldOptions(educationType) : []
-  const programOptions = educationType && field ? getProgramOptions(educationType, field) : []
+  const fieldOptions = pathState.educationType ? getFieldOptions(pathState.educationType) : []
+  const programOptions = pathState.educationType && pathState.field ? getProgramOptions(pathState.educationType, pathState.field) : []
   return (
     <TooltipProvider>
       <div className="space-y-4">
@@ -233,7 +299,7 @@ export default function PathBuilder({
             </TooltipContent>
           </Tooltip>
         </div>
-          <Select value={educationType} onValueChange={handleEducationTypeChange}>
+          <Select value={pathState.educationType} onValueChange={handleEducationTypeChange}>
             <SelectTrigger data-testid="education-type-select">
               <SelectValue placeholder="Select education type" />
             </SelectTrigger>
@@ -247,7 +313,7 @@ export default function PathBuilder({
           </Select>
         </div>
 
-      {educationType && (
+      {pathState.educationType && (
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <Label htmlFor="field" className="text-gray-900">Field of Study</Label>
@@ -260,7 +326,7 @@ export default function PathBuilder({
               </TooltipContent>
             </Tooltip>
           </div>
-            <Select value={field} onValueChange={handleFieldChange}>
+            <Select value={pathState.field} onValueChange={handleFieldChange}>
               <SelectTrigger data-testid="field-select">
                 <SelectValue placeholder="Select field of study" />
               </SelectTrigger>
@@ -275,7 +341,7 @@ export default function PathBuilder({
           </div>
         )}
 
-      {educationType && field && programOptions.length > 0 && (
+      {pathState.educationType && pathState.field && programOptions.length > 0 && (
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <Label htmlFor="program" className="text-gray-900">Program/Degree</Label>
@@ -288,7 +354,7 @@ export default function PathBuilder({
               </TooltipContent>
             </Tooltip>
           </div>
-            <Select value={program} onValueChange={handleProgramChange}>
+            <Select value={pathState.program} onValueChange={handleProgramChange}>
               <SelectTrigger data-testid="program-select">
                 <SelectValue placeholder="Select program" />
               </SelectTrigger>
@@ -423,7 +489,7 @@ export default function PathBuilder({
         </div>
 
       {/* Degree Level Selector - New Field */}
-      {educationType === 'college' && (
+      {pathState.educationType === 'college' && (
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <Label htmlFor="degreeLevel" className="text-gray-900">Degree Level</Label>
