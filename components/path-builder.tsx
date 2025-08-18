@@ -20,6 +20,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
+  TooltipProvider
 } from '@/components/ui/tooltip'
 import analytics from '@/lib/analytics'
 
@@ -127,7 +128,7 @@ export default function PathBuilder({
         })
       }
     }
-  }, [educationType, field, program, inputs, setInputs])
+  }, [educationType, field, program])
 
   const handleEducationTypeChange = (value: string) => {
     // Track analytics
@@ -193,8 +194,9 @@ export default function PathBuilder({
   const fieldOptions = educationType ? getFieldOptions(educationType) : []
   const programOptions = educationType && field ? getProgramOptions(educationType, field) : []
   return (
-    <div className="space-y-4">
-      {title && (
+    <TooltipProvider>
+      <div className="space-y-4">
+        {title && (
         <div>
           <h3 className="text-lg font-semibold">{title}</h3>
           {description && <p className="text-sm text-muted-foreground">{description}</p>}
@@ -508,16 +510,17 @@ export default function PathBuilder({
           </p>
         </div>
 
-      {errors.length > 0 && (
-        <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
-          {errors.map((error, index) => (
-            <div key={index} className="flex items-center gap-2 text-sm text-destructive">
-              <AlertCircle className="h-4 w-4" />
-              {error}
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+        {errors.length > 0 && (
+          <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
+            {errors.map((error, index) => (
+              <div key={index} className="flex items-center gap-2 text-sm text-destructive">
+                <AlertCircle className="h-4 w-4" />
+                {error}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </TooltipProvider>
   )
 }
