@@ -79,20 +79,40 @@ export default function PathBuilder({
 
   // Initialize from existing path if available AND reset when path is cleared
   useEffect(() => {
-    if (inputs.path && !educationType) {
+    // When path is set directly (e.g., from comparison cards)
+    if (inputs.path) {
       const mapping = getPathFromMapping(inputs.path)
       if (mapping) {
-        setEducationType(mapping.type)
-        setField(mapping.field)
-        setProgram(mapping.program)
+        // Only update if values are different to avoid infinite loops
+        if (mapping.type !== educationType || mapping.field !== field || mapping.program !== program) {
+          setEducationType(mapping.type)
+          setField(mapping.field)
+          setProgram(mapping.program)
+        }
       }
-    } else if (!inputs.path && (educationType || field || program)) {
-      // Reset local state when inputs are cleared
-      setEducationType('')
-      setField('')
-      setProgram('')
+    } 
+    // When inputs are cleared (path is empty)
+    else if (!inputs.path && !inputs.educationType && !inputs.field && !inputs.program) {
+      // Only clear if currently has values
+      if (educationType || field || program) {
+        setEducationType('')
+        setField('')
+        setProgram('')
+      }
     }
-  }, [inputs.path, educationType, field, program])
+    // When education type is set from inputs but not local state
+    else if (inputs.educationType && !educationType) {
+      setEducationType(inputs.educationType)
+    }
+    // When field is set from inputs but not local state
+    else if (inputs.field && !field) {
+      setField(inputs.field)
+    }
+    // When program is set from inputs but not local state
+    else if (inputs.program && !program) {
+      setProgram(inputs.program)
+    }
+  }, [inputs.path, inputs.educationType, inputs.field, inputs.program])
 
   // Update the path when selections change
   useEffect(() => {

@@ -126,7 +126,7 @@ export default function HowItWorksPage() {
 
             {/* Key Metrics Section */}
             <div className="mt-12 p-6 bg-gray-50 rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">Truth Metrics We Expose</h3>
+              <h3 className="text-xl font-semibold mb-4 text-gray-900">Truth Metrics We Expose</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <h4 className="font-semibold text-gray-700">Scam Score™</h4>
@@ -149,7 +149,7 @@ export default function HowItWorksPage() {
 
             {/* Premium Features */}
             <div className="mt-8 p-6 bg-gradient-to-r from-red-50 to-orange-50 rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">� Premium Truth Reveals</h3>
+              <h3 className="text-xl font-semibold mb-4 text-gray-900">🚀 Premium Truth Reveals</h3>
               <p className="text-gray-600 mb-4">
                 Expose even more education scams with CollegeScam.io Premium:
               </p>
