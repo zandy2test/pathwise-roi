@@ -4,6 +4,8 @@ import Script from 'next/script'
 import './globals.css'
 import { Footer } from '@/components/footer'
 import ErrorBoundary from '@/components/error-boundary'
+import { EnhancedErrorBoundary } from '@/components/error-tracking'
+import { ClickDebugger } from '@/components/click-debugger'
 import { Analytics } from '@vercel/analytics/next'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -75,11 +77,14 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
-        <ErrorBoundary>
-          <div className="min-h-screen bg-background flex flex-col">
-            {children}
-          </div>
-        </ErrorBoundary>
+        <EnhancedErrorBoundary>
+          <ErrorBoundary>
+            <ClickDebugger />
+            <div className="min-h-screen bg-background flex flex-col">
+              {children}
+            </div>
+          </ErrorBoundary>
+        </EnhancedErrorBoundary>
         <Analytics />
       </body>
     </html>

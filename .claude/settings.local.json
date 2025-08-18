@@ -10,7 +10,9 @@
       "Bash(git push:*)",
       "Bash(mkdir:*)",
       "Bash(node:*)",
-      "Bash(npm test)"
+      "Bash(npm test)",
+      "Bash(npm install:*)",
+      "WebFetch(domain:vercel.com)"
     ],
     "deny": [],
     "ask": []
