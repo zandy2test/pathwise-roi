@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, startTransition } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -359,14 +359,16 @@ export default function HomePage() {
                         const result1New = calculateROI(newInputs1);
                         const result2New = calculateROI(newInputs2);
                         
-                        // Batch all state updates
-                        setInputs1(newInputs1);
-                        setInputs2(newInputs2);
-                        setResult1(result1New);
-                        setResult2(result2New);
-                        setShowComparison(true);
-                        setErrors1([]);
-                        setErrors2([]);
+                        // Use startTransition to prevent concurrent update errors (React #185)
+                        startTransition(() => {
+                          setInputs1(newInputs1);
+                          setInputs2(newInputs2);
+                          setResult1(result1New);
+                          setResult2(result2New);
+                          setShowComparison(true);
+                          setErrors1([]);
+                          setErrors2([]);
+                        });
                         
                         // Scroll after a short delay
                         requestAnimationFrame(() => {
