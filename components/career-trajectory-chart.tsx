@@ -17,10 +17,10 @@ export function CareerTrajectoryChart({ inputs }: CareerTrajectoryChartProps) {
     if (!path) return null;
     
     // Generate 20-year salary progression using actual data points
-    const years = Array.from({ length: 21 }, (_, i) => i);
+    const yearRange = Array.from({ length: 21 }, (_, i) => i);
     
     // Education path salary progression (with degree) - using actual data
-    const educationSalaries = years.map(year => {
+    const educationSalaries = yearRange.map(year => {
       if (year < path.duration / 12) return 0; // Still in school
       const yearsWorking = year - path.duration / 12;
       
@@ -42,7 +42,7 @@ export function CareerTrajectoryChart({ inputs }: CareerTrajectoryChartProps) {
     });
 
     // Alternative path (no degree, immediate work)
-    const noDegreeSalaries = years.map(year => {
+    const noDegreeSalaries = yearRange.map(year => {
       const baseSalary = 35000; // Starting salary without degree
       // Slower growth rate: 2-3% per year
       const growthRate = Math.max(0.015, 0.03 - year * 0.001);
@@ -50,7 +50,7 @@ export function CareerTrajectoryChart({ inputs }: CareerTrajectoryChartProps) {
     });
 
     // Find crossover point
-    const crossoverYear = years.find(year => 
+    const crossoverYear = yearRange.find(year => 
       educationSalaries[year] > noDegreeSalaries[year]
     ) || -1;
 
@@ -59,7 +59,7 @@ export function CareerTrajectoryChart({ inputs }: CareerTrajectoryChartProps) {
     const salaryScale = 200 / maxSalary;
 
     return {
-      years,
+      years: yearRange,
       educationSalaries,
       noDegreeSalaries,
       crossoverYear,
