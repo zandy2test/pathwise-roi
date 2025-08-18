@@ -184,7 +184,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-blue-50">
       {/* Version Indicator for Debugging */}
       <div className="fixed bottom-4 left-4 z-50 bg-black/90 text-white px-3 py-1 rounded-full text-xs font-mono">
-        v1.2.7 | 8/16 3:13PM | Port: {port}
+        v1.3.0 | 8/18 2:58PM | Port: {port}
       </div>
 
       {/* Navigation Bar */}
@@ -214,9 +214,9 @@ export default function HomePage() {
       </nav>
 
       {/* HERO SECTION - Progressive Disclosure Design */}
-      <section id="top" className="pt-32 pb-20 bg-gradient-to-br from-blue-50 via-white to-cyan-50 relative overflow-hidden">
+      <section id="top" className="pt-32 pb-20 bg-gradient-to-br from-blue-100 via-blue-50 to-cyan-100 relative overflow-hidden">
         {/* Background gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-100/20 via-transparent to-cyan-100/20" />
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-200/30 via-transparent to-cyan-200/30" />
         {/* Red Warning Banner at Top */}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
@@ -321,8 +321,8 @@ export default function HomePage() {
                   <Card
                     className="cursor-pointer hover:shadow-xl transition-all hover:scale-105 bg-white border-2 border-gray-200 hover:border-blue-400"
                     onClick={() => {
-                      // Clear existing inputs
-                      setInputs1({
+                      // Set up path 1 inputs
+                      const newInputs1 = {
                         path: comparison.path1,
                         location: 'nyc',
                         schoolTier: 'standard',
@@ -331,8 +331,14 @@ export default function HomePage() {
                         loanInterestRate: 7,
                         degreeLevel: 'bachelors',
                         region: '',
-                      });
-                      setInputs2({
+                        // Parse the path to get education type details
+                        educationType: comparison.path1.split('_')[0],
+                        field: '',
+                        program: ''
+                      };
+                      
+                      // Set up path 2 inputs
+                      const newInputs2 = {
                         path: comparison.path2,
                         location: 'nyc',
                         schoolTier: 'standard',
@@ -341,30 +347,20 @@ export default function HomePage() {
                         loanInterestRate: 7,
                         degreeLevel: 'bachelors',
                         region: '',
-                      });
+                        // Parse the path to get education type details
+                        educationType: comparison.path2.split('_')[0],
+                        field: '',
+                        program: ''
+                      };
+                      
+                      // Update inputs to reflect in UI
+                      setInputs1(newInputs1);
+                      setInputs2(newInputs2);
                       setShowComparison(true);
                       
                       // Calculate both results
-                      const result1New = calculateROI({
-                        path: comparison.path1,
-                        location: 'nyc',
-                        schoolTier: 'standard',
-                        livingCost: 'offcampus',
-                        scholarships: 0,
-                        loanInterestRate: 7,
-                        degreeLevel: 'bachelors',
-                        region: '',
-                      });
-                      const result2New = calculateROI({
-                        path: comparison.path2,
-                        location: 'nyc',
-                        schoolTier: 'standard',
-                        livingCost: 'offcampus',
-                        scholarships: 0,
-                        loanInterestRate: 7,
-                        degreeLevel: 'bachelors',
-                        region: '',
-                      });
+                      const result1New = calculateROI(newInputs1);
+                      const result2New = calculateROI(newInputs2);
                       
                       setResult1(result1New);
                       setResult2(result2New);

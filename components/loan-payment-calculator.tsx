@@ -35,7 +35,7 @@ export function LoanPaymentCalculator({ result, loanInterestRate }: LoanPaymentC
   return (
     <Card className="bg-gradient-to-br from-orange-50 to-red-50 border-2 border-orange-200">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg">
+        <CardTitle className="flex items-center gap-2 text-lg text-gray-900">
           <Calculator className="h-5 w-5 text-orange-600" />
           Student Loan Calculator
         </CardTitle>

@@ -100,7 +100,7 @@ export function AIRiskIndicator({ inputs }: AIRiskIndicatorProps) {
   return (
     <Card className={`bg-gradient-to-br ${risk.bg} border-2 border-${risk.color}-200`}>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg">
+        <CardTitle className="flex items-center gap-2 text-lg text-gray-900">
           <Bot className="h-5 w-5 text-gray-700" />
           AI Disruption Risk Analysis
         </CardTitle>

@@ -17,7 +17,7 @@ export function Footer({ onPremiumClick }: FooterProps = {}) {
           {/* Brand Section */}
           <div className="text-center md:text-left">
             <Link href="/" className="flex items-center justify-center md:justify-start gap-2 mb-3">
-              <span className="font-bold text-xl">PathwiseROI</span>
+              <span className="font-bold text-xl text-gray-900">PathwiseROI</span>
               <span className="text-blue-600 font-medium">| Scam Score™</span>
             </Link>
             <p className="text-sm text-gray-600">

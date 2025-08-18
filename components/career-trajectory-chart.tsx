@@ -46,7 +46,7 @@ export function CareerTrajectoryChart({ inputs }: CareerTrajectoryChartProps) {
   return (
     <Card className="bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg">
+        <CardTitle className="flex items-center gap-2 text-lg text-gray-900">
           <TrendingUp className="h-5 w-5 text-indigo-600" />
           20-Year Career Trajectory
         </CardTitle>

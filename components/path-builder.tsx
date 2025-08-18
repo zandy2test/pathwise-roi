@@ -465,7 +465,16 @@ export default function PathBuilder({
             placeholder="7"
             value={inputs.loanInterestRate ?? 7}
             onChange={(e) => {
-              const value = parseFloat(e.target.value) || 0
+              let value = parseFloat(e.target.value) || 0
+              // Cap the value at 30% max
+              if (value > 30) {
+                value = 30
+                e.target.value = '30'
+              }
+              if (value < 0) {
+                value = 0
+                e.target.value = '0'
+              }
               analytics.featureEngagement('loanInterestRate', value.toString())
               setInputs({...inputs, loanInterestRate: value})
             }}
