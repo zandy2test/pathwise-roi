@@ -17,8 +17,8 @@ export function Footer({ onPremiumClick }: FooterProps = {}) {
           {/* Brand Section */}
           <div className="text-center md:text-left">
             <Link href="/" className="flex items-center justify-center md:justify-start gap-2 mb-3">
-              <Calculator className="h-6 w-6 text-blue-600" />
               <span className="font-bold text-xl">PathwiseROI</span>
+              <span className="text-blue-600 font-medium">| Scam Score™</span>
             </Link>
             <p className="text-sm text-gray-600">
               Make smarter education decisions with data-driven insights
@@ -68,7 +68,7 @@ export function Footer({ onPremiumClick }: FooterProps = {}) {
         <div className="mt-8 pt-6 border-t border-gray-200">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-600">
-              © {currentYear} PathwiseROI. All rights reserved. | v1.2.7 (8/16 3:13PM)
+              © {currentYear} PathwiseROI. All rights reserved. | v1.3.0 (Phase 1)
             </p>
             <p className="text-sm text-gray-600 flex items-center gap-1">
               Made with <Heart className="h-3 w-3 text-red-500 fill-red-500" /> for students everywhere

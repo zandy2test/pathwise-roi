@@ -213,11 +213,16 @@ export default function HomePage() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <a href="#top" className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+            >
               <AlertTriangle className="h-6 w-6 text-blue-600" />
               <span className="text-xl font-bold text-gray-900">PathwiseROI</span>
               <span className="text-sm text-blue-600 font-medium">Scam Score</span>
-            </a>
+            </button>
             <ShimmerButton
               onClick={() => setShowPremiumModal(true)}
               className="px-4 py-2"
@@ -231,7 +236,9 @@ export default function HomePage() {
       </nav>
 
       {/* HERO SECTION - Progressive Disclosure Design */}
-      <section id="top" className="pt-32 pb-20 bg-gradient-to-b from-red-50 via-white to-white">
+      <section id="top" className="pt-32 pb-20 bg-gradient-to-br from-blue-50 via-white to-cyan-50 relative overflow-hidden">
+        {/* Background gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-100/20 via-transparent to-cyan-100/20" />
         {/* Red Warning Banner at Top */}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
@@ -258,7 +265,7 @@ export default function HomePage() {
           </motion.div>
         </motion.div>
 
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto px-4 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -308,9 +315,93 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Popular Comparisons Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">
+              📊 Eye-Opening Comparisons
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {[
+                { title: "Welders make more than lawyers until age 35", path1: "trades_welding", path2: "law_degree" },
+                { title: "Nurses beat MBAs by year 7", path1: "nursing_bachelor", path2: "mba_top20" },
+                { title: "Plumbers earn more than liberal arts grads forever", path1: "trades_plumbing", path2: "college_liberal_arts" },
+                { title: "Community college saves $60K, same outcome", path1: "community_transfer", path2: "college_business" },
+                { title: "Bootcamp profitable 44 months before CS degrees", path1: "bootcamp_coding", path2: "college_tech" }
+              ].map((comparison, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Card
+                    className="cursor-pointer hover:shadow-xl transition-all hover:scale-105 bg-white border-2 border-gray-200 hover:border-blue-400"
+                    onClick={() => {
+                      // Clear existing inputs
+                      setInputs1({
+                        path: comparison.path1,
+                        location: 'nyc',
+                        schoolTier: 'standard',
+                        livingCost: 'offcampus',
+                        scholarships: 0,
+                      });
+                      setInputs2({
+                        path: comparison.path2,
+                        location: 'nyc',
+                        schoolTier: 'standard',
+                        livingCost: 'offcampus',
+                        scholarships: 0,
+                      });
+                      setShowComparison(true);
+                      
+                      // Calculate both results
+                      const result1New = calculateROI({
+                        path: comparison.path1,
+                        location: 'nyc',
+                        schoolTier: 'standard',
+                        livingCost: 'offcampus',
+                        scholarships: 0,
+                      });
+                      const result2New = calculateROI({
+                        path: comparison.path2,
+                        location: 'nyc',
+                        schoolTier: 'standard',
+                        livingCost: 'offcampus',
+                        scholarships: 0,
+                      });
+                      
+                      setResult1(result1New);
+                      setResult2(result2New);
+                      
+                      // Scroll to results
+                      setTimeout(() => {
+                        const resultsElement = document.getElementById('results');
+                        if (resultsElement) {
+                          resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                      }, 100);
+                    }}
+                  >
+                    <CardContent className="p-4">
+                      <p className="font-semibold text-gray-800">{comparison.title}</p>
+                      <p className="text-sm text-blue-600 mt-2">Click to see comparison →</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Calculator Section - Always Visible */}
-      <div id="calculator" className="container mx-auto px-4 py-24">
+      <div id="calculator" className="container mx-auto px-4 py-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -343,12 +434,39 @@ export default function HomePage() {
                     title=""
                     description=""
                   />
-                  <CTAButton 
-                    onClick={handleCalculate} 
-                    className="w-full mt-6 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700"
-                  >
-                    Calculate Scam Score
-                  </CTAButton>
+                  <div className="flex gap-2 mt-6">
+                    <CTAButton 
+                      onClick={handleCalculate} 
+                      className="flex-1 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700"
+                    >
+                      Calculate Scam Score
+                    </CTAButton>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setInputs1({
+                          path: '',
+                          location: '',
+                          schoolTier: '',
+                          livingCost: '',
+                          scholarships: 0,
+                        });
+                        setResult1(null);
+                        setShowComparison(false);
+                        setResult2(null);
+                        setInputs2({
+                          path: '',
+                          location: '',
+                          schoolTier: '',
+                          livingCost: '',
+                          scholarships: 0,
+                        });
+                      }}
+                      className="px-4"
+                    >
+                      Clear
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
 
