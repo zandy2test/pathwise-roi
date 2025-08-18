@@ -16,18 +16,18 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     name: "Sarah M.",
-    path: "Chose welding over liberal arts",
-    savings: "$85,000 saved",
-    quote: "I was about to take out massive loans for an English degree. CollegeScam.io showed me welders make more money and have better job security. Best financial decision of my life!",
-    avatar: "👩‍🔧",
+    path: "Community college to university transfer",
+    savings: "$45,000 saved",
+    quote: "I was planning to go straight to a 4-year university. CollegeScam.io showed me I could save $45K by doing my general education at community college first. Same degree, way less debt!",
+    avatar: "👩‍🎓",
     verified: true
   },
   {
     name: "Mike R.",
-    path: "Nursing vs MBA analysis",
-    savings: "3 years faster career start",
-    quote: "The comparison blew my mind. Why spend 2 extra years in business school when nurses start earning immediately? I'm now an RN making great money with zero regrets.",
-    avatar: "👨‍⚕️",
+    path: "In-state vs out-of-state comparison",
+    savings: "$80,000 saved",
+    quote: "I wanted to go out-of-state for the 'college experience' but the calculator opened my eyes. My in-state school has the same program for $20K/year less. I'll graduate debt-free instead.",
+    avatar: "👨‍🎓",
     verified: true
   },
   {
