@@ -1,0 +1,149 @@
+name: CollegeScam.io Weekly Autonomous Audit
+
+on:
+  schedule:
+    # Every Monday at 9 AM UTC (covers multiple timezones)
+    - cron: '0 9 * * 1'
+  workflow_dispatch: # Allow manual triggering
+    inputs:
+      debug_mode:
+        description: 'Enable debug logging'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  autonomous-monitoring:
+    name: Autonomous Site Health Monitoring
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Ensure reports directory exists
+        run: mkdir -p reports
+
+      - name: Run Weekly Autonomous Audit
+        run: |
+          echo "🚀 Starting CollegeScam.io Weekly Autonomous Audit"
+          echo "📊 Target URL: https://collegescam.io"
+          echo "🕐 Audit Time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          echo ""
+
+          if [ "${{ github.event.inputs.debug_mode }}" == "true" ]; then
+            export DEBUG=true
+            echo "🐛 Debug mode enabled"
+          fi
+
+          node automation/run-weekly-audit.js
+        env:
+          CI: true
+          NODE_ENV: production
+
+      - name: Archive Audit Reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: audit-reports-${{ github.run_number }}
+          path: reports/
+          retention-days: 90
+
+      - name: Generate Summary Comment
+        if: always()
+        run: |
+          echo "## 📊 CollegeScam.io Weekly Audit Results" >> audit-summary.md
+          echo "" >> audit-summary.md
+          echo "**Audit Date**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> audit-summary.md
+          echo "**Site URL**: https://collegescam.io" >> audit-summary.md
+          echo "**Workflow Run**: #${{ github.run_number }}" >> audit-summary.md
+          echo "" >> audit-summary.md
+
+          if [ -f "reports/weekly-summary-$(date +%Y-%m-%d).json" ]; then
+            SCORE=$(cat reports/weekly-summary-$(date +%Y-%m-%d).json | grep -o '"performanceScore":[0-9]*' | cut -d':' -f2)
+            CRITICAL=$(cat reports/weekly-summary-$(date +%Y-%m-%d).json | grep -o '"criticalIssues":[0-9]*' | cut -d':' -f2)
+            MOBILE_PASS=$(cat reports/weekly-summary-$(date +%Y-%m-%d).json | grep -o '"passRate":[0-9]*' | cut -d':' -f2)
+            
+            echo "### 🎯 Key Metrics" >> audit-summary.md
+            echo "- **Performance Score**: ${SCORE}/100" >> audit-summary.md
+            echo "- **Critical Issues**: ${CRITICAL}" >> audit-summary.md  
+            echo "- **Mobile Pass Rate**: ${MOBILE_PASS}%" >> audit-summary.md
+            echo "" >> audit-summary.md
+            
+            if [ "$CRITICAL" -gt "0" ]; then
+              echo "### ⚠️ Action Required" >> audit-summary.md
+              echo "Critical issues detected requiring immediate attention." >> audit-summary.md
+            else
+              echo "### ✅ All Systems Healthy" >> audit-summary.md
+              echo "No critical issues detected. Site performing optimally." >> audit-summary.md
+            fi
+          else
+            echo "### ❌ Audit Failed" >> audit-summary.md
+            echo "Report generation failed. Check workflow logs for details." >> audit-summary.md
+          fi
+
+          echo "" >> audit-summary.md
+          echo "📋 **Full reports available in workflow artifacts**" >> audit-summary.md
+
+      - name: Comment on Latest Commit
+        if: always() && github.event_name == 'schedule'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const summary = fs.readFileSync('audit-summary.md', 'utf8');
+
+            // Create an issue for the audit results
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Weekly Audit Results - ${new Date().toISOString().split('T')[0]}`,
+              body: summary,
+              labels: ['audit', 'monitoring']
+            });
+
+  # Optional: Send Slack notification for critical issues
+  notify-critical:
+    name: Critical Issue Notification
+    needs: autonomous-monitoring
+    runs-on: ubuntu-latest
+    if: always() && needs.autonomous-monitoring.result != 'success'
+
+    steps:
+      - name: Download Reports
+        uses: actions/download-artifact@v4
+        with:
+          name: audit-reports-${{ github.run_number }}
+          path: reports/
+
+      - name: Check for Critical Issues
+        run: |
+          CRITICAL_COUNT=0
+          if [ -f "reports/weekly-summary-$(date +%Y-%m-%d).json" ]; then
+            CRITICAL_COUNT=$(cat reports/weekly-summary-$(date +%Y-%m-%d).json | grep -o '"criticalIssues":[0-9]*' | cut -d':' -f2)
+          fi
+
+          echo "CRITICAL_ISSUES=$CRITICAL_COUNT" >> $GITHUB_ENV
+
+          if [ "$CRITICAL_COUNT" -gt "0" ]; then
+            echo "🚨 $CRITICAL_COUNT critical issues detected!"
+            echo "ALERT_REQUIRED=true" >> $GITHUB_ENV
+          else
+            echo "✅ No critical issues detected"
+            echo "ALERT_REQUIRED=false" >> $GITHUB_ENV
+          fi
+
+      # Placeholder for Slack/Discord webhook integration
+      # Uncomment and configure webhook URL when ready
+      # - name: Send Alert Notification
+      #   if: env.ALERT_REQUIRED == 'true'
+      #   run: |
+      #     curl -X POST -H 'Content-type: application/json' \
+      #       --data "{\"text\":\"🚨 CollegeScam.io Critical Issues Detected\\n${{ env.CRITICAL_ISSUES }} issues require immediate attention\\nView details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}" \
+      #       ${{ secrets.SLACK_WEBHOOK_URL }}
