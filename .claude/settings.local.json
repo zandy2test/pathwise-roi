@@ -13,7 +13,9 @@
       "Bash(npm test)",
       "Bash(npm install:*)",
       "WebFetch(domain:vercel.com)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "WebFetch(domain:collegescam.io)",
+      "WebSearch"
     ],
     "deny": [],
     "ask": [],

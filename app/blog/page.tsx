@@ -17,13 +17,29 @@ export const metadata: Metadata = {
 
 const blogPosts = [
   {
+    slug: 'college-debt-crisis-2025-reality-check',
+    title: 'College Debt Crisis 2025: Students Are Finally Waking Up',
+    description: '47% of students now prioritize cost over prestige. See why 2025 is the year students are finally making smarter financial decisions.',
+    publishedAt: '2025-08-19',
+    readTime: '7 min',
+    category: 'Breaking News',
+    featured: true
+  },
+  {
+    slug: 'employer-degree-requirements-2025',
+    title: 'Major Employers Drop Degree Requirements: Fortune 500 Revolution',
+    description: 'Apple, Google, IBM, and Bank of America no longer require college degrees. Here\'s what skills they actually want.',
+    publishedAt: '2025-08-19',
+    readTime: '9 min',
+    category: 'Industry Shift'
+  },
+  {
     slug: 'trade-school-vs-college-2025',
     title: 'Trade School vs College in 2025: The Numbers Don\'t Lie',
     description: 'A comprehensive analysis of ROI comparing traditional 4-year degrees to skilled trade programs. Spoiler: trades are winning.',
     publishedAt: '2025-08-19',
     readTime: '8 min',
-    category: 'Analysis',
-    featured: true
+    category: 'Analysis'
   },
   {
     slug: 'student-debt-crisis-statistics',
