@@ -18,7 +18,7 @@ class WeeklyAuditOrchestrator {
     this.results = {
       performance: null,
       mobile: null,
-      recommendations: []
+      recommendations: [],
     };
   }
 
@@ -44,7 +44,6 @@ class WeeklyAuditOrchestrator {
 
       console.log('\n✅ Weekly audit complete!');
       return this.results;
-
     } catch (error) {
       console.error('❌ Weekly audit failed:', error);
       throw error;
@@ -69,19 +68,22 @@ class WeeklyAuditOrchestrator {
       overview: {
         performanceScore: this.calculateOverallScore(),
         criticalIssues: this.getCriticalIssuesCount(),
-        recommendationsCount: this.results.recommendations.length
+        recommendationsCount: this.results.recommendations.length,
       },
       performance: {
         averageLoadTime: this.results.performance?.averageMetrics?.loadTime,
-        alerts: this.results.performance?.alerts?.length || 0
+        alerts: this.results.performance?.alerts?.length || 0,
       },
       mobile: {
         testsRun: this.results.mobile?.summary?.totalTests || 0,
-        passRate: this.results.mobile?.summary?.passRate || 0
-      }
+        passRate: this.results.mobile?.summary?.passRate || 0,
+      },
     };
 
-    const summaryPath = path.join(this.reportDir, `weekly-summary-${new Date().toISOString().split('T')[0]}.json`);
+    const summaryPath = path.join(
+      this.reportDir,
+      `weekly-summary-${new Date().toISOString().split('T')[0]}.json`
+    );
     await fs.writeFile(summaryPath, JSON.stringify(summary, null, 2));
 
     console.log(`📊 Weekly summary saved to ${summaryPath}`);
@@ -98,7 +100,7 @@ class WeeklyAuditOrchestrator {
 
   getCriticalIssuesCount() {
     let count = 0;
-    count += this.results.performance?.alerts?.filter(a => a.severity === 'high').length || 0;
+    count += this.results.performance?.alerts?.filter((a) => a.severity === 'high').length || 0;
     count += this.results.mobile?.criticalIssues?.length || 0;
     return count;
   }
@@ -109,7 +111,7 @@ if (require.main === module) {
   (async () => {
     const orchestrator = new WeeklyAuditOrchestrator();
     await orchestrator.runWeeklyAudit();
-  })().catch(error => {
+  })().catch((error) => {
     console.error('💥 Weekly audit failed:', error);
     process.exit(1);
   });

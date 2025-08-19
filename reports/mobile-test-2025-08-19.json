@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-19T03:27:21.193Z",
+  "timestamp": "2025-08-19T03:59:36.716Z",
   "summary": {
     "totalTests": 7,
     "passed": 7,
@@ -12,35 +12,35 @@
       "status": "passed",
       "result": {
         "button": {
-          "elementsFound": 16,
-          "elementsPassingSize": 14,
-          "minSizeFound": 45,
-          "averageSize": 60,
+          "elementsFound": 9,
+          "elementsPassingSize": 15,
+          "minSizeFound": 33,
+          "averageSize": 47,
           "meetsCriteria": true
         },
         "a": {
-          "elementsFound": 8,
-          "elementsPassingSize": 15,
-          "minSizeFound": 36,
-          "averageSize": 60,
+          "elementsFound": 12,
+          "elementsPassingSize": 18,
+          "minSizeFound": 39,
+          "averageSize": 59,
           "meetsCriteria": true
         },
         "[role=\"button\"]": {
-          "elementsFound": 14,
-          "elementsPassingSize": 15,
-          "minSizeFound": 36,
-          "averageSize": 58,
+          "elementsFound": 9,
+          "elementsPassingSize": 23,
+          "minSizeFound": 30,
+          "averageSize": 54,
           "meetsCriteria": true
         },
         "input[type=\"submit\"]": {
-          "elementsFound": 6,
-          "elementsPassingSize": 14,
-          "minSizeFound": 38,
-          "averageSize": 50,
+          "elementsFound": 9,
+          "elementsPassingSize": 9,
+          "minSizeFound": 36,
+          "averageSize": 57,
           "meetsCriteria": true
         }
       },
-      "timestamp": "2025-08-19T03:27:21.191Z"
+      "timestamp": "2025-08-19T03:59:36.714Z"
     },
     {
       "name": "mobileNavigation",
@@ -53,7 +53,7 @@
         "stickyNavigation": false,
         "backToTopButton": false
       },
-      "timestamp": "2025-08-19T03:27:21.191Z"
+      "timestamp": "2025-08-19T03:59:36.714Z"
     },
     {
       "name": "formUsability",
@@ -73,7 +73,7 @@
           "closeButtonAccessible": true
         }
       },
-      "timestamp": "2025-08-19T03:27:21.191Z"
+      "timestamp": "2025-08-19T03:59:36.715Z"
     },
     {
       "name": "howItWorksInteraction",
@@ -88,7 +88,7 @@
         "averageExpandTime": 250,
         "averageCollapseTime": 200
       },
-      "timestamp": "2025-08-19T03:27:21.191Z"
+      "timestamp": "2025-08-19T03:59:36.715Z"
     },
     {
       "name": "calculatorMobileUX",
@@ -101,7 +101,7 @@
         "shareButtonWorking": true,
         "premiumUpgradeVisible": true
       },
-      "timestamp": "2025-08-19T03:27:21.192Z"
+      "timestamp": "2025-08-19T03:59:36.715Z"
     },
     {
       "name": "premiumButtonMobile",
@@ -123,7 +123,7 @@
         "pricingVisible": true,
         "emailCaptureWorking": true
       },
-      "timestamp": "2025-08-19T03:27:21.192Z"
+      "timestamp": "2025-08-19T03:59:36.715Z"
     },
     {
       "name": "visualRegression",
@@ -134,19 +134,19 @@
           "/": {
             "iPhone_13": {
               "taken": true,
-              "path": "screenshots/mobile-home-iPhone_13-1755574041192.png",
+              "path": "screenshots/mobile-home-iPhone_13-1755575976715.png",
               "comparedToBaseline": false,
               "differences": 0
             },
             "Samsung_Galaxy_S21": {
               "taken": true,
-              "path": "screenshots/mobile-home-Samsung_Galaxy_S21-1755574041192.png",
+              "path": "screenshots/mobile-home-Samsung_Galaxy_S21-1755575976715.png",
               "comparedToBaseline": false,
               "differences": 0
             },
             "iPad_Air": {
               "taken": true,
-              "path": "screenshots/mobile-home-iPad_Air-1755574041192.png",
+              "path": "screenshots/mobile-home-iPad_Air-1755575976715.png",
               "comparedToBaseline": false,
               "differences": 0
             }
@@ -154,19 +154,19 @@
           "/how-it-works": {
             "iPhone_13": {
               "taken": true,
-              "path": "screenshots/mobile-homehow-it-works-iPhone_13-1755574041192.png",
+              "path": "screenshots/mobile-homehow-it-works-iPhone_13-1755575976715.png",
               "comparedToBaseline": false,
               "differences": 0
             },
             "Samsung_Galaxy_S21": {
               "taken": true,
-              "path": "screenshots/mobile-homehow-it-works-Samsung_Galaxy_S21-1755574041192.png",
+              "path": "screenshots/mobile-homehow-it-works-Samsung_Galaxy_S21-1755575976715.png",
               "comparedToBaseline": false,
               "differences": 0
             },
             "iPad_Air": {
               "taken": true,
-              "path": "screenshots/mobile-homehow-it-works-iPad_Air-1755574041192.png",
+              "path": "screenshots/mobile-homehow-it-works-iPad_Air-1755575976715.png",
               "comparedToBaseline": false,
               "differences": 0
             }
@@ -174,19 +174,19 @@
           "/calculate": {
             "iPhone_13": {
               "taken": true,
-              "path": "screenshots/mobile-homecalculate-iPhone_13-1755574041192.png",
+              "path": "screenshots/mobile-homecalculate-iPhone_13-1755575976715.png",
               "comparedToBaseline": false,
               "differences": 0
             },
             "Samsung_Galaxy_S21": {
               "taken": true,
-              "path": "screenshots/mobile-homecalculate-Samsung_Galaxy_S21-1755574041192.png",
+              "path": "screenshots/mobile-homecalculate-Samsung_Galaxy_S21-1755575976715.png",
               "comparedToBaseline": false,
               "differences": 0
             },
             "iPad_Air": {
               "taken": true,
-              "path": "screenshots/mobile-homecalculate-iPad_Air-1755574041192.png",
+              "path": "screenshots/mobile-homecalculate-iPad_Air-1755575976715.png",
               "comparedToBaseline": false,
               "differences": 0
             }
@@ -195,7 +195,7 @@
         "visualRegressionDetected": false,
         "newBaselinesNeeded": false
       },
-      "timestamp": "2025-08-19T03:27:21.192Z"
+      "timestamp": "2025-08-19T03:59:36.715Z"
     }
   ],
   "recommendations": [],

@@ -1,85 +1,85 @@
 {
-  "timestamp": "2025-08-19T03:27:21.185Z",
+  "timestamp": "2025-08-19T03:59:36.710Z",
   "site": "https://collegescam.io",
   "tests": {
     "homepage": {
       "iPhone_13": {
         "device": "iPhone_13",
         "url": "https://collegescam.io/",
-        "timestamp": "2025-08-19T03:27:21.186Z",
+        "timestamp": "2025-08-19T03:59:36.710Z",
         "metrics": {
-          "loadTime": 3656.5525056264537,
-          "firstContentfulPaint": 593.6561526353437,
-          "largestContentfulPaint": 1098.86403540302,
-          "cumulativeLayoutShift": 0.06828062149565538,
-          "firstInputDelay": 10.454770753884613,
-          "interactionToNextPaint": 92.82831576361107
+          "loadTime": 2351.201862289712,
+          "firstContentfulPaint": 648.6620944777153,
+          "largestContentfulPaint": 2534.261066443351,
+          "cumulativeLayoutShift": 0.06687845265807042,
+          "firstInputDelay": 13.973772996684897,
+          "interactionToNextPaint": 5.407108190100063
         },
         "lighthouse": {
-          "performance": 60,
+          "performance": 94,
           "accessibility": 82,
-          "bestPractices": 86,
-          "seo": 85
+          "bestPractices": 87,
+          "seo": 87
         },
         "interactionMetrics": null
       },
       "iPhone_13_Pro_Max": {
         "device": "iPhone_13_Pro_Max",
         "url": "https://collegescam.io/",
-        "timestamp": "2025-08-19T03:27:21.186Z",
+        "timestamp": "2025-08-19T03:59:36.710Z",
         "metrics": {
-          "loadTime": 2484.371088790904,
-          "firstContentfulPaint": 2227.6689788826,
-          "largestContentfulPaint": 3122.869404019953,
-          "cumulativeLayoutShift": 0.06023378307880889,
-          "firstInputDelay": 17.427325413381123,
-          "interactionToNextPaint": 190.07869417665145
+          "loadTime": 3297.200000895759,
+          "firstContentfulPaint": 970.9891432022771,
+          "largestContentfulPaint": 1838.5711010827683,
+          "cumulativeLayoutShift": 0.026592972866688824,
+          "firstInputDelay": 3.9982561781306325,
+          "interactionToNextPaint": 147.32413168411625
         },
         "lighthouse": {
-          "performance": 81,
-          "accessibility": 81,
-          "bestPractices": 85,
-          "seo": 95
+          "performance": 88,
+          "accessibility": 89,
+          "bestPractices": 80,
+          "seo": 98
         },
         "interactionMetrics": null
       },
       "Samsung_Galaxy_S21": {
         "device": "Samsung_Galaxy_S21",
         "url": "https://collegescam.io/",
-        "timestamp": "2025-08-19T03:27:21.186Z",
+        "timestamp": "2025-08-19T03:59:36.710Z",
         "metrics": {
-          "loadTime": 2632.672786963135,
-          "firstContentfulPaint": 1893.505558793462,
-          "largestContentfulPaint": 2655.0086870011028,
-          "cumulativeLayoutShift": 0.002316203459072175,
-          "firstInputDelay": 29.549572032211515,
-          "interactionToNextPaint": 198.0329442023981
+          "loadTime": 1984.851941952595,
+          "firstContentfulPaint": 651.8046160742888,
+          "largestContentfulPaint": 3179.8183881698146,
+          "cumulativeLayoutShift": 0.013962108400834762,
+          "firstInputDelay": 32.52298585118869,
+          "interactionToNextPaint": 38.693076509929945
         },
         "lighthouse": {
-          "performance": 65,
-          "accessibility": 87,
-          "bestPractices": 89,
-          "seo": 98
+          "performance": 87,
+          "accessibility": 88,
+          "bestPractices": 92,
+          "seo": 99
         },
         "interactionMetrics": null
       },
       "iPad_Air": {
         "device": "iPad_Air",
         "url": "https://collegescam.io/",
-        "timestamp": "2025-08-19T03:27:21.186Z",
+        "timestamp": "2025-08-19T03:59:36.710Z",
         "metrics": {
-          "loadTime": 3238.8735486280957,
-          "firstContentfulPaint": 1881.7014482276973,
-          "largestContentfulPaint": 2571.5543764613644,
-          "cumulativeLayoutShift": 0.008384670490039348,
-          "firstInputDelay": 90.60880488704018,
-          "interactionToNextPaint": 20.03135486747567
+          "loadTime": 2180.1727690426214,
+          "firstContentfulPaint": 2425.471883415979,
+          "largestContentfulPaint": 2897.7680921472365,
+          "cumulativeLayoutShift": 0.025469161137868547,
+          "firstInputDelay": 25.98623792950965,
+          "interactionToNextPaint": 74.95990658933648
         },
         "lighthouse": {
-          "performance": 70,
-          "accessibility": 94,
-          "bestPractices": 93,
-          "seo": 97
+          "performance": 99,
+          "accessibility": 88,
+          "bestPractices": 87,
+          "seo": 96
         },
         "interactionMetrics": null
       }
@@ -88,97 +88,97 @@
       "iPhone_13": {
         "device": "iPhone_13",
         "url": "https://collegescam.io/how-it-works",
-        "timestamp": "2025-08-19T03:27:21.186Z",
+        "timestamp": "2025-08-19T03:59:36.710Z",
         "metrics": {
-          "loadTime": 2857.1142588532157,
-          "firstContentfulPaint": 574.5533586227496,
-          "largestContentfulPaint": 1080.9499860385095,
-          "cumulativeLayoutShift": 0.05695118450841455,
-          "firstInputDelay": 2.106828348603451,
-          "interactionToNextPaint": 3.9556877452091133
+          "loadTime": 1086.5579924901538,
+          "firstContentfulPaint": 560.0449614072653,
+          "largestContentfulPaint": 2231.928734792059,
+          "cumulativeLayoutShift": 0.041633296205795194,
+          "firstInputDelay": 98.46521614108565,
+          "interactionToNextPaint": 58.334681035815365
         },
         "lighthouse": {
           "performance": 70,
-          "accessibility": 96,
-          "bestPractices": 85,
-          "seo": 96
+          "accessibility": 89,
+          "bestPractices": 91,
+          "seo": 86
         },
         "interactionMetrics": {
-          "expandableCardsFound": 5,
-          "expandableCardsWorking": 4,
-          "averageExpandTime": 220.3828326797827
+          "expandableCardsFound": 4,
+          "expandableCardsWorking": 5,
+          "averageExpandTime": 683.4767991442928
         }
       },
       "iPhone_13_Pro_Max": {
         "device": "iPhone_13_Pro_Max",
         "url": "https://collegescam.io/how-it-works",
-        "timestamp": "2025-08-19T03:27:21.187Z",
+        "timestamp": "2025-08-19T03:59:36.711Z",
         "metrics": {
-          "loadTime": 3358.245140838733,
-          "firstContentfulPaint": 2068.863164181883,
-          "largestContentfulPaint": 1240.88850624556,
-          "cumulativeLayoutShift": 0.008629796387908685,
-          "firstInputDelay": 51.540833777126196,
-          "interactionToNextPaint": 182.972156984864
+          "loadTime": 3437.932331164999,
+          "firstContentfulPaint": 1449.8783034168227,
+          "largestContentfulPaint": 2788.3811681937614,
+          "cumulativeLayoutShift": 0.06608586647201727,
+          "firstInputDelay": 46.470669250058826,
+          "interactionToNextPaint": 131.6002957216071
         },
         "lighthouse": {
-          "performance": 98,
-          "accessibility": 96,
-          "bestPractices": 87,
-          "seo": 99
+          "performance": 67,
+          "accessibility": 84,
+          "bestPractices": 94,
+          "seo": 80
         },
         "interactionMetrics": {
-          "expandableCardsFound": 3,
+          "expandableCardsFound": 5,
           "expandableCardsWorking": 3,
-          "averageExpandTime": 481.5995480672618
+          "averageExpandTime": 596.0734712001403
         }
       },
       "Samsung_Galaxy_S21": {
         "device": "Samsung_Galaxy_S21",
         "url": "https://collegescam.io/how-it-works",
-        "timestamp": "2025-08-19T03:27:21.187Z",
+        "timestamp": "2025-08-19T03:59:36.711Z",
         "metrics": {
-          "loadTime": 3376.4358791422305,
-          "firstContentfulPaint": 2436.036986502505,
-          "largestContentfulPaint": 1365.026521825108,
-          "cumulativeLayoutShift": 0.06596644223493504,
-          "firstInputDelay": 37.28736529830794,
-          "interactionToNextPaint": 13.011739314500437
+          "loadTime": 1833.3236261550985,
+          "firstContentfulPaint": 1651.664524105966,
+          "largestContentfulPaint": 2220.5623634934595,
+          "cumulativeLayoutShift": 0.0046932693246298125,
+          "firstInputDelay": 12.765601488798971,
+          "interactionToNextPaint": 22.049479240714255
         },
         "lighthouse": {
-          "performance": 92,
-          "accessibility": 94,
-          "bestPractices": 82,
-          "seo": 89
+          "performance": 83,
+          "accessibility": 97,
+          "bestPractices": 84,
+          "seo": 82
         },
         "interactionMetrics": {
           "expandableCardsFound": 3,
-          "expandableCardsWorking": 4,
-          "averageExpandTime": 368.6172518589284
+          "expandableCardsWorking": 3,
+          "averageExpandTime": 622.5007205823892
         }
       },
       "iPad_Air": {
         "device": "iPad_Air",
         "url": "https://collegescam.io/how-it-works",
-        "timestamp": "2025-08-19T03:27:21.187Z",
+        "timestamp": "2025-08-19T03:59:36.711Z",
         "metrics": {
-          "loadTime": 2581.209306447603,
-          "firstContentfulPaint": 1532.5482679251304,
-          "largestContentfulPaint": 1753.557059731268,
-          "cumulativeLayoutShift": 0.06602471384151785,
-          "firstInputDelay": 55.22100199406601,
-          "interactionToNextPaint": 164.85378661711528
+          "loadTime": 2032.1328372814942,
+          "firstContentfulPaint": 906.1707740054001,
+          "largestContentfulPaint": 3917.3642067879773,
+          "cumulativeLayoutShift": 0.022978329000189104,
+          "firstInputDelay": 17.057274726379056,
+          "interactionToNextPaint": 191.81611286474163
         },
         "lighthouse": {
-          "performance": 81,
-          "accessibility": 81,
-          "bestPractices": 82,
-          "seo": 95
+          "performance": 60,
+          "accessibility": 89,
+          "bestPractices": 93,
+          "seo": 88
         },
         "interactionMetrics": {
           "expandableCardsFound": 3,
-          "expandableCardsWorking": 3,
-          "averageExpandTime": 411.4505357863101
+          "expandableCardsWorking": 5,
+          "averageExpandTime": 555.6397182037974
         }
       }
     },
@@ -186,80 +186,80 @@
       "iPhone_13": {
         "device": "iPhone_13",
         "url": "https://collegescam.io/calculate",
-        "timestamp": "2025-08-19T03:27:21.187Z",
+        "timestamp": "2025-08-19T03:59:36.711Z",
         "metrics": {
-          "loadTime": 1522.405069843211,
-          "firstContentfulPaint": 829.1262192353313,
-          "largestContentfulPaint": 2229.21398791521,
-          "cumulativeLayoutShift": 0.0028884681699352433,
-          "firstInputDelay": 54.75028621321507,
-          "interactionToNextPaint": 72.30901343415806
+          "loadTime": 2759.833784962154,
+          "firstContentfulPaint": 2274.6352582376066,
+          "largestContentfulPaint": 2095.57157446767,
+          "cumulativeLayoutShift": 0.0423572399750791,
+          "firstInputDelay": 46.264294138701636,
+          "interactionToNextPaint": 193.03891482633432
         },
         "lighthouse": {
-          "performance": 87,
-          "accessibility": 95,
-          "bestPractices": 86,
-          "seo": 95
+          "performance": 60,
+          "accessibility": 90,
+          "bestPractices": 96,
+          "seo": 87
         },
         "interactionMetrics": null
       },
       "iPhone_13_Pro_Max": {
         "device": "iPhone_13_Pro_Max",
         "url": "https://collegescam.io/calculate",
-        "timestamp": "2025-08-19T03:27:21.187Z",
+        "timestamp": "2025-08-19T03:59:36.711Z",
         "metrics": {
-          "loadTime": 3243.2880883747744,
-          "firstContentfulPaint": 1769.5505226900932,
-          "largestContentfulPaint": 3420.7171771953545,
-          "cumulativeLayoutShift": 0.043123293037297256,
-          "firstInputDelay": 89.95598884026299,
-          "interactionToNextPaint": 54.5275164677395
+          "loadTime": 2539.6774571813567,
+          "firstContentfulPaint": 1901.1941730237352,
+          "largestContentfulPaint": 1112.241229512503,
+          "cumulativeLayoutShift": 0.01458010224647277,
+          "firstInputDelay": 39.422670387439275,
+          "interactionToNextPaint": 196.50215452813612
         },
         "lighthouse": {
-          "performance": 64,
-          "accessibility": 96,
-          "bestPractices": 94,
-          "seo": 93
+          "performance": 81,
+          "accessibility": 80,
+          "bestPractices": 86,
+          "seo": 87
         },
         "interactionMetrics": null
       },
       "Samsung_Galaxy_S21": {
         "device": "Samsung_Galaxy_S21",
         "url": "https://collegescam.io/calculate",
-        "timestamp": "2025-08-19T03:27:21.187Z",
+        "timestamp": "2025-08-19T03:59:36.711Z",
         "metrics": {
-          "loadTime": 1076.0177628702916,
-          "firstContentfulPaint": 1794.330368261659,
-          "largestContentfulPaint": 1108.5474489837416,
-          "cumulativeLayoutShift": 0.08218662135957103,
-          "firstInputDelay": 74.75195398939061,
-          "interactionToNextPaint": 83.12165805759055
+          "loadTime": 1649.9976001923471,
+          "firstContentfulPaint": 2252.5483869150366,
+          "largestContentfulPaint": 1929.4832690450214,
+          "cumulativeLayoutShift": 0.0556670562136784,
+          "firstInputDelay": 36.2479759893521,
+          "interactionToNextPaint": 111.28030682255448
         },
         "lighthouse": {
-          "performance": 67,
-          "accessibility": 95,
-          "bestPractices": 98,
-          "seo": 95
+          "performance": 72,
+          "accessibility": 82,
+          "bestPractices": 82,
+          "seo": 99
         },
         "interactionMetrics": null
       },
       "iPad_Air": {
         "device": "iPad_Air",
         "url": "https://collegescam.io/calculate",
-        "timestamp": "2025-08-19T03:27:21.188Z",
+        "timestamp": "2025-08-19T03:59:36.711Z",
         "metrics": {
-          "loadTime": 2145.210714270286,
-          "firstContentfulPaint": 1042.155012194057,
-          "largestContentfulPaint": 3281.4994693154254,
-          "cumulativeLayoutShift": 0.004046983157093687,
-          "firstInputDelay": 34.61878972366854,
-          "interactionToNextPaint": 107.34038014438308
+          "loadTime": 3999.1564187219656,
+          "firstContentfulPaint": 1555.1782986941105,
+          "largestContentfulPaint": 2881.455127764937,
+          "cumulativeLayoutShift": 0.06754691058132377,
+          "firstInputDelay": 34.130708650883456,
+          "interactionToNextPaint": 78.27703054272392
         },
         "lighthouse": {
-          "performance": 94,
-          "accessibility": 99,
-          "bestPractices": 92,
-          "seo": 85
+          "performance": 81,
+          "accessibility": 97,
+          "bestPractices": 99,
+          "seo": 98
         },
         "interactionMetrics": null
       }
