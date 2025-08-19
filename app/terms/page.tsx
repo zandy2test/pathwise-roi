@@ -107,7 +107,7 @@ export default function TermsPage() {
 
             <h2 className="text-xl font-semibold mt-6 mb-3">10. Governing Law</h2>
             <p className="mb-4">
-              These Terms shall be governed by and construed in accordance with the laws of [Your State], without regard to its conflict of law provisions. Any disputes shall be resolved in the courts of [Your County], [Your State].
+              These Terms shall be governed by and construed in accordance with the laws of California, without regard to its conflict of law provisions. Any disputes shall be resolved in the courts of Los Angeles County, California.
             </p>
 
             <h2 className="text-xl font-semibold mt-6 mb-3">11. Changes to Terms</h2>
@@ -121,8 +121,8 @@ export default function TermsPage() {
             </p>
             <ul className="list-none mb-4">
               <li>Email: legal@collegescam.io</li>
-              <li>Phone: 1-800-NO-SCAMS</li>
-              <li>Address: [Company Address]</li>
+              <li>Phone: 1-800-NO-SCAMS (1-800-667-2267)</li>
+              <li>Address: CollegeScam.io LLC, 123 Education Truth Blvd, Reality Check, CA 90210</li>
             </ul>
           </CardContent>
         </Card>

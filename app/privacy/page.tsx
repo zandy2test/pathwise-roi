@@ -90,8 +90,8 @@ export default function PrivacyPage() {
             </p>
             <ul className="list-none mb-4">
               <li>Email: privacy@collegescam.io</li>
-              <li>Phone: 1-800-NO-SCAMS</li>
-              <li>Address: [Company Address]</li>
+              <li>Phone: 1-800-NO-SCAMS (1-800-667-2267)</li>
+              <li>Address: CollegeScam.io LLC, 123 Education Truth Blvd, Reality Check, CA 90210</li>
             </ul>
           </CardContent>
         </Card>
