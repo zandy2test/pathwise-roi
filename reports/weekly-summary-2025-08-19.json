@@ -1,0 +1,16 @@
+{
+  "auditDate": "2025-08-19T03:27:21.178Z",
+  "siteUrl": "https://collegescam.io",
+  "overview": {
+    "performanceScore": 100,
+    "criticalIssues": 0,
+    "recommendationsCount": 0
+  },
+  "performance": {
+    "alerts": 0
+  },
+  "mobile": {
+    "testsRun": 7,
+    "passRate": 100
+  }
+}

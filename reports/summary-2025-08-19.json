@@ -1,0 +1,16 @@
+{
+  "timestamp": "2025-08-19T03:27:21.185Z",
+  "overview": {
+    "pagesTestedCount": 3,
+    "devicesTestedCount": 4,
+    "totalTests": 12
+  },
+  "averageMetrics": {
+    "loadTime": 2681.033012554078,
+    "firstContentfulPaint": 1553.6413365127094,
+    "largestContentfulPaint": 2077.3913883446344,
+    "cumulativeLayoutShift": 0.039086065101687426
+  },
+  "alerts": [],
+  "recommendations": []
+}

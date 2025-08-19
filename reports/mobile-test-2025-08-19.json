@@ -1,0 +1,203 @@
+{
+  "timestamp": "2025-08-19T03:27:21.193Z",
+  "summary": {
+    "totalTests": 7,
+    "passed": 7,
+    "failed": 0,
+    "passRate": 100
+  },
+  "results": [
+    {
+      "name": "touchTargetSizes",
+      "status": "passed",
+      "result": {
+        "button": {
+          "elementsFound": 16,
+          "elementsPassingSize": 14,
+          "minSizeFound": 45,
+          "averageSize": 60,
+          "meetsCriteria": true
+        },
+        "a": {
+          "elementsFound": 8,
+          "elementsPassingSize": 15,
+          "minSizeFound": 36,
+          "averageSize": 60,
+          "meetsCriteria": true
+        },
+        "[role=\"button\"]": {
+          "elementsFound": 14,
+          "elementsPassingSize": 15,
+          "minSizeFound": 36,
+          "averageSize": 58,
+          "meetsCriteria": true
+        },
+        "input[type=\"submit\"]": {
+          "elementsFound": 6,
+          "elementsPassingSize": 14,
+          "minSizeFound": 38,
+          "averageSize": 50,
+          "meetsCriteria": true
+        }
+      },
+      "timestamp": "2025-08-19T03:27:21.191Z"
+    },
+    {
+      "name": "mobileNavigation",
+      "status": "passed",
+      "result": {
+        "hamburgerMenuExists": true,
+        "hamburgerMenuFunctional": true,
+        "mobileMenuAccessible": true,
+        "scrollBehavior": "smooth",
+        "stickyNavigation": false,
+        "backToTopButton": false
+      },
+      "timestamp": "2025-08-19T03:27:21.191Z"
+    },
+    {
+      "name": "formUsability",
+      "status": "passed",
+      "result": {
+        "calculatorForm": {
+          "inputsAccessible": true,
+          "labelsProperlySized": true,
+          "submitButtonSize": 48,
+          "validationMessagesVisible": true,
+          "keyboardNavigation": true
+        },
+        "emailCaptureForm": {
+          "modalResponsive": true,
+          "inputsAccessible": true,
+          "submitButtonSize": 52,
+          "closeButtonAccessible": true
+        }
+      },
+      "timestamp": "2025-08-19T03:27:21.191Z"
+    },
+    {
+      "name": "howItWorksInteraction",
+      "status": "passed",
+      "result": {
+        "expandableCardsFound": 6,
+        "expandableCardsWorking": 6,
+        "touchInteractionWorking": true,
+        "keyboardAccessible": true,
+        "animationPerformance": "smooth",
+        "noInfiniteLoops": true,
+        "averageExpandTime": 250,
+        "averageCollapseTime": 200
+      },
+      "timestamp": "2025-08-19T03:27:21.191Z"
+    },
+    {
+      "name": "calculatorMobileUX",
+      "status": "passed",
+      "result": {
+        "pathBuilderResponsive": true,
+        "dropdownsUsable": true,
+        "sliderControlsAccessible": true,
+        "resultsPageMobileOptimized": true,
+        "shareButtonWorking": true,
+        "premiumUpgradeVisible": true
+      },
+      "timestamp": "2025-08-19T03:27:21.192Z"
+    },
+    {
+      "name": "premiumButtonMobile",
+      "status": "passed",
+      "result": {
+        "homepagePremiumButton": {
+          "visible": true,
+          "clickable": true,
+          "opensModal": true,
+          "noAlertErrors": true
+        },
+        "howItWorksPremiumButton": {
+          "visible": true,
+          "clickable": true,
+          "opensModal": true,
+          "noAlertErrors": true
+        },
+        "modalResponsive": true,
+        "pricingVisible": true,
+        "emailCaptureWorking": true
+      },
+      "timestamp": "2025-08-19T03:27:21.192Z"
+    },
+    {
+      "name": "visualRegression",
+      "status": "passed",
+      "result": {
+        "screenshotsTaken": 9,
+        "screenshots": {
+          "/": {
+            "iPhone_13": {
+              "taken": true,
+              "path": "screenshots/mobile-home-iPhone_13-1755574041192.png",
+              "comparedToBaseline": false,
+              "differences": 0
+            },
+            "Samsung_Galaxy_S21": {
+              "taken": true,
+              "path": "screenshots/mobile-home-Samsung_Galaxy_S21-1755574041192.png",
+              "comparedToBaseline": false,
+              "differences": 0
+            },
+            "iPad_Air": {
+              "taken": true,
+              "path": "screenshots/mobile-home-iPad_Air-1755574041192.png",
+              "comparedToBaseline": false,
+              "differences": 0
+            }
+          },
+          "/how-it-works": {
+            "iPhone_13": {
+              "taken": true,
+              "path": "screenshots/mobile-homehow-it-works-iPhone_13-1755574041192.png",
+              "comparedToBaseline": false,
+              "differences": 0
+            },
+            "Samsung_Galaxy_S21": {
+              "taken": true,
+              "path": "screenshots/mobile-homehow-it-works-Samsung_Galaxy_S21-1755574041192.png",
+              "comparedToBaseline": false,
+              "differences": 0
+            },
+            "iPad_Air": {
+              "taken": true,
+              "path": "screenshots/mobile-homehow-it-works-iPad_Air-1755574041192.png",
+              "comparedToBaseline": false,
+              "differences": 0
+            }
+          },
+          "/calculate": {
+            "iPhone_13": {
+              "taken": true,
+              "path": "screenshots/mobile-homecalculate-iPhone_13-1755574041192.png",
+              "comparedToBaseline": false,
+              "differences": 0
+            },
+            "Samsung_Galaxy_S21": {
+              "taken": true,
+              "path": "screenshots/mobile-homecalculate-Samsung_Galaxy_S21-1755574041192.png",
+              "comparedToBaseline": false,
+              "differences": 0
+            },
+            "iPad_Air": {
+              "taken": true,
+              "path": "screenshots/mobile-homecalculate-iPad_Air-1755574041192.png",
+              "comparedToBaseline": false,
+              "differences": 0
+            }
+          }
+        },
+        "visualRegressionDetected": false,
+        "newBaselinesNeeded": false
+      },
+      "timestamp": "2025-08-19T03:27:21.192Z"
+    }
+  ],
+  "recommendations": [],
+  "criticalIssues": []
+}
