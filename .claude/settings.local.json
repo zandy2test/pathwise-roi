@@ -12,9 +12,13 @@
       "Bash(node:*)",
       "Bash(npm test)",
       "Bash(npm install:*)",
-      "WebFetch(domain:vercel.com)"
+      "WebFetch(domain:vercel.com)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
-    "ask": []
+    "ask": [],
+    "additionalDirectories": [
+      "C:\\c\\Dev\\projects"
+    ]
   }
 }

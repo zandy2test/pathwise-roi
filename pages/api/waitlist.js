@@ -1,4 +1,6 @@
-// Enhanced API endpoint with logging and optional viewing
+import { detectBot, getClientIP } from '../../lib/bot-protection';
+
+// Enhanced API endpoint with bot protection and logging
 export default async function handler(req, res) {
   // Handle GET requests for admin viewing (simple auth)
   if (req.method === 'GET') {
@@ -21,19 +23,49 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { email } = req.body;
+  const { email, honeypot, startTime, mathAnswer, mathChallenge } = req.body;
+  
+  // Get client IP for bot detection
+  const clientIP = getClientIP(req);
+  
+  // Bot detection
+  const botCheck = detectBot({
+    ip: clientIP,
+    userAgent: req.headers['user-agent'],
+    honeypot,
+    startTime,
+    email
+  });
+  
+  // Verify math challenge if provided
+  if (mathChallenge && mathAnswer) {
+    if (parseInt(mathAnswer) !== mathChallenge.answer) {
+      return res.status(400).json({ 
+        error: 'Incorrect verification answer',
+        botScore: botCheck.score 
+      });
+    }
+  }
+  
+  // Block if bot score is too high
+  if (botCheck.isBot) {
+    console.log(`🤖 Bot detected from ${clientIP}:`, {
+      email,
+      reasons: botCheck.reasons,
+      score: botCheck.score,
+      userAgent: req.headers['user-agent']
+    });
+    
+    return res.status(429).json({ 
+      error: 'Request rejected. Please try again later.',
+      reasons: botCheck.reasons.length > 0 ? ['Suspicious activity detected'] : undefined
+    });
+  }
 
-  // Enhanced email validation
+  // Enhanced email validation (already done in detectBot, but keep for backwards compatibility)
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email || !emailRegex.test(email)) {
     return res.status(400).json({ error: 'Invalid email address' });
-  }
-
-  // Check for disposable emails
-  const disposableDomains = ['tempmail.com', 'throwaway.email', '10minutemail.com'];
-  const domain = email.split('@')[1];
-  if (disposableDomains.includes(domain)) {
-    return res.status(400).json({ error: 'Please use a permanent email address' });
   }
 
   try {
@@ -47,8 +79,9 @@ export default async function handler(req, res) {
     console.log(`Email: ${email}`);
     console.log(`Timestamp: ${timestamp}`);
     console.log(`Source: ${source}`);
-    console.log(`IP: ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}`);
+    console.log(`IP: ${clientIP}`);
     console.log(`User-Agent: ${req.headers['user-agent']}`);
+    console.log(`Bot Score: ${botCheck.score}/100`);
     console.log('========================================');
     
     // Try Vercel KV if available (only in production)

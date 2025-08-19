@@ -6,6 +6,7 @@ import { Footer } from '@/components/footer'
 import ErrorBoundary from '@/components/error-boundary'
 import { EnhancedErrorBoundary } from '@/components/error-tracking'
 import { VercelToolbarIntegration } from '@/components/vercel-toolbar-integration'
+import { FloatingFeedbackButton } from '@/components/feedback-widget'
 import { Analytics } from '@vercel/analytics/next'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -86,6 +87,7 @@ export default function RootLayout({
             <div className="min-h-screen bg-background flex flex-col">
               {children}
             </div>
+            <FloatingFeedbackButton />
           </ErrorBoundary>
         </EnhancedErrorBoundary>
         <Analytics />

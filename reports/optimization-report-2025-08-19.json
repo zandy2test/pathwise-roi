@@ -1,0 +1,363 @@
+{
+  "timestamp": "2025-08-19T09:34:45.844Z",
+  "analysis": {
+    "pages": {
+      "homepage": {
+        "devices": {
+          "iPhone_13": {
+            "metrics": {
+              "loadTime": 2351.201862289712,
+              "firstContentfulPaint": 648.6620944777153,
+              "largestContentfulPaint": 2534.261066443351,
+              "cumulativeLayoutShift": 0.06687845265807042,
+              "firstInputDelay": 13.973772996684897,
+              "interactionToNextPaint": 5.407108190100063
+            },
+            "lighthouse": {
+              "performance": 94,
+              "accessibility": 82,
+              "bestPractices": 87,
+              "seo": 87
+            },
+            "issues": [],
+            "score": "good"
+          },
+          "iPhone_13_Pro_Max": {
+            "metrics": {
+              "loadTime": 3297.200000895759,
+              "firstContentfulPaint": 970.9891432022771,
+              "largestContentfulPaint": 1838.5711010827683,
+              "cumulativeLayoutShift": 0.026592972866688824,
+              "firstInputDelay": 3.9982561781306325,
+              "interactionToNextPaint": 147.32413168411625
+            },
+            "lighthouse": {
+              "performance": 88,
+              "accessibility": 89,
+              "bestPractices": 80,
+              "seo": 98
+            },
+            "issues": [],
+            "score": "good"
+          },
+          "Samsung_Galaxy_S21": {
+            "metrics": {
+              "loadTime": 1984.851941952595,
+              "firstContentfulPaint": 651.8046160742888,
+              "largestContentfulPaint": 3179.8183881698146,
+              "cumulativeLayoutShift": 0.013962108400834762,
+              "firstInputDelay": 32.52298585118869,
+              "interactionToNextPaint": 38.693076509929945
+            },
+            "lighthouse": {
+              "performance": 87,
+              "accessibility": 88,
+              "bestPractices": 92,
+              "seo": 99
+            },
+            "issues": [],
+            "score": "good"
+          },
+          "iPad_Air": {
+            "metrics": {
+              "loadTime": 2180.1727690426214,
+              "firstContentfulPaint": 2425.471883415979,
+              "largestContentfulPaint": 2897.7680921472365,
+              "cumulativeLayoutShift": 0.025469161137868547,
+              "firstInputDelay": 25.98623792950965,
+              "interactionToNextPaint": 74.95990658933648
+            },
+            "lighthouse": {
+              "performance": 99,
+              "accessibility": 88,
+              "bestPractices": 87,
+              "seo": 96
+            },
+            "issues": [],
+            "score": "good"
+          }
+        },
+        "averages": {
+          "performance": 92,
+          "loadTime": 2453,
+          "fcp": 1174,
+          "lcp": 2613,
+          "cls": "0.033"
+        }
+      },
+      "how-it-works": {
+        "devices": {
+          "iPhone_13": {
+            "metrics": {
+              "loadTime": 1086.5579924901538,
+              "firstContentfulPaint": 560.0449614072653,
+              "largestContentfulPaint": 2231.928734792059,
+              "cumulativeLayoutShift": 0.041633296205795194,
+              "firstInputDelay": 98.46521614108565,
+              "interactionToNextPaint": 58.334681035815365
+            },
+            "lighthouse": {
+              "performance": 70,
+              "accessibility": 89,
+              "bestPractices": 91,
+              "seo": 86
+            },
+            "issues": [],
+            "score": "good"
+          },
+          "iPhone_13_Pro_Max": {
+            "metrics": {
+              "loadTime": 3437.932331164999,
+              "firstContentfulPaint": 1449.8783034168227,
+              "largestContentfulPaint": 2788.3811681937614,
+              "cumulativeLayoutShift": 0.06608586647201727,
+              "firstInputDelay": 46.470669250058826,
+              "interactionToNextPaint": 131.6002957216071
+            },
+            "lighthouse": {
+              "performance": 67,
+              "accessibility": 84,
+              "bestPractices": 94,
+              "seo": 80
+            },
+            "issues": [
+              {
+                "type": "lighthouse_performance",
+                "severity": "medium",
+                "value": 67,
+                "message": "Moderate Lighthouse performance score: 67/100"
+              }
+            ],
+            "score": "acceptable"
+          },
+          "Samsung_Galaxy_S21": {
+            "metrics": {
+              "loadTime": 1833.3236261550985,
+              "firstContentfulPaint": 1651.664524105966,
+              "largestContentfulPaint": 2220.5623634934595,
+              "cumulativeLayoutShift": 0.0046932693246298125,
+              "firstInputDelay": 12.765601488798971,
+              "interactionToNextPaint": 22.049479240714255
+            },
+            "lighthouse": {
+              "performance": 83,
+              "accessibility": 97,
+              "bestPractices": 84,
+              "seo": 82
+            },
+            "issues": [],
+            "score": "good"
+          },
+          "iPad_Air": {
+            "metrics": {
+              "loadTime": 2032.1328372814942,
+              "firstContentfulPaint": 906.1707740054001,
+              "largestContentfulPaint": 3917.3642067879773,
+              "cumulativeLayoutShift": 0.022978329000189104,
+              "firstInputDelay": 17.057274726379056,
+              "interactionToNextPaint": 191.81611286474163
+            },
+            "lighthouse": {
+              "performance": 60,
+              "accessibility": 89,
+              "bestPractices": 93,
+              "seo": 88
+            },
+            "issues": [
+              {
+                "type": "lighthouse_performance",
+                "severity": "medium",
+                "value": 60,
+                "message": "Moderate Lighthouse performance score: 60/100"
+              }
+            ],
+            "score": "acceptable"
+          }
+        },
+        "averages": {
+          "performance": 70,
+          "loadTime": 2097,
+          "fcp": 1142,
+          "lcp": 2790,
+          "cls": "0.034"
+        }
+      },
+      "calculator": {
+        "devices": {
+          "iPhone_13": {
+            "metrics": {
+              "loadTime": 2759.833784962154,
+              "firstContentfulPaint": 2274.6352582376066,
+              "largestContentfulPaint": 2095.57157446767,
+              "cumulativeLayoutShift": 0.0423572399750791,
+              "firstInputDelay": 46.264294138701636,
+              "interactionToNextPaint": 193.03891482633432
+            },
+            "lighthouse": {
+              "performance": 60,
+              "accessibility": 90,
+              "bestPractices": 96,
+              "seo": 87
+            },
+            "issues": [
+              {
+                "type": "lighthouse_performance",
+                "severity": "medium",
+                "value": 60,
+                "message": "Moderate Lighthouse performance score: 60/100"
+              }
+            ],
+            "score": "acceptable"
+          },
+          "iPhone_13_Pro_Max": {
+            "metrics": {
+              "loadTime": 2539.6774571813567,
+              "firstContentfulPaint": 1901.1941730237352,
+              "largestContentfulPaint": 1112.241229512503,
+              "cumulativeLayoutShift": 0.01458010224647277,
+              "firstInputDelay": 39.422670387439275,
+              "interactionToNextPaint": 196.50215452813612
+            },
+            "lighthouse": {
+              "performance": 81,
+              "accessibility": 80,
+              "bestPractices": 86,
+              "seo": 87
+            },
+            "issues": [],
+            "score": "good"
+          },
+          "Samsung_Galaxy_S21": {
+            "metrics": {
+              "loadTime": 1649.9976001923471,
+              "firstContentfulPaint": 2252.5483869150366,
+              "largestContentfulPaint": 1929.4832690450214,
+              "cumulativeLayoutShift": 0.0556670562136784,
+              "firstInputDelay": 36.2479759893521,
+              "interactionToNextPaint": 111.28030682255448
+            },
+            "lighthouse": {
+              "performance": 72,
+              "accessibility": 82,
+              "bestPractices": 82,
+              "seo": 99
+            },
+            "issues": [],
+            "score": "good"
+          },
+          "iPad_Air": {
+            "metrics": {
+              "loadTime": 3999.1564187219656,
+              "firstContentfulPaint": 1555.1782986941105,
+              "largestContentfulPaint": 2881.455127764937,
+              "cumulativeLayoutShift": 0.06754691058132377,
+              "firstInputDelay": 34.130708650883456,
+              "interactionToNextPaint": 78.27703054272392
+            },
+            "lighthouse": {
+              "performance": 81,
+              "accessibility": 97,
+              "bestPractices": 99,
+              "seo": 98
+            },
+            "issues": [],
+            "score": "good"
+          }
+        },
+        "averages": {
+          "performance": 74,
+          "loadTime": 2737,
+          "fcp": 1996,
+          "lcp": 2005,
+          "cls": "0.045"
+        }
+      }
+    },
+    "overall": {
+      "averagePerformanceScore": 79,
+      "averageLoadTime": 2429,
+      "averageFCP": 1437,
+      "averageLCP": 2469,
+      "averageCLS": "0.037",
+      "totalTests": 12
+    }
+  },
+  "recommendations": [
+    {
+      "id": "load_time_optimization",
+      "priority": "high",
+      "category": "Loading Speed",
+      "title": "Reduce Page Load Times",
+      "description": "Average load time is 2429ms. Target: <2000ms",
+      "actions": [
+        "Implement proper image lazy loading",
+        "Reduce JavaScript bundle size",
+        "Use CDN for static assets",
+        "Optimize server response times",
+        "Implement service worker caching",
+        "Remove unused CSS and JavaScript"
+      ],
+      "impact": "High - directly affects user experience"
+    },
+    {
+      "id": "how-it-works_lighthouse_performance",
+      "priority": "medium",
+      "category": "Performance",
+      "title": "Fix Lighthouse Performance Score on how-it-works",
+      "description": "2 device(s) affected: iPhone_13_Pro_Max (67), iPad_Air (60)",
+      "actions": [
+        "Run Lighthouse audit for detailed recommendations",
+        "Optimize images and reduce file sizes",
+        "Minimize unused CSS and JavaScript",
+        "Implement proper caching strategies"
+      ],
+      "impact": "Medium - affects how-it-works page performance"
+    },
+    {
+      "id": "calculator_lighthouse_performance",
+      "priority": "medium",
+      "category": "Performance",
+      "title": "Fix Lighthouse Performance Score on calculator",
+      "description": "1 device(s) affected: iPhone_13 (60)",
+      "actions": [
+        "Run Lighthouse audit for detailed recommendations",
+        "Optimize images and reduce file sizes",
+        "Minimize unused CSS and JavaScript",
+        "Implement proper caching strategies"
+      ],
+      "impact": "Medium - affects calculator page performance"
+    }
+  ],
+  "priorityIssues": [
+    {
+      "id": "load_time_optimization",
+      "priority": "high",
+      "category": "Loading Speed",
+      "title": "Reduce Page Load Times",
+      "description": "Average load time is 2429ms. Target: <2000ms",
+      "actions": [
+        "Implement proper image lazy loading",
+        "Reduce JavaScript bundle size",
+        "Use CDN for static assets",
+        "Optimize server response times",
+        "Implement service worker caching",
+        "Remove unused CSS and JavaScript"
+      ],
+      "impact": "High - directly affects user experience"
+    }
+  ],
+  "summary": {
+    "performanceGrade": "B",
+    "overallScore": 79,
+    "totalIssues": 3,
+    "highPriorityIssues": 1,
+    "mediumPriorityIssues": 2,
+    "keyMetrics": {
+      "loadTime": "2429ms",
+      "fcp": "1437ms",
+      "lcp": "2469ms",
+      "cls": "0.037"
+    },
+    "recommendation": "Good performance with room for improvement. Focus on high-priority optimizations."
+  }
+}

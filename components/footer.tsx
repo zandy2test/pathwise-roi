@@ -35,6 +35,9 @@ export function Footer({ onPremiumClick }: FooterProps = {}) {
               <Link href="/how-it-works" className="block text-sm text-gray-600 hover:text-red-600 transition-colors">
                 How It Works
               </Link>
+              <Link href="/blog" className="block text-sm text-gray-600 hover:text-red-600 transition-colors">
+                Blog & Insights
+              </Link>
               {onPremiumClick ? (
                 <button 
                   onClick={onPremiumClick}

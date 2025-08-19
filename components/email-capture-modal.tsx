@@ -17,6 +17,8 @@ export function EmailCaptureModal({ showModal, setShowModal }: EmailCaptureModal
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [startTime, setStartTime] = useState(Date.now());
+  const [honeypot, setHoneypot] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,13 +42,17 @@ export function EmailCaptureModal({ showModal, setShowModal }: EmailCaptureModal
         });
       }
 
-      // Submit to serverless function
+      // Submit to serverless function with bot protection
       const response = await fetch('/api/waitlist', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ 
+          email,
+          honeypot,
+          startTime
+        }),
       });
 
       if (response.ok) {
@@ -70,6 +76,8 @@ export function EmailCaptureModal({ showModal, setShowModal }: EmailCaptureModal
       setIsSubmitted(false);
       setEmail('');
       setError('');
+      setStartTime(Date.now()); // Reset timing
+      setHoneypot('');
     }, 300);
   };
 
@@ -209,6 +217,17 @@ export function EmailCaptureModal({ showModal, setShowModal }: EmailCaptureModal
 
                       {/* Email form */}
                       <form onSubmit={handleSubmit} className="space-y-3">
+                        {/* Honeypot field - hidden from users */}
+                        <input
+                          type="text"
+                          name="website"
+                          value={honeypot}
+                          onChange={(e) => setHoneypot(e.target.value)}
+                          style={{ display: 'none' }}
+                          tabIndex={-1}
+                          autoComplete="off"
+                        />
+                        
                         <div>
                           <Input
                             type="email"

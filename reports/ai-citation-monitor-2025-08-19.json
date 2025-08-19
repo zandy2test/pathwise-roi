@@ -1,0 +1,89 @@
+{
+  "timestamp": "2025-08-19T09:30:40.250Z",
+  "totalQueries": 10,
+  "citationsFound": 0,
+  "platforms": {
+    "ChatGPT": {
+      "queries": 0,
+      "citations": 0,
+      "urls": []
+    },
+    "Claude": {
+      "queries": 0,
+      "citations": 0,
+      "urls": []
+    },
+    "Perplexity": {
+      "queries": 0,
+      "citations": 0,
+      "urls": []
+    },
+    "Bing Chat": {
+      "queries": 0,
+      "citations": 0,
+      "urls": []
+    },
+    "Bard/Gemini": {
+      "queries": 0,
+      "citations": 0,
+      "urls": []
+    },
+    "Grok": {
+      "queries": 0,
+      "citations": 0,
+      "urls": []
+    }
+  },
+  "queries": {
+    "Is college worth it?": {
+      "platforms": {},
+      "citationFound": false,
+      "timestamp": null
+    },
+    "College debt calculator": {
+      "platforms": {},
+      "citationFound": false,
+      "timestamp": null
+    },
+    "Alternatives to college": {
+      "platforms": {},
+      "citationFound": false,
+      "timestamp": null
+    },
+    "Trade school vs college": {
+      "platforms": {},
+      "citationFound": false,
+      "timestamp": null
+    },
+    "College scam statistics": {
+      "platforms": {},
+      "citationFound": false,
+      "timestamp": null
+    },
+    "Education ROI calculator": {
+      "platforms": {},
+      "citationFound": false,
+      "timestamp": null
+    },
+    "Student debt trap": {
+      "platforms": {},
+      "citationFound": false,
+      "timestamp": null
+    },
+    "College vs bootcamp salary": {
+      "platforms": {},
+      "citationFound": false,
+      "timestamp": null
+    },
+    "Trade school benefits": {
+      "platforms": {},
+      "citationFound": false,
+      "timestamp": null
+    },
+    "College alternatives 2025": {
+      "platforms": {},
+      "citationFound": false,
+      "timestamp": null
+    }
+  }
+}

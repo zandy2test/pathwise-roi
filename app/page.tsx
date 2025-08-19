@@ -4,12 +4,7 @@ import { useState, startTransition, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import PathBuilder from '@/components/path-builder';
-import ROITimeline from '@/components/roi-timeline';
 import { Footer } from '@/components/footer';
-import { LoanPaymentCalculator } from '@/components/loan-payment-calculator';
-import { CareerTrajectoryChart } from '@/components/career-trajectory-chart';
-import { AIRiskIndicator } from '@/components/ai-risk-indicator';
 import { calculateROI } from '@/lib/calculator';
 import { validateCalculatorInputs } from '@/lib/validation';
 import { educationPaths } from '@/lib/data';
@@ -18,10 +13,18 @@ import type { CalculatorInputs, CalculationResult } from '@/lib/types';
 import { AnimatedGradientHeading } from '@/components/magic/animated-gradient-text';
 import { CTAButton, PremiumButton, ShimmerButton } from '@/components/magic/shimmer-button';
 import { NumberTicker } from '@/components/magic/number-ticker';
+import { TooltipProvider } from '@/components/ui/tooltip';
+
+// Direct imports for now - will optimize build process separately
+import PathBuilder from '@/components/path-builder';
+import ROITimeline from '@/components/roi-timeline';
+import { LoanPaymentCalculator } from '@/components/loan-payment-calculator';
+import { CareerTrajectoryChart } from '@/components/career-trajectory-chart';
+import { AIRiskIndicator } from '@/components/ai-risk-indicator';
 import { EmailCaptureModal } from '@/components/email-capture-modal';
 import { TestimonialsSection } from '@/components/testimonials-section';
 import { SocialProofSection } from '@/components/social-proof-section';
-import { TooltipProvider } from '@/components/ui/tooltip';
+
 import {
   TrendingUp,
   Calendar,
